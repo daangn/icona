@@ -1,0 +1,19 @@
+{
+  "name": "icona",
+  "version": "0.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/daangn/icona.git",
+  "author": "junghyeonsu <jung660317@naver.com>",
+  "license": "MIT",
+  "packageManager": "yarn@3.5.1",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@changesets/cli": "^2.26.1"
+  },
+  "scripts": {
+    "release": "yarn changeset publish",
+    "version": "changeset version && yarn install --no-immutable"
+  }
+}
