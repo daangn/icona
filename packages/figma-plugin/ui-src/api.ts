@@ -1,9 +1,4 @@
 /* eslint-disable no-restricted-globals */
-export const postMessage = (data: Record<string, string>) => {
-  parent.postMessage(
-    {
-      pluginMessage: data,
-    },
-    "*",
-  );
+export const postMessage = (data: Record<string, unknown>) => {
+  parent.postMessage({ pluginMessage: data }, "*");
 };

@@ -1,15 +1,14 @@
 {
   "name": "@icona/figma-plugin",
-  "packageManager": "yarn@3.5.1",
   "scripts": {
-    "tsc": "yarn tsc:main && yarn tsc:ui",
-    "tsc:main": "tsc --noEmit -p plugin-src",
-    "tsc:ui": "tsc --noEmit -p ui-src",
     "build": "yarn build:ui && yarn build:main -- --minify",
     "build:main": "node ./esbuild.plugin.js",
     "build:ui": "yarn vite build --minify esbuild --emptyOutDir=false",
     "build:watch": "yarn build:ui --watch && yarn build:main --watch",
-    "dev": "yarn build:watch"
+    "dev": "yarn build:watch",
+    "tsc": "yarn tsc:main && yarn tsc:ui",
+    "tsc:main": "tsc --noEmit -p plugin-src",
+    "tsc:ui": "tsc --noEmit -p ui-src"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.6.1",
@@ -28,9 +27,11 @@
     "npm": "^9.6.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "ts-dedent": "^2.2.0",
     "typescript": "^5.0.4",
     "ultra-runner": "^3.10.5",
     "vite": "^4.3.5",
     "vite-plugin-singlefile": "^0.13.5"
-  }
+  },
+  "packageManager": "yarn@3.5.1"
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 export function handleFigmaMessage(
   type: string,
   fn: (pluginMessage: { type: string; [key: string]: any }) => void,

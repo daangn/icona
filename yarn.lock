@@ -3478,6 +3478,7 @@ __metadata:
     npm: ^9.6.6
     react: ^18.2.0
     react-dom: ^18.2.0
+    ts-dedent: ^2.2.0
     typescript: ^5.0.4
     ultra-runner: ^3.10.5
     vite: ^4.3.5
