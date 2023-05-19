@@ -1,4 +1,5 @@
-import { ACTION, DATA } from "../constants";
+import { ACTION, DATA } from "../common/constants";
+import type { GithubData } from "../common/types";
 import { getClient } from "./github";
 
 figma.showUI(__html__, { width: 320, height: 436 });
@@ -71,11 +72,13 @@ figma.ui.onmessage = async (msg) => {
       break;
 
     case ACTION.PUSH_GITHUB_REPO:
-      const owner = msg.payload.owner;
-      const name = msg.payload.name;
-      const apiKey = msg.payload.apiKey;
-      const content = msg.payload.content;
-
+      const {
+        content,
+        githubData: { apiKey, name, owner },
+      } = msg.payload as {
+        githubData: GithubData;
+        content: string;
+      };
       const { sync } = getClient(owner, name, apiKey);
       sync("main", content);
       break;

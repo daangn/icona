@@ -12,7 +12,7 @@ export const ACTION = {
   CREATE_ICON_FRAME: "create-icon-frame",
 
   PUSH_GITHUB_REPO: "push-github-repo",
-};
+} as const;
 
 export const DATA = {
   GITHUB_API_KEY: "github-api-key",
