@@ -1,6 +1,6 @@
 import { ACTION, DATA } from "../common/constants";
 import type { GithubData } from "../common/types";
-import { getClient } from "./github";
+import { createGithubClient } from "./github";
 
 figma.showUI(__html__, { width: 320, height: 436 });
 
@@ -71,17 +71,28 @@ figma.ui.onmessage = async (msg) => {
       setLocalData(DATA.ICON_FRAME_ID, msg.payload);
       break;
 
-    case ACTION.PUSH_GITHUB_REPO:
-      const {
-        content,
-        githubData: { apiKey, name, owner },
-      } = msg.payload as {
+    case ACTION.SETTING_DONE: {
+      const { githubData, figmaFileKey, iconFrameId } = msg.payload as {
         githubData: GithubData;
-        content: string;
+        iconFrameId: string;
+        figmaFileKey: string;
       };
-      const { sync } = getClient(owner, name, apiKey);
-      sync("main", content);
+      const { owner, name, apiKey } = githubData;
+      const { createSettingPR } = createGithubClient(owner, name, apiKey);
+      createSettingPR({ figmaFileKey, iconFrameId });
       break;
+    }
+
+    case ACTION.DEPLOY_ICON: {
+      const { githubData } = msg.payload as {
+        githubData: GithubData;
+      };
+      const { owner, name, apiKey } = githubData;
+      const { createDeployPR } = createGithubClient(owner, name, apiKey);
+
+      createDeployPR();
+      break;
+    }
 
     case ACTION.CREATE_ICON_FRAME:
       const frameId = await getLocalData(DATA.ICON_FRAME_ID);

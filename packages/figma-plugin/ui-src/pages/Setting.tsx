@@ -3,17 +3,14 @@ import { Box, Button, Divider, Input, Text } from "@chakra-ui/react";
 import * as React from "react";
 
 import { ACTION } from "../../common/constants";
-import {
-  useSettingDispatch,
-  useSettingState,
-} from "../contexts/SettingContext";
+import { useAppDispatch, useAppState } from "../contexts/AppContext";
 import { getFigmaFileKeyFromUrl } from "../utils/string";
 import * as styles from "./Setting.css";
 
 const Setting = () => {
-  const dispatch = useSettingDispatch();
+  const dispatch = useAppDispatch();
   const { githubRepositoryUrl, githubApiKey, figmaFileUrl, iconFrameId } =
-    useSettingState();
+    useAppState();
 
   return (
     <Box className={styles.container}>
@@ -77,7 +74,7 @@ const Setting = () => {
       </Box>
 
       <Divider />
-      <Button onClick={() => dispatch({ type: ACTION.PUSH_GITHUB_REPO })}>
+      <Button onClick={() => dispatch({ type: ACTION.SETTING_DONE })}>
         GITHUB PUSH
       </Button>
     </Box>

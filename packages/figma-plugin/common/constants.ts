@@ -11,7 +11,8 @@ export const ACTION = {
 
   CREATE_ICON_FRAME: "create-icon-frame",
 
-  PUSH_GITHUB_REPO: "push-github-repo",
+  SETTING_DONE: "setting-done",
+  DEPLOY_ICON: "deploy-icon",
 } as const;
 
 export const DATA = {

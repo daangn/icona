@@ -2,6 +2,7 @@ import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import * as React from "react";
 
 import * as styles from "./App.css";
+import Deploy from "./Deploy";
 import Setting from "./Setting";
 
 const App = () => {
@@ -17,7 +18,7 @@ const App = () => {
             <Setting />
           </TabPanel>
           <TabPanel>
-            <p>two!</p>
+            <Deploy />
           </TabPanel>
         </TabPanels>
       </Tabs>
