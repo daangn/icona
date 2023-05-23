@@ -31,15 +31,20 @@ repo, targetBranch, }) => __awaiter(void 0, void 0, void 0, function* () {
         repo,
         tree_sha: baseBranch.commit.sha,
     });
-    const blobs = yield Promise.all(contents.map((content) => octokit.request("POST /repos/{owner}/{repo}/git/blobs", {
+    const blobs = yield Promise.all(contents.map((content) => octokit
+        .request("POST /repos/{owner}/{repo}/git/blobs", {
         owner,
         repo,
         content: content.svg,
         encoding: "utf-8",
-    })));
+    })
+        .then((blob) => ({
+        name: content.name,
+        data: blob.data,
+    }))));
     const treeBlobs = blobs.map((blob) => {
         return {
-            path: blob.data.url,
+            path: blob.name,
             mode: "100644",
             type: "blob",
             sha: blob.data.sha,

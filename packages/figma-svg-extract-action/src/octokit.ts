@@ -47,12 +47,17 @@ const pushToGithub = async ({
 
   const blobs = await Promise.all(
     contents.map((content) =>
-      octokit.request("POST /repos/{owner}/{repo}/git/blobs", {
-        owner,
-        repo,
-        content: content.svg,
-        encoding: "utf-8",
-      }),
+      octokit
+        .request("POST /repos/{owner}/{repo}/git/blobs", {
+          owner,
+          repo,
+          content: content.svg,
+          encoding: "utf-8",
+        })
+        .then((blob) => ({
+          name: content.name,
+          data: blob.data,
+        })),
     ),
   );
 
@@ -66,7 +71,7 @@ const pushToGithub = async ({
 
   const treeBlobs = blobs.map((blob) => {
     return {
-      path: blob.data.url,
+      path: blob.name,
       mode: "100644",
       type: "blob",
       sha: blob.data.sha,

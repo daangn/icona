@@ -1,6 +1,6 @@
 {
   "name": "figma-svg-extract-action",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc && ncc build"
