@@ -1,5 +1,5 @@
 {
-  "name": "@icona/figma-svg-extract-action",
+  "name": "figma-svg-extract-action",
   "version": "0.0.1",
   "main": "dist/index.js",
   "scripts": {
