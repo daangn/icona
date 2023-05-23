@@ -96,19 +96,10 @@ const pushToGithub = async ({
     },
   );
 
-  const currentRef = await octokit.request(
-    "GET /repos/{owner}/{repo}/git/ref/{ref}",
-    {
-      owner,
-      repo,
-      ref: `head/${targetBranch}`,
-    },
-  );
-
   await octokit.request("PATCH /repos/{owner}/{repo}/git/refs/{ref}", {
     owner,
     repo,
-    ref: currentRef.data.ref,
+    ref: `refs/heads/${targetBranch}`,
     sha: commit.data.sha,
   });
 };
