@@ -5,6 +5,9 @@
 This is a Figma plugin to export SVG files to GitHub with only one click.
 Shorten the process between designers (Figma) and developers (GitHub).
 
+**Designer**: Build icon set in Figma and click deploy button, that's it.
+**Developer**: Merge the PR and use the icon svg set in your project.
+
 ## Process
 
 1. Create a new Figma file and Frame
