@@ -3517,19 +3517,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/figma-svg-extract-action@workspace:packages/figma-svg-extract-action":
-  version: 0.0.0-use.local
-  resolution: "@icona/figma-svg-extract-action@workspace:packages/figma-svg-extract-action"
-  dependencies:
-    "@actions/core": ^1.10.0
-    "@icona/figma-svg-extracter": "workspace:^"
-    "@octokit/core": ^4.2.1
-    "@types/node": ^20.2.3
-    "@vercel/ncc": ^0.36.1
-    typescript: ^5.0.4
-  languageName: unknown
-  linkType: soft
-
 "@icona/figma-svg-extracter@workspace:^, @icona/figma-svg-extracter@workspace:packages/figma-svg-extracter":
   version: 0.0.0-use.local
   resolution: "@icona/figma-svg-extracter@workspace:packages/figma-svg-extracter"
@@ -6518,6 +6505,19 @@ __metadata:
   checksum: f19bc28a2a0b9626e69fd7cf3a05798706db7f6c7548da657cbf5026a570945f5eeaedff52007ea35c8bcd3d237c58a20bf1543bc568ab2422411d762dd3d5bf
   languageName: node
   linkType: hard
+
+"figma-svg-extract-action@workspace:packages/figma-svg-extract-action":
+  version: 0.0.0-use.local
+  resolution: "figma-svg-extract-action@workspace:packages/figma-svg-extract-action"
+  dependencies:
+    "@actions/core": ^1.10.0
+    "@icona/figma-svg-extracter": "workspace:^"
+    "@octokit/core": ^4.2.1
+    "@types/node": ^20.2.3
+    "@vercel/ncc": ^0.36.1
+    typescript: ^5.0.4
+  languageName: unknown
+  linkType: soft
 
 "file-entry-cache@npm:^6.0.1":
   version: 6.0.1
