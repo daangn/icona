@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import fetch from "node-fetch";
+import fetch from "cross-fetch";
 
 import * as core from "./core.js";
 import type { FigmaDataInterface } from "./interface.js";

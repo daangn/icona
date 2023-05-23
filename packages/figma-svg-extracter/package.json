@@ -1,6 +1,6 @@
 {
-  "name": "@icona/figma-svg-extracter",
-  "version": "0.0.0",
+  "name": "figma-svg-extracter",
+  "version": "0.0.3",
   "type": "module",
   "exports": {
     ".": {
@@ -10,13 +10,17 @@
     }
   },
   "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "yarn build:tds && yarn build:src",
     "build:src": "nanobundle build",
     "build:tds": "tsc --emitDeclarationOnly"
   },
   "dependencies": {
-    "node-fetch": "^3.3.1"
+    "cross-fetch": "^3.1.6"
   },
   "devDependencies": {
     "@types/node": "^20.2.3",
@@ -24,6 +28,9 @@
     "typescript": "^5.0.4"
   },
   "packageManager": "yarn@3.5.1",
+  "publishConfig": {
+    "access": "public"
+  },
   "ultra": {
     "concurrent": [
       "build"

@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import fetch from "cross-fetch";
 
 import type { FigmaDataInterface, GetSvgUrlsInterface } from "./interface.js";
 

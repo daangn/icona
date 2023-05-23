@@ -1,5 +1,5 @@
 import * as core from "@actions/core";
-import { svgExtracter } from "@icona/figma-svg-extracter";
+import { svgExtracter } from "figma-svg-extracter";
 
 import { pushToGithub } from "./octokit";
 
@@ -11,7 +11,7 @@ try {
 
   // NOTE: https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables
   const githubRepo = process.env.GITHUB_REPOSITORY;
-  const currentBranch = process.env.GITHUB_REF_NAME;
+  const currentBranch = process.env.GITHUB_HEAD_REF;
   const owner = githubRepo?.split("/")[0];
   const repo = githubRepo?.split("/")[1];
 
@@ -33,6 +33,10 @@ try {
 
   core.info(`figmaFileKey: ${figmaFileKey}`);
   core.info(`figmaIconFrameId: ${figmaIconFrameId}`);
+  core.info(`githubRepo: ${githubRepo}`);
+  core.info(`currentBranch: ${currentBranch}`);
+  core.info(`owner: ${owner}`);
+  core.info(`repo: ${repo}`);
 
   // svg extracter로 svg 추출
 
