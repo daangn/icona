@@ -1,3 +1,4 @@
+import * as core from "@actions/core";
 import { Octokit } from "@octokit/core";
 
 const octokitClient = (githubToken: string) => {
@@ -105,11 +106,14 @@ const pushToGithub = async ({
     },
   );
 
+  core.info(`currentRef.data.ref: ${currentRef.data.ref}`);
+
   await octokit.request("PATCH /repos/{owner}/{repo}/git/refs/{ref}", {
     owner,
     repo,
     ref: currentRef.data.ref,
     sha: commit.data.sha,
+    force: true,
   });
 };
 
