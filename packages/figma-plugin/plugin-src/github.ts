@@ -160,8 +160,6 @@ export function createGithubClient(
 
     const head = await getHead(baseBranch);
 
-    console.log("head", head);
-
     const treeBody = await Promise.all(
       files.map((file) =>
         uploadBlob(file.content).then((blob) => ({

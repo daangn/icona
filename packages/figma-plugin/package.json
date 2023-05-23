@@ -1,5 +1,6 @@
 {
   "name": "@icona/figma-plugin",
+  "version": "0.0.0",
   "scripts": {
     "build": "yarn build:ui && yarn build:main -- --minify",
     "build:main": "node ./esbuild.plugin.js",
@@ -33,5 +34,10 @@
     "vite": "^4.3.5",
     "vite-plugin-singlefile": "^0.13.5"
   },
-  "packageManager": "yarn@3.5.1"
+  "packageManager": "yarn@3.5.1",
+  "ultra": {
+    "concurrent": [
+      "build"
+    ]
+  }
 }

@@ -23,5 +23,10 @@
     "nanobundle": "^1.6.0",
     "typescript": "^5.0.4"
   },
-  "packageManager": "yarn@3.5.1"
+  "packageManager": "yarn@3.5.1",
+  "ultra": {
+    "concurrent": [
+      "build"
+    ]
+  }
 }

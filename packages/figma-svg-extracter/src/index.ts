@@ -30,7 +30,7 @@ const svgExtracter = (props: FigmaDataInterface) => {
           res.text(),
         );
         return {
-          name: svgImageWithName.name,
+          name: svgImageWithName.name!,
           svg,
         };
       }),

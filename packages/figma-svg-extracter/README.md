@@ -1,1 +1,1 @@
-# figma-svg-extracter
+# @icona/figma-svg-extracter

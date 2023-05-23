@@ -1,0 +1,22 @@
+name: 'Figma SVG Extract'
+description: 'Extract SVGs from Figma and commit them to your repository'
+inputs:
+  github-token:
+    description: 'GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)'
+    default: ${{ github.token }}
+    required: true
+  figma-token:
+    description: 'Figma Personal Access Token (PAT)'
+    required: true
+  figma-file-key:
+    description: 'Figma File Key'
+    required: true
+  figma-icon-frame-id:
+    description: 'Figma Icon Frame ID'
+    required: true
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
+branding:
+  icon: 'circle'
+  color: 'red'
