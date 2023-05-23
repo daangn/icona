@@ -63,16 +63,16 @@ repo, targetBranch, }) => __awaiter(void 0, void 0, void 0, function* () {
         tree: tree.data.sha,
         parents: [baseBranch.commit.sha],
     });
-    const newBranch = yield octokit.request("POST /repos/{owner}/{repo}/git/refs", {
+    const currentRef = yield octokit.request("GET /repos/{owner}/{repo}/git/ref/{ref}", {
         owner,
         repo,
-        ref: `refs/heads/${targetBranch}`,
+        ref: `heads/${targetBranch}`,
         sha: commit.data.sha,
     });
     yield octokit.request("PATCH /repos/{owner}/{repo}/git/refs/{ref}", {
         owner,
         repo,
-        ref: newBranch.data.ref,
+        ref: currentRef.data.ref,
         sha: commit.data.sha,
     });
 });

@@ -96,12 +96,12 @@ const pushToGithub = async ({
     },
   );
 
-  const newBranch = await octokit.request(
-    "POST /repos/{owner}/{repo}/git/refs",
+  const currentRef = await octokit.request(
+    "GET /repos/{owner}/{repo}/git/ref/{ref}",
     {
       owner,
       repo,
-      ref: `refs/heads/${targetBranch}`,
+      ref: `heads/${targetBranch}`,
       sha: commit.data.sha,
     },
   );
@@ -109,7 +109,7 @@ const pushToGithub = async ({
   await octokit.request("PATCH /repos/{owner}/{repo}/git/refs/{ref}", {
     owner,
     repo,
-    ref: newBranch.data.ref,
+    ref: currentRef.data.ref,
     sha: commit.data.sha,
   });
 };
