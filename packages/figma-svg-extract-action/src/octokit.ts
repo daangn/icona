@@ -101,8 +101,7 @@ const pushToGithub = async ({
     {
       owner,
       repo,
-      ref: `heads/${targetBranch}`,
-      sha: commit.data.sha,
+      ref: `head/${targetBranch}`,
     },
   );
 
