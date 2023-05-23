@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-globals */
 import { Box, Button, Divider, Input, Text } from "@chakra-ui/react";
 import * as React from "react";
 
@@ -64,10 +63,10 @@ const Setting = () => {
       <Divider />
       <Box>
         <Text>{`{
-          ${iconFrameId ? `"icon-frame-id": "${iconFrameId}"` : ""},
+          ${iconFrameId ? `"FIGMA_ICON_FRAME_ID": "${iconFrameId}"` : ""},
           ${
             figmaFileUrl
-              ? `"figma-file-key": "${getFigmaFileKeyFromUrl(figmaFileUrl)}"`
+              ? `"FIGMA_FILE_KEY": "${getFigmaFileKeyFromUrl(figmaFileUrl)}"`
               : ""
           },
         }`}</Text>
