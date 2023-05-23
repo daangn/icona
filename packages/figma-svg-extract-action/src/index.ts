@@ -65,7 +65,8 @@ try {
       repo: repo!,
       contents: svgs,
       message: "Update svg",
-      path: "svg",
+      // TODO: path를 어떻게 처리할지 고민해보자.
+      // path: "svg",
       targetBranch: currentBranch!,
     });
 

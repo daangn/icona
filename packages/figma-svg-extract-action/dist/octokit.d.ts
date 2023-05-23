@@ -1,8 +1,7 @@
-declare const pushToGithub: ({ contents, githubToken, message, owner, path, repo, targetBranch, }: {
+declare const pushToGithub: ({ contents, githubToken, message, owner, repo, targetBranch, }: {
     githubToken: string;
     owner: string;
     repo: string;
-    path: string;
     contents: {
         name: string;
         svg: string;

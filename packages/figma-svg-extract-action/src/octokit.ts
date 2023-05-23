@@ -13,14 +13,14 @@ const pushToGithub = async ({
   githubToken,
   message,
   owner,
-  path,
+  // path,
   repo,
   targetBranch,
 }: {
   githubToken: string;
   owner: string;
   repo: string;
-  path: string;
+  // path: string;
   contents: { name: string; svg: string }[];
   message: string;
   targetBranch: string;
@@ -66,7 +66,7 @@ const pushToGithub = async ({
 
   const treeBlobs = blobs.map((blob) => {
     return {
-      path: `${path}/${blob.data.url}`,
+      path: blob.data.url,
       mode: "100644",
       type: "blob",
       sha: blob.data.sha,

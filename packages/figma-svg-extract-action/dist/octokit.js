@@ -17,7 +17,9 @@ const octokitClient = (githubToken) => {
     });
     return octokit;
 };
-const pushToGithub = ({ contents, githubToken, message, owner, path, repo, targetBranch, }) => __awaiter(void 0, void 0, void 0, function* () {
+const pushToGithub = ({ contents, githubToken, message, owner, 
+// path,
+repo, targetBranch, }) => __awaiter(void 0, void 0, void 0, function* () {
     const octokit = octokitClient(githubToken);
     const { data: baseBranch } = yield octokit.request("GET /repos/{owner}/{repo}/branches/{branch}", {
         owner,
@@ -37,7 +39,7 @@ const pushToGithub = ({ contents, githubToken, message, owner, path, repo, targe
     })));
     const treeBlobs = blobs.map((blob) => {
         return {
-            path: `${path}/${blob.data.url}`,
+            path: blob.data.url,
             mode: "100644",
             type: "blob",
             sha: blob.data.sha,
