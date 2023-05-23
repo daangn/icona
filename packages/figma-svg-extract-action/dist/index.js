@@ -11414,7 +11414,7 @@ repo, targetBranch, }) => __awaiter(void 0, void 0, void 0, function* () {
     yield octokit.request("PATCH /repos/{owner}/{repo}/git/refs/{ref}", {
         owner,
         repo,
-        ref: currentRef.data.ref,
+        ref: `heads/${targetBranch}`,
         sha: commit.data.sha,
         force: true,
     });
