@@ -150,7 +150,7 @@ export function createGithubClient(
       {
         path: ".icona/release.md",
         content: dedent`
-          # Release Note
+          # Release Note\n
         `,
       },
     ];
@@ -196,7 +196,7 @@ export function createGithubClient(
         ${release.content}
   
         ## ${new Date().toISOString()}
-        - Update Icons
+        - Update Icons\n
       `,
       },
     ];
