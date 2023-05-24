@@ -1,12 +1,7 @@
 module.exports = {
   root: true,
   parser: "@typescript-eslint/parser",
-  extends: [
-    "react-app",
-    "airbnb-typescript",
-    "prettier",
-    "plugin:storybook/recommended",
-  ],
+  extends: ["react-app", "airbnb-typescript", "prettier"],
   parserOptions: {
     project: "./tsconfig.eslint.json",
     tsconfigRootDir: __dirname,
