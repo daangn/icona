@@ -5,6 +5,6 @@
     "strict": true,
     "skipLibCheck": true,
     "moduleResolution": "node",
-    "types": ["@figma/plugin-typings"]
+    "types": ["@figma/plugin-typings", "node"]
   }
 }
