@@ -14,26 +14,26 @@ const pushToGithub = async ({
   githubToken,
   message,
   owner,
-  // path,
+  path,
   repo,
   targetBranch,
 }: {
   githubToken: string;
   owner: string;
   repo: string;
-  // path: string;
+  path: string;
   contents: { name: string; svg: string }[];
   message: string;
   targetBranch: string;
 }) => {
   const octokit = octokitClient(githubToken);
 
-  const { data: baseBranch } = await octokit.request(
+  const { data: targetBranchTree } = await octokit.request(
     "GET /repos/{owner}/{repo}/branches/{branch}",
     {
       owner,
       repo,
-      branch: "main",
+      branch: targetBranch,
     },
   );
 
@@ -42,7 +42,7 @@ const pushToGithub = async ({
     {
       owner,
       repo,
-      tree_sha: baseBranch.commit.sha,
+      tree_sha: targetBranchTree.commit.sha,
     },
   );
 
@@ -72,7 +72,7 @@ const pushToGithub = async ({
 
   const treeBlobs = blobs.map((blob) => {
     return {
-      path: blob.name,
+      path: path ? `${path}/${blob.name}.svg` : `${blob.name}.svg`,
       mode: "100644",
       type: "blob",
       sha: blob.data.sha,
@@ -93,7 +93,7 @@ const pushToGithub = async ({
       repo,
       message,
       tree: tree.data.sha,
-      parents: [baseBranch.commit.sha],
+      parents: [targetBranchTree.commit.sha],
     },
   );
 

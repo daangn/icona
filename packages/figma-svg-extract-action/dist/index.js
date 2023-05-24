@@ -11296,8 +11296,7 @@ try {
                 repo: repo,
                 contents: svgs,
                 message: "Update svg",
-                // TODO: path를 어떻게 처리할지 고민해보자.
-                // path: "svg",
+                path: "svg",
                 targetBranch: currentBranch,
             });
             core.info("End svg extracter");
@@ -11359,19 +11358,17 @@ const octokitClient = (githubToken) => {
     });
     return octokit;
 };
-const pushToGithub = ({ contents, githubToken, message, owner, 
-// path,
-repo, targetBranch, }) => __awaiter(void 0, void 0, void 0, function* () {
+const pushToGithub = ({ contents, githubToken, message, owner, path, repo, targetBranch, }) => __awaiter(void 0, void 0, void 0, function* () {
     const octokit = octokitClient(githubToken);
-    const { data: baseBranch } = yield octokit.request("GET /repos/{owner}/{repo}/branches/{branch}", {
+    const { data: targetBranchTree } = yield octokit.request("GET /repos/{owner}/{repo}/branches/{branch}", {
         owner,
         repo,
-        branch: "main",
+        branch: targetBranch,
     });
     const { data: baseTree } = yield octokit.request("GET /repos/{owner}/{repo}/git/trees/{tree_sha}", {
         owner,
         repo,
-        tree_sha: baseBranch.commit.sha,
+        tree_sha: targetBranchTree.commit.sha,
     });
     const blobs = yield Promise.all(contents.map((content) => octokit
         .request("POST /repos/{owner}/{repo}/git/blobs", {
@@ -11386,7 +11383,7 @@ repo, targetBranch, }) => __awaiter(void 0, void 0, void 0, function* () {
     }))));
     const treeBlobs = blobs.map((blob) => {
         return {
-            path: blob.name,
+            path: path ? `${path}/${blob.name}.svg` : `${blob.name}.svg`,
             mode: "100644",
             type: "blob",
             sha: blob.data.sha,
@@ -11403,7 +11400,7 @@ repo, targetBranch, }) => __awaiter(void 0, void 0, void 0, function* () {
         repo,
         message,
         tree: tree.data.sha,
-        parents: [baseBranch.commit.sha],
+        parents: [targetBranchTree.commit.sha],
     });
     const currentRef = yield octokit.request("GET /repos/{owner}/{repo}/git/ref/{ref}", {
         owner,
