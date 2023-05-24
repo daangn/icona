@@ -189,11 +189,13 @@ export function createGithubClient(
     const head = await getHead(baseBranch);
     const release = await getContent(filePath);
 
+    const content = atob(release.content);
+
     const files = [
       {
         path: ".icona/release.md",
         content: dedent(`
-        ${Buffer.from(release.content).toString("base64")}
+        ${content}
   
         ## ${new Date().toISOString()}
         - Update Icons\n
