@@ -158,7 +158,7 @@ export function createGithubClient(
       },
     ];
 
-    const prTitle = "Setting up Icona";
+    const prTitle = "[Icona]: Setting";
     const prBody = "This PR is created by Icona.";
 
     const head = await getHead(baseBranch);
@@ -185,8 +185,8 @@ export function createGithubClient(
   async function createDeployPR(svgs: { name: string; svg: string }[]) {
     const baseBranch = "main";
     const newBranch = `icona-deploy-${new Date().getTime()}`;
-    const prTitle = "Update Icona";
-    const commitTitle = "chore: update release.md";
+    const prTitle = "[Icona]: Update Icons";
+    const commitTitle = "feat: update icons";
 
     const head = await getHead(baseBranch);
 
