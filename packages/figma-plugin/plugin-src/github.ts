@@ -184,7 +184,7 @@ export function createGithubClient(
 
   async function createDeployPR(svgs: { name: string; svg: string }[]) {
     const baseBranch = "main";
-    const newBranch = `icona-deploy-${new Date().getTime()}`;
+    const newBranch = `icona-update-${new Date().getTime()}`;
     const prTitle = "[Icona]: Update Icons";
     const commitTitle = "feat: update icons";
 
