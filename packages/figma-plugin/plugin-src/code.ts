@@ -5,7 +5,7 @@ import type { GithubData } from "../common/types";
 import { createGithubClient } from "./github";
 import { getSvgInIconFrame } from "./service";
 
-figma.showUI(__html__, { width: 320, height: 436 });
+figma.showUI(__html__, { width: 360, height: 436 });
 
 // get github settings
 function getLocalData(key: string) {
@@ -42,6 +42,8 @@ async function init() {
 
   const frameId = await getLocalData(DATA.ICON_FRAME_ID);
   const iconFrame = figma.getNodeById(frameId);
+
+  // NOTE: iconFrame이 없으면 빈 문자열을 보내준다.
   if (iconFrame) {
     const svgDatas = await getSvgInIconFrame(frameId);
     figma.ui.postMessage({

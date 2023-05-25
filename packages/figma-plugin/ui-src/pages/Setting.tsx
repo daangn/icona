@@ -1,9 +1,10 @@
-import { Box, Button, Divider, Input, Text } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import * as React from "react";
 
 import { ACTION } from "../../common/constants";
+import { PasswordInput } from "../components/PasswordInput";
+import { TextInput } from "../components/TextInput";
 import { useAppDispatch, useAppState } from "../contexts/AppContext";
-import { getFigmaFileKeyFromUrl } from "../utils/string";
 import * as styles from "./Setting.css";
 
 const Setting = () => {
@@ -11,13 +12,18 @@ const Setting = () => {
   const { githubRepositoryUrl, githubApiKey, figmaFileUrl, iconFrameId } =
     useAppState();
 
+  const isExistIconFrameId = Boolean(iconFrameId);
+
   return (
     <Box className={styles.container}>
-      <Text>Github Repository URL</Text>
-      <Input
+      <TextInput
+        label="Github Repository URL"
         placeholder="Github Repository URL"
         value={githubRepositoryUrl}
-        onChange={(event) => {
+        helperText="Github Repository URL that you want to deploy."
+        errorMessage="It's not a valid Github Repository URL."
+        isError={githubRepositoryUrl.match(/https:\/\/github.com\/.*/) === null}
+        handleChange={(event) => {
           dispatch({
             type: ACTION.SET_GITHUB_REPO_URL,
             payload: event.target.value,
@@ -25,11 +31,12 @@ const Setting = () => {
         }}
       />
 
-      <Text>Github API Key</Text>
-      <Input
-        placeholder="Github API Key"
+      <PasswordInput
         value={githubApiKey}
-        onChange={(event) => {
+        label="Github API Key"
+        helperText="Github API Key from your Github Account."
+        placeholder="Github API Key"
+        handleChange={(event) => {
           dispatch({
             type: ACTION.SET_GITHUB_API_KEY,
             payload: event.target.value,
@@ -37,11 +44,16 @@ const Setting = () => {
         }}
       />
 
-      <Text>Figma Page URL</Text>
-      <Input
-        placeholder="Figma File URL"
+      <TextInput
+        label="Figma Page URL"
+        placeholder="Figma Page URL"
         value={figmaFileUrl}
-        onChange={(event) => {
+        helperText="Figma Page URL that your icons are in."
+        errorMessage="It's not a figma file URL."
+        isError={
+          figmaFileUrl.match(/https:\/\/www.figma.com\/file\/.*/) === null
+        }
+        handleChange={(event) => {
           dispatch({
             type: ACTION.SET_FIGMA_FILE_URL,
             payload: event.target.value,
@@ -49,32 +61,20 @@ const Setting = () => {
         }}
       />
 
-      <Text>Icon Frame ID</Text>
-      <Input placeholder="Icon Frame ID" value={iconFrameId} readOnly />
-      {!iconFrameId && (
-        <Text color="red.600" fontSize={14}>
-          아이콘 프레임을 찾을 수 없습니다.
-        </Text>
-      )}
-      <Button onClick={() => dispatch({ type: ACTION.CREATE_ICON_FRAME })}>
-        Icon Frame 만들기
+      <Button
+        isDisabled={isExistIconFrameId}
+        onClick={() => dispatch({ type: ACTION.CREATE_ICON_FRAME })}
+      >
+        {isExistIconFrameId
+          ? "Icon Frame already created"
+          : "Create Icon Frame"}
       </Button>
 
-      <Divider />
-      <Box>
-        <Text>{`{
-          ${iconFrameId ? `"FIGMA_ICON_FRAME_ID": "${iconFrameId}"` : ""},
-          ${
-            figmaFileUrl
-              ? `"FIGMA_FILE_KEY": "${getFigmaFileKeyFromUrl(figmaFileUrl)}"`
-              : ""
-          },
-        }`}</Text>
-      </Box>
-
-      <Divider />
-      <Button onClick={() => dispatch({ type: ACTION.SETTING_DONE })}>
-        GITHUB PUSH
+      <Button
+        isDisabled
+        onClick={() => dispatch({ type: ACTION.SETTING_DONE })}
+      >
+        WIP(Setting Done)
       </Button>
     </Box>
   );
