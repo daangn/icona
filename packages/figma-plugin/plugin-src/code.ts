@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable @typescript-eslint/no-shadow */
-import { ACTION, DATA } from "../common/constants";
+import { ACTION, DATA, STATUS } from "../common/constants";
 import type { GithubData } from "../common/types";
 import { createGithubClient } from "./github";
 import { getSvgInIconFrame } from "./service";
@@ -94,14 +94,42 @@ figma.ui.onmessage = async (msg) => {
     }
 
     case ACTION.DEPLOY_ICON: {
+      figma.ui.postMessage({
+        type: ACTION.DEPLOY_ICON_STATUS,
+        payload: STATUS.LOADING,
+      });
       const { githubData, iconFrameId } = msg.payload as {
         githubData: GithubData;
         iconFrameId: string;
       };
-      const { owner, name, apiKey } = githubData;
-      const { createDeployPR } = createGithubClient(owner, name, apiKey);
-      const svgs = await getSvgInIconFrame(iconFrameId);
-      createDeployPR(svgs);
+
+      try {
+        const { owner, name, apiKey } = githubData;
+        const { createDeployPR } = createGithubClient(owner, name, apiKey);
+        const svgs = await getSvgInIconFrame(iconFrameId);
+        await createDeployPR(svgs);
+        figma.ui.postMessage({
+          type: ACTION.DEPLOY_ICON_STATUS,
+          payload: STATUS.SUCCESS,
+        });
+        setTimeout(() => {
+          figma.ui.postMessage({
+            type: ACTION.DEPLOY_ICON_STATUS,
+            payload: STATUS.IDLE,
+          });
+        }, 3000);
+      } catch (error) {
+        figma.ui.postMessage({
+          type: ACTION.DEPLOY_ICON_STATUS,
+          payload: STATUS.ERROR,
+        });
+        setTimeout(() => {
+          figma.ui.postMessage({
+            type: ACTION.DEPLOY_ICON_STATUS,
+            payload: STATUS.IDLE,
+          });
+        }, 3000);
+      }
       break;
     }
 

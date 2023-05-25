@@ -13,7 +13,9 @@ export const ACTION = {
   CREATE_ICON_FRAME: "create-icon-frame",
 
   SETTING_DONE: "setting-done",
+
   DEPLOY_ICON: "deploy-icon",
+  DEPLOY_ICON_STATUS: "deploy-icon-status",
 } as const;
 
 export const DATA = {
@@ -22,4 +24,11 @@ export const DATA = {
 
   ICON_FRAME_ID: "icon-frame",
   FIGMA_FILE_URL: "figma-file-url",
-};
+} as const;
+
+export const STATUS = {
+  IDLE: "idle",
+  LOADING: "loading",
+  SUCCESS: "success",
+  ERROR: "error",
+} as const;

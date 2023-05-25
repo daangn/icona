@@ -1,11 +1,13 @@
 import type { Dispatch } from "react";
 import React, { createContext, useContext, useReducer } from "react";
 
+import { STATUS } from "../../common/constants";
 import { ACTION } from "../../common/constants";
 import type { GithubData, IconData } from "../../common/types";
 import { postMessage } from "../utils/figma";
 import { getFigmaFileKeyFromUrl, getGithubDataFromUrl } from "../utils/string";
 
+type Status = `${(typeof STATUS)[keyof typeof STATUS]}`;
 type State = {
   // Computed
   githubData: GithubData;
@@ -17,6 +19,9 @@ type State = {
   iconFrameId: string;
   figmaFileUrl: string;
   iconPreview: IconData[];
+
+  // Status
+  deployIconStatus: Status;
 };
 
 type Actions =
@@ -31,6 +36,7 @@ type Actions =
   | { type: `${typeof ACTION.SET_FIGMA_FILE_URL}`; payload: string }
   | { type: `${typeof ACTION.SET_GITHUB_REPO_URL}`; payload: string }
   | { type: `${typeof ACTION.SET_ICON_FRAME_ID}`; payload: string }
+  | { type: `${typeof ACTION.DEPLOY_ICON_STATUS}`; payload: Status }
   // NO SIDE EFFECT
   | { type: `${typeof ACTION.CREATE_ICON_FRAME}` }
   | { type: `${typeof ACTION.SETTING_DONE}` }
@@ -154,6 +160,13 @@ function reducer(state: State, action: Actions): State {
       return state;
     }
 
+    case ACTION.DEPLOY_ICON_STATUS: {
+      return {
+        ...state,
+        deployIconStatus: action.payload,
+      };
+    }
+
     default:
       throw new Error("Unhandled action");
   }
@@ -175,10 +188,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     githubRepositoryUrl: "",
     iconFrameId: "",
     figmaFileUrl: "",
+
+    // Status
+    deployIconStatus: STATUS.IDLE,
   });
 
   // Init
   React.useEffect(() => {
+    // NOTE: Event listener from figma
     window.onmessage = (event) => {
       const msg = event.data.pluginMessage;
       switch (msg.type) {
@@ -197,6 +214,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         case ACTION.GET_ICON_PREVIEW:
           if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
           break;
+        case ACTION.DEPLOY_ICON_STATUS: {
+          dispatch({ type: msg.type, payload: msg.payload });
+          return;
+        }
       }
     };
   }, [dispatch]);
