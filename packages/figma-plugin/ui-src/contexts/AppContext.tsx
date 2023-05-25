@@ -2,7 +2,7 @@ import type { Dispatch } from "react";
 import React, { createContext, useContext, useReducer } from "react";
 
 import { ACTION } from "../../common/constants";
-import type { GithubData } from "../../common/types";
+import type { GithubData, IconData } from "../../common/types";
 import { postMessage } from "../utils/figma";
 import { getFigmaFileKeyFromUrl, getGithubDataFromUrl } from "../utils/string";
 
@@ -16,6 +16,7 @@ type State = {
   githubApiKey: string;
   iconFrameId: string;
   figmaFileUrl: string;
+  iconPreview: IconData[];
 };
 
 type Actions =
@@ -24,6 +25,7 @@ type Actions =
   | { type: `${typeof ACTION.GET_FIGMA_FILE_URL}`; payload: string }
   | { type: `${typeof ACTION.GET_GITHUB_REPO_URL}`; payload: string }
   | { type: `${typeof ACTION.GET_ICON_FRAME_ID}`; payload: string }
+  | { type: `${typeof ACTION.GET_ICON_PREVIEW}`; payload: IconData[] }
   // SETTER
   | { type: `${typeof ACTION.SET_GITHUB_API_KEY}`; payload: string }
   | { type: `${typeof ACTION.SET_FIGMA_FILE_URL}`; payload: string }
@@ -70,6 +72,11 @@ function reducer(state: State, action: Actions): State {
           ...state.githubData,
           ...getGithubDataFromUrl(action.payload),
         },
+      };
+    case ACTION.GET_ICON_PREVIEW:
+      return {
+        ...state,
+        iconPreview: action.payload,
       };
 
     /* SETTER */
@@ -141,6 +148,7 @@ function reducer(state: State, action: Actions): State {
         type: ACTION.DEPLOY_ICON,
         payload: {
           githubData: state.githubData,
+          iconFrameId: state.iconFrameId,
         },
       });
       return state;
@@ -160,6 +168,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       apiKey: "",
     },
     figmaFileKey: "",
+    iconPreview: [],
 
     // Input
     githubApiKey: "",
@@ -183,6 +192,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
           break;
         case ACTION.GET_FIGMA_FILE_URL:
+          if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
+          break;
+        case ACTION.GET_ICON_PREVIEW:
           if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
           break;
       }

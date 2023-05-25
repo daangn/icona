@@ -3,6 +3,7 @@ import * as React from "react";
 
 import * as styles from "./App.css";
 import Deploy from "./Deploy";
+import Preview from "./Preview";
 import Setting from "./Setting";
 
 const App = () => {
@@ -12,6 +13,7 @@ const App = () => {
         <TabList>
           <Tab>Setting</Tab>
           <Tab>Deploy</Tab>
+          <Tab>Preview</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -19,6 +21,9 @@ const App = () => {
           </TabPanel>
           <TabPanel>
             <Deploy />
+          </TabPanel>
+          <TabPanel>
+            <Preview />
           </TabPanel>
         </TabPanels>
       </Tabs>

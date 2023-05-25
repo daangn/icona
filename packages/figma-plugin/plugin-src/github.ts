@@ -10,7 +10,10 @@ export function createGithubClient(
   const ACCESS_TOKEN = accessToken;
   const API_URL = `https://api.github.com/repos/${repoOwner}/${repoName}`;
 
-  async function uploadBlob(content: string): Promise<{ sha: string }> {
+  async function uploadBlob(
+    content: string,
+    encoding: "utf-8" | "base64" = "utf-8",
+  ): Promise<{ sha: string }> {
     return fetch(`${API_URL}/git/blobs`, {
       method: "POST",
       headers: {
@@ -19,7 +22,7 @@ export function createGithubClient(
       },
       body: JSON.stringify({
         content,
-        encoding: "utf-8",
+        encoding,
       }),
     }).then((res) => res.json());
   }
@@ -30,17 +33,17 @@ export function createGithubClient(
     }).then((res) => res.json());
   }
 
-  async function getContent(
-    path: string,
-  ): Promise<{ sha: string; content: string }> {
-    return fetch(`${API_URL}/contents/${path}`, {
-      method: "GET",
-      headers: {
-        Authorization: `token ${ACCESS_TOKEN}`,
-        "X-GitHub-Api-Version": GITHUB_API_VERSION,
-      },
-    }).then((res) => res.json());
-  }
+  // async function getContent(
+  //   path: string,
+  // ): Promise<{ sha: string; content: string }> {
+  //   return fetch(`${API_URL}/contents/${path}`, {
+  //     method: "GET",
+  //     headers: {
+  //       Authorization: `token ${ACCESS_TOKEN}`,
+  //       "X-GitHub-Api-Version": GITHUB_API_VERSION,
+  //     },
+  //   }).then((res) => res.json());
+  // }
 
   async function createBranch(name: string, sha: string) {
     return fetch(`${API_URL}/git/refs`, {
@@ -179,34 +182,18 @@ export function createGithubClient(
     await createPullRequest(newBranch, baseBranch, prTitle, prBody);
   }
 
-  async function createDeployPR() {
+  async function createDeployPR(svgs: { name: string; svg: string }[]) {
     const baseBranch = "main";
     const newBranch = `icona-deploy-${new Date().getTime()}`;
     const prTitle = "Update Icona";
-    const filePath = ".icona/release.md";
     const commitTitle = "chore: update release.md";
 
     const head = await getHead(baseBranch);
-    const release = await getContent(filePath);
-
-    const content = atob(release.content);
-
-    const files = [
-      {
-        path: ".icona/release.md",
-        content: dedent(`
-        ${content}
-  
-        ## ${new Date().toISOString()}
-        - Update Icons\n
-      `),
-      },
-    ];
 
     const treeBody = await Promise.all(
-      files.map((file) =>
-        uploadBlob(file.content).then((blob) => ({
-          path: file.path,
+      svgs.map((file) =>
+        uploadBlob(file.svg).then((blob) => ({
+          path: `svg/${file.name}.svg`,
           mode: "100644",
           type: "blob",
           sha: blob.sha,

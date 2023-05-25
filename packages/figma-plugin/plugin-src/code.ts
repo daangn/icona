@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/no-shadow */
 import { ACTION, DATA } from "../common/constants";
 import type { GithubData } from "../common/types";
 import { createGithubClient } from "./github";
+import { getSvgInIconFrame } from "./service";
 
 figma.showUI(__html__, { width: 320, height: 436 });
 
@@ -40,9 +43,14 @@ async function init() {
   const frameId = await getLocalData(DATA.ICON_FRAME_ID);
   const iconFrame = figma.getNodeById(frameId);
   if (iconFrame) {
+    const svgDatas = await getSvgInIconFrame(frameId);
     figma.ui.postMessage({
       type: ACTION.GET_ICON_FRAME_ID,
       payload: frameId,
+    });
+    figma.ui.postMessage({
+      type: ACTION.GET_ICON_PREVIEW,
+      payload: svgDatas,
     });
   } else {
     setLocalData(DATA.ICON_FRAME_ID, "");
@@ -84,13 +92,14 @@ figma.ui.onmessage = async (msg) => {
     }
 
     case ACTION.DEPLOY_ICON: {
-      const { githubData } = msg.payload as {
+      const { githubData, iconFrameId } = msg.payload as {
         githubData: GithubData;
+        iconFrameId: string;
       };
       const { owner, name, apiKey } = githubData;
       const { createDeployPR } = createGithubClient(owner, name, apiKey);
-
-      createDeployPR();
+      const svgs = await getSvgInIconFrame(iconFrameId);
+      createDeployPR(svgs);
       break;
     }
 

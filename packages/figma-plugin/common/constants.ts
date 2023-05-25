@@ -3,6 +3,7 @@ export const ACTION = {
   GET_GITHUB_API_KEY: "get-github-api-key",
   GET_ICON_FRAME_ID: "get-icon-frame-id",
   GET_FIGMA_FILE_URL: "get-figma-file-url",
+  GET_ICON_PREVIEW: "get-icon-preview",
 
   SET_GITHUB_REPO_URL: "set-github-repo-url",
   SET_GITHUB_API_KEY: "set-github-api-key",
