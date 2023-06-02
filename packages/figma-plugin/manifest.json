@@ -1,6 +1,6 @@
 {
-  "name": "Icona Plugin",
-  "id": "00000000000",
+  "name": "Icona",
+  "id": "1246320822364150095",
   "api": "1.0.0",
   "main": "dist/code.js",
   "ui": "dist/index.html",
