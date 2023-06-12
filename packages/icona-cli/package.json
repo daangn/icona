@@ -17,11 +17,14 @@
   },
   "dependencies": {
     "commander": "^10.0.1",
-    "findup-sync": "^5.0.0"
+    "findup-sync": "^5.0.0",
+    "pdfkit": "^0.13.0",
+    "svg-to-pdfkit": "^0.1.8"
   },
   "devDependencies": {
     "@types/findup-sync": "^4.0.2",
     "@types/node": "^20.2.5",
+    "@types/svg-to-pdfkit": "^0.1.0",
     "esbuild": "^0.17.19",
     "typescript": "^5.1.3"
   },
