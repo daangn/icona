@@ -1,20 +1,21 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable @typescript-eslint/no-shadow */
 import { ACTION, DATA, STATUS } from "../common/constants";
-import type { GithubData } from "../common/types";
+import type { Messages } from "../common/types";
 import { createGithubClient } from "./github";
 import { getSvgInIconFrame } from "./service";
 
 figma.showUI(__html__, { width: 360, height: 436 });
 
 // get github settings
-function getLocalData(key: string) {
-  return figma.clientStorage.getAsync(key);
+async function getLocalData(key: string) {
+  const data = await figma.clientStorage.getAsync(key);
+  return data;
 }
 
 // set github settings
-function setLocalData(key: string, data: string) {
-  figma.clientStorage.setAsync(key, data);
+async function setLocalData(key: string, data: any) {
+  await figma.clientStorage.setAsync(key, data);
 }
 
 // send github data to UI
@@ -55,7 +56,7 @@ async function init() {
       payload: svgDatas,
     });
   } else {
-    setLocalData(DATA.ICON_FRAME_ID, "");
+    await setLocalData(DATA.ICON_FRAME_ID, "");
     figma.ui.postMessage({
       type: ACTION.GET_ICON_FRAME_ID,
       payload: "",
@@ -63,33 +64,60 @@ async function init() {
   }
 }
 
-figma.ui.onmessage = async (msg) => {
+figma.ui.onmessage = async (msg: Messages) => {
   switch (msg.type) {
     case ACTION.SET_GITHUB_REPO_URL:
+      if (!msg.payload) return;
       setLocalData(DATA.GITHUB_REPO_URL, msg.payload);
       break;
 
     case ACTION.SET_GITHUB_API_KEY:
+      if (!msg.payload) return;
       setLocalData(DATA.GITHUB_API_KEY, msg.payload);
       break;
 
     case ACTION.SET_FIGMA_FILE_URL:
+      if (!msg.payload) return;
       setLocalData(DATA.FIGMA_FILE_URL, msg.payload);
       break;
 
     case ACTION.SET_ICON_FRAME_ID:
+      if (!msg.payload) return;
       setLocalData(DATA.ICON_FRAME_ID, msg.payload);
       break;
 
     case ACTION.SETTING_DONE: {
-      const { githubData, figmaFileKey, iconFrameId } = msg.payload as {
-        githubData: GithubData;
-        iconFrameId: string;
-        figmaFileKey: string;
-      };
-      const { owner, name, apiKey } = githubData;
+      figma.ui.postMessage({
+        type: ACTION.SETTING_DONE_STATUS,
+        payload: STATUS.LOADING,
+      });
+      const { owner, name, apiKey } = msg.payload;
       const { createSettingPR } = createGithubClient(owner, name, apiKey);
-      createSettingPR({ figmaFileKey, iconFrameId });
+
+      try {
+        await createSettingPR();
+        figma.ui.postMessage({
+          type: ACTION.SETTING_DONE_STATUS,
+          payload: STATUS.SUCCESS,
+        });
+        setTimeout(() => {
+          figma.ui.postMessage({
+            type: ACTION.SETTING_DONE_STATUS,
+            payload: STATUS.IDLE,
+          });
+        }, 3000);
+      } catch (error) {
+        figma.ui.postMessage({
+          type: ACTION.SETTING_DONE_STATUS,
+          payload: STATUS.ERROR,
+        });
+        setTimeout(() => {
+          figma.ui.postMessage({
+            type: ACTION.SETTING_DONE_STATUS,
+            payload: STATUS.IDLE,
+          });
+        }, 3000);
+      }
       break;
     }
 
@@ -98,15 +126,13 @@ figma.ui.onmessage = async (msg) => {
         type: ACTION.DEPLOY_ICON_STATUS,
         payload: STATUS.LOADING,
       });
-      const { githubData, iconFrameId } = msg.payload as {
-        githubData: GithubData;
-        iconFrameId: string;
-      };
+      const { githubData, iconFrameId } = msg.payload;
 
       try {
         const { owner, name, apiKey } = githubData;
         const { createDeployPR } = createGithubClient(owner, name, apiKey);
         const svgs = await getSvgInIconFrame(iconFrameId);
+
         await createDeployPR(svgs);
         figma.ui.postMessage({
           type: ACTION.DEPLOY_ICON_STATUS,
@@ -153,9 +179,9 @@ figma.ui.onmessage = async (msg) => {
       });
       break;
 
-    case "cancel":
-      figma.closePlugin();
-      break;
+    // case "cancel":
+    // figma.closePlugin();
+    // break;
   }
 };
 

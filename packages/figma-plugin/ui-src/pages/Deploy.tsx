@@ -7,7 +7,7 @@ import * as styles from "./Deploy.css";
 
 const Deploy = () => {
   const dispatch = useAppDispatch();
-  const { deployIconStatus } = useAppState();
+  const { deployIconStatus, githubData, iconFrameId } = useAppState();
 
   const buttonInfo = {
     [STATUS.IDLE]: {
@@ -36,7 +36,15 @@ const Deploy = () => {
           deployIconStatus === STATUS.SUCCESS ||
           deployIconStatus === STATUS.ERROR
         }
-        onClick={() => dispatch({ type: ACTION.DEPLOY_ICON })}
+        onClick={() =>
+          dispatch({
+            type: ACTION.DEPLOY_ICON,
+            payload: {
+              githubData,
+              iconFrameId,
+            },
+          })
+        }
         colorScheme={buttonInfo[deployIconStatus].colorScheme}
       >
         {buttonInfo[deployIconStatus].children}

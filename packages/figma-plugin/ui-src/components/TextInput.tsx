@@ -27,14 +27,9 @@ export const TextInput = ({
   handleChange,
 }: TextInputProps) => {
   return (
-    <FormControl isInvalid={isError}>
+    <FormControl onChange={handleChange} isInvalid={isError}>
       <FormLabel>{label}</FormLabel>
-      <Input
-        placeholder={placeholder}
-        type="text"
-        value={value}
-        onChange={handleChange}
-      />
+      <Input placeholder={placeholder} type="text" value={value} />
       {!isError ? (
         <FormHelperText>{helperText}</FormHelperText>
       ) : (

@@ -13,6 +13,7 @@ export const ACTION = {
   CREATE_ICON_FRAME: "create-icon-frame",
 
   SETTING_DONE: "setting-done",
+  SETTING_DONE_STATUS: "setting-done-status",
 
   DEPLOY_ICON: "deploy-icon",
   DEPLOY_ICON_STATUS: "deploy-icon-status",

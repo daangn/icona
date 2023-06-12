@@ -1,7 +1,7 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Spinner } from "@chakra-ui/react";
 import * as React from "react";
 
-import { ACTION } from "../../common/constants";
+import { ACTION, STATUS } from "../../common/constants";
 import { PasswordInput } from "../components/PasswordInput";
 import { TextInput } from "../components/TextInput";
 import { useAppDispatch, useAppState } from "../contexts/AppContext";
@@ -9,10 +9,35 @@ import * as styles from "./Setting.css";
 
 const Setting = () => {
   const dispatch = useAppDispatch();
-  const { githubRepositoryUrl, githubApiKey, figmaFileUrl, iconFrameId } =
-    useAppState();
+  const {
+    githubRepositoryUrl,
+    githubApiKey,
+    figmaFileUrl,
+    iconFrameId,
+    githubData,
+    settingStatus,
+  } = useAppState();
 
   const isExistIconFrameId = Boolean(iconFrameId);
+
+  const settingButtonInfo = {
+    [STATUS.IDLE]: {
+      children: "Setting",
+      colorScheme: "gray",
+    },
+    [STATUS.LOADING]: {
+      children: <Spinner size="sm" />,
+      colorScheme: "gray",
+    },
+    [STATUS.SUCCESS]: {
+      children: "Setting Success!",
+      colorScheme: "green",
+    },
+    [STATUS.ERROR]: {
+      children: "Setting Failed!",
+      colorScheme: "red",
+    },
+  };
 
   return (
     <Box className={styles.container}>
@@ -71,10 +96,17 @@ const Setting = () => {
       </Button>
 
       <Button
-        isDisabled
-        onClick={() => dispatch({ type: ACTION.SETTING_DONE })}
+        isDisabled={
+          settingStatus === STATUS.LOADING ||
+          settingStatus === STATUS.SUCCESS ||
+          settingStatus === STATUS.ERROR
+        }
+        colorScheme={settingButtonInfo[settingStatus].colorScheme}
+        onClick={() =>
+          dispatch({ type: ACTION.SETTING_DONE, payload: githubData })
+        }
       >
-        WIP(Setting Done)
+        {settingButtonInfo[settingStatus].children}
       </Button>
     </Box>
   );

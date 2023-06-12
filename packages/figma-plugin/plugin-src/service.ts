@@ -1,8 +1,5 @@
-/**
- * 기본적으로는 Component Name으로 간다.
- * 근데 Component Set이고 Variant가 있을 때는 어떻게 해야할까?
- * 폴더 구조로 보여주는 것이 좋을까?
- */
+import type { IconData } from "../common/types";
+
 const makeComponentName = ({
   componentSetName,
   componentName,
@@ -27,6 +24,7 @@ const makeComponentName = ({
   return name;
 };
 
+// FIXME:(june): 인스턴스 타입 들어왔을 때 처리
 const findComponentInNode = (
   node: ComponentSetNode | ComponentNode | FrameNode,
   setName?: string,
@@ -51,7 +49,9 @@ const findComponentInNode = (
   }
 };
 
-export async function getSvgInIconFrame(iconFrameId: string) {
+export async function getSvgInIconFrame(
+  iconFrameId: string,
+): Promise<IconData[]> {
   const frame = figma.getNodeById(iconFrameId) as FrameNode;
 
   const components = findComponentInNode(frame) as {
@@ -59,8 +59,10 @@ export async function getSvgInIconFrame(iconFrameId: string) {
     name: string;
   }[];
 
+  const filteredComponents = components.filter((component) => component);
+
   const svgs = await Promise.all(
-    components.map(async (component) => {
+    filteredComponents.map(async (component) => {
       const node = figma.getNodeById(component.id) as ComponentNode;
       const svg = await node.exportAsync({
         format: "SVG_STRING",

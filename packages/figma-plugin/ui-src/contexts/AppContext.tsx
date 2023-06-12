@@ -3,11 +3,15 @@ import React, { createContext, useContext, useReducer } from "react";
 
 import { STATUS } from "../../common/constants";
 import { ACTION } from "../../common/constants";
-import type { GithubData, IconData } from "../../common/types";
+import type {
+  GithubData,
+  IconData,
+  Messages,
+  Status,
+} from "../../common/types";
 import { postMessage } from "../utils/figma";
 import { getFigmaFileKeyFromUrl, getGithubDataFromUrl } from "../utils/string";
 
-type Status = `${(typeof STATUS)[keyof typeof STATUS]}`;
 type State = {
   // Computed
   githubData: GithubData;
@@ -22,32 +26,15 @@ type State = {
 
   // Status
   deployIconStatus: Status;
+  settingStatus: Status;
 };
 
-type Actions =
-  // GETTER
-  | { type: `${typeof ACTION.GET_GITHUB_API_KEY}`; payload: string }
-  | { type: `${typeof ACTION.GET_FIGMA_FILE_URL}`; payload: string }
-  | { type: `${typeof ACTION.GET_GITHUB_REPO_URL}`; payload: string }
-  | { type: `${typeof ACTION.GET_ICON_FRAME_ID}`; payload: string }
-  | { type: `${typeof ACTION.GET_ICON_PREVIEW}`; payload: IconData[] }
-  // SETTER
-  | { type: `${typeof ACTION.SET_GITHUB_API_KEY}`; payload: string }
-  | { type: `${typeof ACTION.SET_FIGMA_FILE_URL}`; payload: string }
-  | { type: `${typeof ACTION.SET_GITHUB_REPO_URL}`; payload: string }
-  | { type: `${typeof ACTION.SET_ICON_FRAME_ID}`; payload: string }
-  | { type: `${typeof ACTION.DEPLOY_ICON_STATUS}`; payload: Status }
-  // NO SIDE EFFECT
-  | { type: `${typeof ACTION.CREATE_ICON_FRAME}` }
-  | { type: `${typeof ACTION.SETTING_DONE}` }
-  | { type: `${typeof ACTION.DEPLOY_ICON}` };
-
-type AppDispatch = Dispatch<Actions>;
+type AppDispatch = Dispatch<Messages>;
 
 const AppStateContext = createContext<State | null>(null);
 const AppDispatchContext = createContext<AppDispatch | null>(null);
 
-function reducer(state: State, action: Actions): State {
+function reducer(state: State, action: Messages): State {
   switch (action.type) {
     /* GETTER */
     case ACTION.GET_GITHUB_API_KEY:
@@ -88,7 +75,7 @@ function reducer(state: State, action: Actions): State {
     /* SETTER */
     case ACTION.SET_GITHUB_API_KEY:
       postMessage({
-        type: action,
+        type: action.type,
         payload: action.payload,
       });
       return {
@@ -101,7 +88,7 @@ function reducer(state: State, action: Actions): State {
       };
     case ACTION.SET_FIGMA_FILE_URL:
       postMessage({
-        type: action,
+        type: action.type,
         payload: action.payload,
       });
       return {
@@ -111,7 +98,7 @@ function reducer(state: State, action: Actions): State {
       };
     case ACTION.SET_ICON_FRAME_ID:
       postMessage({
-        type: action,
+        type: action.type,
         payload: action.payload,
       });
       return {
@@ -120,7 +107,7 @@ function reducer(state: State, action: Actions): State {
       };
     case ACTION.SET_GITHUB_REPO_URL:
       postMessage({
-        type: action,
+        type: action.type,
         payload: action.payload,
       });
       return {
@@ -138,23 +125,26 @@ function reducer(state: State, action: Actions): State {
       });
       return state;
 
+    // FIXME: 아마도 필요 없을지도? 세팅 어떻게 할건지 다시 생각하기
     case ACTION.SETTING_DONE:
       postMessage({
         type: ACTION.SETTING_DONE,
-        payload: {
-          githubData: state.githubData,
-          iconFrameId: state.iconFrameId,
-          figmaFileKey: state.figmaFileKey,
-        },
+        payload: action.payload,
       });
       return state;
+
+    case ACTION.SETTING_DONE_STATUS:
+      return {
+        ...state,
+        settingStatus: action.payload,
+      };
 
     case ACTION.DEPLOY_ICON: {
       postMessage({
         type: ACTION.DEPLOY_ICON,
         payload: {
-          githubData: state.githubData,
-          iconFrameId: state.iconFrameId,
+          githubData: action.payload.githubData,
+          iconFrameId: action.payload.iconFrameId,
         },
       });
       return state;
@@ -191,13 +181,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
     // Status
     deployIconStatus: STATUS.IDLE,
+    settingStatus: STATUS.IDLE,
   });
 
   // Init
   React.useEffect(() => {
     // NOTE: Event listener from figma
     window.onmessage = (event) => {
-      const msg = event.data.pluginMessage;
+      const msg = event.data.pluginMessage as Messages;
       switch (msg.type) {
         case ACTION.GET_GITHUB_API_KEY:
           if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
@@ -215,6 +206,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
           break;
         case ACTION.DEPLOY_ICON_STATUS: {
+          dispatch({ type: msg.type, payload: msg.payload });
+          return;
+        }
+        case ACTION.SETTING_DONE_STATUS: {
           dispatch({ type: msg.type, payload: msg.payload });
           return;
         }
