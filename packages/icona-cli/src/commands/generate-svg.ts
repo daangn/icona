@@ -17,8 +17,7 @@ type Args = {
   path?: string;
 };
 
-export const generate = new Command("generate")
-  .alias("gen")
+export const generateSvg = new Command("generate-svg")
   .option(
     "-p, --path <path>",
     "icons.json file path that will be generated (default: svg)",
