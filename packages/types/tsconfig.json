@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "outDir": "dist",
+    "emitDeclarationOnly": true
+  },
+  "include": ["src", "index.ts"],
+  "exclude": []
+}
