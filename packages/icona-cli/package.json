@@ -1,6 +1,6 @@
 {
   "name": "icona-cli",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/daangn/icona.git",
@@ -16,12 +16,19 @@
     "prepack": "yarn build"
   },
   "dependencies": {
+    "@svgr/core": "^8.0.0",
+    "@svgr/plugin-jsx": "^8.0.1",
+    "@svgr/plugin-prettier": "^8.0.1",
+    "@svgr/plugin-svgo": "^8.0.1",
     "commander": "^10.0.1",
     "findup-sync": "^5.0.0",
     "pdfkit": "^0.13.0",
-    "svg-to-pdfkit": "^0.1.8"
+    "svg-to-pdfkit": "^0.1.8",
+    "svg2vectordrawable": "^2.9.1",
+    "svgo": "^3.0.2"
   },
   "devDependencies": {
+    "@icona/types": "workspace:^",
     "@types/findup-sync": "^4.0.2",
     "@types/node": "^20.2.5",
     "@types/svg-to-pdfkit": "^0.1.0",

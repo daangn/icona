@@ -1,3 +1,5 @@
+import type { IconaIconData } from "@icona/types";
+
 import { generateSvgActionTemplate } from "./templates";
 
 const GITHUB_API_VERSION = "2022-11-28";
@@ -202,7 +204,7 @@ export function createGithubClient(
     await createPullRequest(newBranch, baseBranch, prTitle, prBody);
   }
 
-  async function createDeployPR(svgs: { name: string; svg: string }[]) {
+  async function createDeployPR(svgs: IconaIconData[]) {
     const baseBranch = "main";
     const newBranch = `icona-update-${new Date().getTime()}`;
     const prTitle = "[Icona]: Update Icons";

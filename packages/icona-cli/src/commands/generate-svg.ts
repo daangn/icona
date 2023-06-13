@@ -1,22 +1,16 @@
+import type { IconaIconData } from "@icona/types";
 import { Command } from "commander";
-import findup from "findup-sync";
 import fs from "fs";
 import path from "path";
+import svgo from "svgo";
 
-const ICONS_FILE = ".icona/icons.json";
-const ICONS_PATH = findup(ICONS_FILE);
-const PROJECT_PATH = path.resolve(path.dirname(findup("package.json")!));
+import { ICONS_PATH, PROJECT_PATH } from "../constants";
 
-type Svg = string;
-type SvgName = string;
-type Icons = {
-  name: SvgName;
-  svg: Svg;
-}[];
-type Args = {
+interface GenerateSvgCommandArgs {
   path?: string;
-};
+}
 
+// TODO: svgo option 타입을 유저에게서 받을 수 있도록 수정
 export const generateSvg = new Command("generate-svg")
   .option(
     "-p, --path <path>",
@@ -24,7 +18,7 @@ export const generateSvg = new Command("generate-svg")
     "svg",
   )
   .description("Generate SVG from .icona/icons.json file")
-  .action((args: Args) => {
+  .action((args: GenerateSvgCommandArgs) => {
     try {
       console.log("Generating SVGs...");
 
@@ -35,15 +29,32 @@ export const generateSvg = new Command("generate-svg")
         return;
       }
 
-      const icons = JSON.parse(fs.readFileSync(ICONS_PATH, "utf-8")) as Icons;
+      const icons = JSON.parse(
+        fs.readFileSync(ICONS_PATH, "utf-8"),
+      ) as IconaIconData[];
 
       icons.forEach(({ name, svg }) => {
         if (!fs.existsSync(path.resolve(PROJECT_PATH, pathArg))) {
           fs.mkdirSync(path.resolve(PROJECT_PATH, pathArg));
         }
 
+        const { data: optimizedSvg } = svgo.optimize(svg, {
+          js2svg: {
+            indent: 2,
+            pretty: true,
+          },
+          plugins: [
+            {
+              name: "convertColors",
+              params: {
+                currentColor: true,
+              },
+            },
+          ],
+        });
+
         const svgPath = path.resolve(PROJECT_PATH, pathArg, `${name}.svg`);
-        fs.writeFileSync(svgPath, svg);
+        fs.writeFileSync(svgPath, optimizedSvg, "utf-8");
       });
 
       console.log(`SVGs generated in ${pathArg}`);

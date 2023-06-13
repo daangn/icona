@@ -1,14 +1,10 @@
+import type { IconaIconData } from "@icona/types";
 import type { Dispatch } from "react";
 import React, { createContext, useContext, useReducer } from "react";
 
 import { STATUS } from "../../common/constants";
 import { ACTION } from "../../common/constants";
-import type {
-  GithubData,
-  IconData,
-  Messages,
-  Status,
-} from "../../common/types";
+import type { GithubData, Messages, Status } from "../../common/types";
 import { postMessage } from "../utils/figma";
 import { getFigmaFileKeyFromUrl, getGithubDataFromUrl } from "../utils/string";
 
@@ -22,7 +18,7 @@ type State = {
   githubApiKey: string;
   iconFrameId: string;
   figmaFileUrl: string;
-  iconPreview: IconData[];
+  iconPreview: IconaIconData[];
 
   // Status
   deployIconStatus: Status;

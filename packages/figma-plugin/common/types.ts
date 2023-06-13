@@ -1,14 +1,11 @@
+import type { IconaIconData } from "@icona/types";
+
 import type { ACTION, STATUS } from "./constants";
 
 export interface GithubData {
   owner: string;
   name: string;
   apiKey: string;
-}
-
-export interface IconData {
-  name: string;
-  svg: string;
 }
 
 export interface IconaMetaData {
@@ -23,7 +20,7 @@ export type Messages =
   | { type: `${typeof ACTION.GET_FIGMA_FILE_URL}`; payload: string }
   | { type: `${typeof ACTION.GET_GITHUB_REPO_URL}`; payload: string }
   | { type: `${typeof ACTION.GET_ICON_FRAME_ID}`; payload: string }
-  | { type: `${typeof ACTION.GET_ICON_PREVIEW}`; payload: IconData[] }
+  | { type: `${typeof ACTION.GET_ICON_PREVIEW}`; payload: IconaIconData[] }
   | { type: `${typeof ACTION.SET_GITHUB_API_KEY}`; payload: string }
   | { type: `${typeof ACTION.SET_FIGMA_FILE_URL}`; payload: string }
   | { type: `${typeof ACTION.SET_GITHUB_REPO_URL}`; payload: string }

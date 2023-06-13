@@ -35,6 +35,7 @@
     "vite-plugin-singlefile": "^0.13.5"
   },
   "devDependencies": {
+    "@icona/types": "workspace:^",
     "@types/node": "^20.2.3"
   },
   "packageManager": "yarn@3.5.1",

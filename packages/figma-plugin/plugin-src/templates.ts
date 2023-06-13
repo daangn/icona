@@ -6,8 +6,6 @@ export const generateSvgActionTemplate = dedent(`
     push:
       branches:
         - 'icona-update-**'
-      paths:
-        - '.icona/icons.json'
   
   name: Generate SVG files from icons.json
   
@@ -23,16 +21,46 @@ export const generateSvgActionTemplate = dedent(`
             node-version: 18
   
         - name: Install Icona CLI
-          run: npm install icona-cli -g
+          run: npm install icona-cli@latest -g
   
-        - name: Generate SVG files
+        - name: Generate SVGs
           run: |
-            icona generate
+            icona generate-svg
             git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git config --global user.name "GitHub Action"
             git add .
-            git commit -m "Generate SVG files"
-            git push\n
+            git commit -m "[Icona] Generate SVG files"
+            git push
+
+        # If you want to generate XMLs, uncomment this block
+        # - name: Generate XMLs
+        #   run: |
+        #     icona generate-xml
+        #     git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        #     git config --global user.name "GitHub Action"
+        #     git add .
+        #     git commit -m "[Icona] Generate XML files"
+        #     git push
+
+        # If you want to generate PDFs, uncomment this block
+        # - name: Generate PDFs
+        #   run: |
+        #     icona generate-pdf
+        #     git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        #     git config --global user.name "GitHub Action"
+        #     git add .
+        #     git commit -m "[Icona] Generate PDF files"
+        #     git push
+
+        # If you want to generate React Components, uncomment this block
+        # - name: Generate React Components
+        #   run: |
+        #     icona generate-react-component
+        #     git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        #     git config --global user.name "GitHub Action"
+        #     git add .
+        #     git commit -m "[Icona] Generate React Components"
+        #     git push\n
 `);
 
 export const releaseTemplate = dedent(`

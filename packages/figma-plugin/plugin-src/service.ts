@@ -1,4 +1,4 @@
-import type { IconData } from "../common/types";
+import type { IconaIconData } from "@icona/types";
 
 const makeComponentName = ({
   componentSetName,
@@ -51,7 +51,7 @@ const findComponentInNode = (
 
 export async function getSvgInIconFrame(
   iconFrameId: string,
-): Promise<IconData[]> {
+): Promise<IconaIconData[]> {
   const frame = figma.getNodeById(iconFrameId) as FrameNode;
 
   const components = findComponentInNode(frame) as {
