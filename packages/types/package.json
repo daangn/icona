@@ -1,12 +1,22 @@
 {
   "name": "@icona/types",
+  "version": "0.0.1",
   "private": true,
-  "main": "src/index.ts",
+  "main": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "clean": "rm -rf ./dist",
+    "generate:json-schema": "yarn typescript-json-schema ./src/index.ts IconaConfig --out schema.json"
   },
   "devDependencies": {
-    "typescript": "^5.1.3"
+    "@svgr/babel-preset": "^8.0.0",
+    "@types/babel__core": "^7.20.1",
+    "@types/node": "^20.3.1",
+    "@types/pdfkit": "^0.12.10",
+    "@types/prettier": "^2.7.3",
+    "@types/svg-to-pdfkit": "^0.1.0",
+    "typescript": "^5.1.3",
+    "typescript-json-schema": "^0.57.0"
   },
   "packageManager": "yarn@3.5.1"
 }

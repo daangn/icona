@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "build": "ultra -r build",
+    "clean": "ultra -r clean",
     "release": "yarn changeset publish",
     "version": "changeset version && yarn install --no-immutable"
   },
@@ -35,7 +36,8 @@
   "packageManager": "yarn@3.5.1",
   "ultra": {
     "concurrent": [
-      "build"
+      "build",
+      "clean"
     ]
   }
 }
