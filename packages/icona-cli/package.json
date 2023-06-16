@@ -1,6 +1,6 @@
 {
   "name": "@icona/cli",
-  "version": "0.0.2",
+  "version": "0.0.2-test.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/daangn/icona.git",
@@ -14,7 +14,7 @@
     "build": "yarn build:icona-cli",
     "build:icona-cli": "node build.mjs",
     "build:package": "yarn build",
-    "prepack": "yarn build"
+    "prepack": "yarn clean && yarn build"
   },
   "dependencies": {
     "@icona/generator": "workspace:^",
