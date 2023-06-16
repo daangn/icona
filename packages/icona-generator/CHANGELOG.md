@@ -1,5 +1,13 @@
 # @icona/generator
 
+## 0.0.7
+
+### Patch Changes
+
+- 9d4053c: bump
+- Updated dependencies [9d4053c]
+  - @icona/utils@0.0.7
+
 ## 0.0.3
 
 ### Patch Changes
