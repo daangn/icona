@@ -14,7 +14,7 @@
     "build": "yarn build:icona-cli",
     "build:icona-cli": "node build.mjs",
     "build:package": "yarn build",
-    "prepack": "yarn clean && yarn build"
+    "prepack": "yarn build"
   },
   "dependencies": {
     "@icona/generator": "workspace:^",

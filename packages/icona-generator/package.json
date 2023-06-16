@@ -17,7 +17,7 @@
   "scripts": {
     "build": "nanobundle build",
     "clean": "nanobundle clean",
-    "prepack": "yarn clean && yarn build"
+    "prepack": "yarn build"
   },
   "dependencies": {
     "@icona/utils": "workspace:^",
