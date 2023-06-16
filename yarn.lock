@@ -2079,7 +2079,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@icona/cli@workspace:packages/icona-cli"
   dependencies:
-    "@icona/generator": "workspace:^"
+    "@icona/generator": ^0.0.6
     "@icona/types": "workspace:^"
     "@icona/utils": "workspace:^"
     "@types/dedent": ^0.7.0
@@ -2095,12 +2095,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/generator@workspace:^, @icona/generator@workspace:packages/icona-generator":
+"@icona/generator@^0.0.6, @icona/generator@workspace:packages/icona-generator":
   version: 0.0.0-use.local
   resolution: "@icona/generator@workspace:packages/icona-generator"
   dependencies:
-    "@icona/types": "workspace:^"
-    "@icona/utils": "workspace:^"
+    "@icona/types": ^0.0.6
+    "@icona/utils": ^0.0.6
     "@svgr/core": ^8.0.0
     nanobundle: ^1.6.0
     pdfkit: ^0.13.0
@@ -2136,7 +2136,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/types@workspace:^, @icona/types@workspace:packages/types":
+"@icona/types@^0.0.6, @icona/types@workspace:^, @icona/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@icona/types@workspace:packages/types"
   dependencies:
@@ -2151,11 +2151,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/utils@workspace:^, @icona/utils@workspace:packages/icona-utils":
+"@icona/utils@^0.0.6, @icona/utils@workspace:^, @icona/utils@workspace:packages/icona-utils":
   version: 0.0.0-use.local
   resolution: "@icona/utils@workspace:packages/icona-utils"
   dependencies:
-    "@icona/types": "workspace:^"
+    "@icona/types": ^0.0.6
     "@types/node": ^20.3.1
     findup-sync: ^5.0.0
     nanobundle: ^1.6.0

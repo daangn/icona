@@ -1,6 +1,11 @@
 {
   "name": "@icona/generator",
-  "version": "0.0.3",
+  "version": "0.0.6",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daangn/icona.git",
+    "directory": "packages/icona-generator"
+  },
   "type": "module",
   "exports": {
     ".": {
@@ -20,7 +25,7 @@
     "prepack": "yarn build"
   },
   "dependencies": {
-    "@icona/utils": "workspace:^",
+    "@icona/utils": "^0.0.6",
     "@svgr/core": "^8.0.0",
     "pdfkit": "^0.13.0",
     "svg-to-pdfkit": "^0.1.8",
@@ -28,7 +33,7 @@
     "svgo": "^3.0.2"
   },
   "devDependencies": {
-    "@icona/types": "workspace:^",
+    "@icona/types": "^0.0.6",
     "nanobundle": "^1.6.0",
     "prettier": "^2.8.8",
     "typescript": "^5.1.3"

@@ -1,13 +1,14 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "target": "ESNext",
-    "lib": ["ESNext"],
-    "strict": true,
-    "skipLibCheck": true,
+    "module": "ESNext",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "outDir": "dist",
-    "rootDir": "src",
+    "strict": true,
     "declaration": true,
-  }
+    "outDir": "dist"
+  },
+  "include": ["src"],
 }

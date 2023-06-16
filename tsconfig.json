@@ -1,16 +1,10 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "jsx": "react",
-    "moduleResolution": "Node",
-    "declaration": true,
-    "declarationMap": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "NodeNext",
     "strict": true,
-    "skipLibCheck": false
-  },
-  "include": ["packages"],
-  "exclude": ["**/dist"]
+    "composite": true,
+    "incremental": true
+  }
 }

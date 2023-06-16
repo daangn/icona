@@ -9,11 +9,7 @@
     "isolatedModules": false,
     "strict": true,
     "declaration": true,
-    "outDir": "lib",
-    "strictNullChecks": true
+    "outDir": "dist"
   },
-  "include": [
-    "src",
-    "package.json",
-  ]
+  "include": ["src", "package.json"],
 }
