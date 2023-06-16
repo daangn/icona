@@ -20,10 +20,12 @@
     "@icona/generator": "workspace:^",
     "@icona/utils": "workspace:^",
     "commander": "^10.0.1",
+    "dedent": "^0.7.0",
     "findup-sync": "^5.0.0"
   },
   "devDependencies": {
     "@icona/types": "workspace:^",
+    "@types/dedent": "^0.7.0",
     "@types/findup-sync": "^4.0.2",
     "@types/node": "^20.2.5",
     "esbuild": "^0.17.19",

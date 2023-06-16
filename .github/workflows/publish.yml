@@ -1,0 +1,46 @@
+on:
+  push:
+    branches:
+      - main
+
+name: 패키지를 출판해요 - main
+
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+
+jobs:
+  publish-package:
+    name: 패키지를 출판해요
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "16"
+
+      - uses: actions/cache@v2
+        id: yarn-unplugged-cache
+        with:
+          path: |
+            '.yarn/unplugged/'
+            '.yarn/build-state.yml'
+            '.yarn/install-state.gz'
+          key: ${{ runner.os }}-yarn-v1-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-v1-
+
+      - name: Unplugged된 의존성을 설치하고 Yarn 파일들이 설치과정중에 변하지 않는지 확인해요. (만약 이 스텝에서 오류가 발생한다면 "yarn install"을 수행하고 커밋, 푸시하세요)
+        run: |
+          yarn install --immutable
+        shell: bash
+
+      - name: 릴리즈 Pull Request를 만들거나 패키지를 배포해요
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: yarn release
+          version: yarn version
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}

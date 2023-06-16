@@ -1,7 +1,7 @@
 // TODO: Need test code for this file.
 import type { IconaConfig, IconaIconData } from "@icona/types";
 import findup from "findup-sync";
-import { existsSync, mkdirSync, readFileSync } from "fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 
 export const ICONA_FOLDER = ".icona";
@@ -47,4 +47,13 @@ export const makeFolderIfNotExistFromRoot = (targetPath: string) => {
   if (!existsSync(resolve(projectPath, targetPath))) {
     mkdirSync(resolve(projectPath, targetPath));
   }
+};
+
+export const generateConfigFile = (config: string) => {
+  const configPath = getIconaConfigPath();
+  const iconaFolderPath = getIconaFolderPath();
+
+  makeFolderIfNotExistFromRoot(iconaFolderPath);
+
+  writeFileSync(configPath, config);
 };
