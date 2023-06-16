@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf ./dist",
-    "generate:json-schema": "yarn typescript-json-schema ./src/index.ts IconaConfig --out schema.json"
+    "generate:json-schema": "yarn typescript-json-schema ./src/index.ts IconaConfig --out schema.json --noExtraProps"
   },
   "devDependencies": {
     "@svgr/babel-preset": "^8.0.0",

@@ -1,5 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
   "definitions": {
     "BuiltInParserName": {
       "enum": [
@@ -29,12 +30,14 @@
       "type": "string"
     },
     "ConfigItem": {
+      "additionalProperties": false,
       "properties": {
         "dirname": {
           "description": "The path that the options are relative to.",
           "type": "string"
         },
         "file": {
+          "additionalProperties": false,
           "description": "Information about the plugin's file, if Babel knows it.\n *",
           "properties": {
             "request": {
@@ -74,6 +77,7 @@
               "type": "object"
             },
             {
+              "additionalProperties": false,
               "type": "object"
             }
           ],
@@ -93,6 +97,7 @@
       ]
     },
     "Config_1": {
+      "additionalProperties": false,
       "properties": {
         "configFile": {
           "type": "string"
@@ -117,6 +122,7 @@
           "type": "boolean"
         },
         "jsx": {
+          "additionalProperties": false,
           "properties": {
             "babelConfig": {
               "$ref": "#/definitions/TransformOptions"
@@ -129,6 +135,7 @@
           "type": "string"
         },
         "jsxRuntimeImport": {
+          "additionalProperties": false,
           "properties": {
             "defaultSpecifier": {
               "type": "string"
@@ -191,6 +198,7 @@
           "type": "boolean"
         },
         "svgoConfig": {
+          "additionalProperties": false,
           "properties": {
             "datauri": {
               "$ref": "#/definitions/DataUri",
@@ -201,6 +209,7 @@
               "type": "number"
             },
             "js2svg": {
+              "additionalProperties": false,
               "description": "Options for rendering optimized SVG from AST.",
               "properties": {
                 "attrEnd": {
@@ -228,6 +237,7 @@
                   "type": "string"
                 },
                 "encodeEntity": {
+                  "additionalProperties": false,
                   "type": "object"
                 },
                 "eol": {
@@ -320,6 +330,7 @@
       "type": "string"
     },
     "Function": {
+      "additionalProperties": false,
       "properties": {
         "arguments": {},
         "caller": {
@@ -336,6 +347,7 @@
       "type": "object"
     },
     "GenerateDrawableConfig": {
+      "additionalProperties": false,
       "properties": {
         "active": {
           "default": false,
@@ -360,6 +372,7 @@
       "type": "object"
     },
     "GeneratePDFConfig": {
+      "additionalProperties": false,
       "properties": {
         "active": {
           "default": false,
@@ -379,6 +392,7 @@
       "type": "object"
     },
     "GenerateReactConfig": {
+      "additionalProperties": false,
       "properties": {
         "active": {
           "default": false,
@@ -398,6 +412,7 @@
       "type": "object"
     },
     "GenerateSVGConfig": {
+      "additionalProperties": false,
       "properties": {
         "active": {
           "default": true,
@@ -410,6 +425,7 @@
           "type": "string"
         },
         "svgoConfig": {
+          "additionalProperties": false,
           "description": "Config (svgo)",
           "properties": {
             "datauri": {
@@ -421,6 +437,7 @@
               "type": "number"
             },
             "js2svg": {
+              "additionalProperties": false,
               "description": "Options for rendering optimized SVG from AST.",
               "properties": {
                 "attrEnd": {
@@ -448,6 +465,7 @@
                   "type": "string"
                 },
                 "encodeEntity": {
+                  "additionalProperties": false,
                   "type": "object"
                 },
                 "eol": {
@@ -527,6 +545,7 @@
       "type": "object"
     },
     "GeneratorOptions": {
+      "additionalProperties": false,
       "properties": {
         "auxiliaryCommentAfter": {
           "description": "Optional string to add as a block comment at the end of the output file.",
@@ -557,6 +576,7 @@
           "type": "string"
         },
         "jsescOption": {
+          "additionalProperties": false,
           "description": "Options for outputting jsesc representation.",
           "properties": {
             "compact": {
@@ -644,6 +664,7 @@
       "type": "object"
     },
     "InputSourceMap": {
+      "additionalProperties": false,
       "description": "Source map standard format as to revision 3",
       "properties": {
         "file": {
@@ -685,11 +706,16 @@
           "$ref": "#/definitions/RegExp"
         },
         {
-          "type": ["string", "object"]
+          "additionalProperties": false,
+          "type": "object"
+        },
+        {
+          "type": "string"
         }
       ]
     },
     "Options": {
+      "additionalProperties": false,
       "properties": {
         "__embeddedInHtml": {
           "type": "boolean"
@@ -753,14 +779,13 @@
         "parser": {
           "anyOf": [
             {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/Pick<string,never>"
-                },
-                {
-                  "type": "object"
-                }
-              ]
+              "additionalProperties": false,
+              "properties": {},
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "type": "object"
             },
             {
               "enum": [
@@ -788,9 +813,6 @@
                 "yaml"
               ],
               "type": "string"
-            },
-            {
-              "type": "object"
             }
           ],
           "description": "Specify which parser to use."
@@ -896,6 +918,7 @@
       "type": "object"
     },
     "PDFKit.DocumentInfo": {
+      "additionalProperties": false,
       "properties": {
         "Author": {
           "type": "string"
@@ -927,6 +950,7 @@
       "type": "object"
     },
     "PDFKit.DocumentPermissions": {
+      "additionalProperties": false,
       "properties": {
         "annotating": {
           "type": "boolean"
@@ -954,6 +978,7 @@
       "type": "object"
     },
     "PDFKit.PDFDocumentOptions": {
+      "additionalProperties": false,
       "properties": {
         "autoFirstPage": {
           "type": "boolean"
@@ -984,6 +1009,7 @@
           "type": "number"
         },
         "margins": {
+          "additionalProperties": false,
           "properties": {
             "bottom": {
               "type": "number"
@@ -1033,29 +1059,36 @@
       "type": "object"
     },
     "Parser<T>": {
+      "additionalProperties": false,
       "properties": {
         "astFormat": {
           "type": "string"
         },
         "hasPragma": {
+          "additionalProperties": false,
           "type": "object"
         },
         "locEnd": {
+          "additionalProperties": false,
           "type": "object"
         },
         "locStart": {
+          "additionalProperties": false,
           "type": "object"
         },
         "parse": {
+          "additionalProperties": false,
           "type": "object"
         },
         "preprocess": {
+          "additionalProperties": false,
           "type": "object"
         }
       },
       "type": "object"
     },
     "ParserOptions": {
+      "additionalProperties": false,
       "properties": {
         "allowAwaitOutsideFunction": {
           "description": "By default, await use is not allowed outside of an async function.\nSet this to true to accept such code.",
@@ -1134,6 +1167,7 @@
       "type": "object"
     },
     "Partial<RequiredOptions>": {
+      "additionalProperties": false,
       "properties": {
         "__embeddedInHtml": {
           "type": "boolean"
@@ -1197,14 +1231,13 @@
         "parser": {
           "anyOf": [
             {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/Pick<string,never>"
-                },
-                {
-                  "type": "object"
-                }
-              ]
+              "additionalProperties": false,
+              "properties": {},
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "type": "object"
             },
             {
               "enum": [
@@ -1232,9 +1265,6 @@
                 "yaml"
               ],
               "type": "string"
-            },
-            {
-              "type": "object"
             }
           ],
           "description": "Specify which parser to use."
@@ -1339,13 +1369,12 @@
       },
       "type": "object"
     },
-    "Pick<string,never>": {
-      "type": "object"
-    },
     "Plugin": {
+      "additionalProperties": false,
       "type": "object"
     },
     "Plugin<any>": {
+      "additionalProperties": false,
       "properties": {
         "defaultOptions": {
           "$ref": "#/definitions/Partial<RequiredOptions>"
@@ -1377,8 +1406,10 @@
     "PluginConfig": {
       "anyOf": [
         {
+          "additionalProperties": false,
           "properties": {
             "fn": {
+              "additionalProperties": false,
               "type": "object"
             },
             "name": {
@@ -1388,12 +1419,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "cleanupAttrs",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "newlines": {
                   "type": "boolean"
@@ -1411,6 +1444,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "cleanupEnableBackground",
@@ -1423,12 +1457,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "cleanupIds",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "force": {
                   "type": "boolean"
@@ -1458,12 +1494,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "cleanupNumericValues",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "convertToPx": {
                   "type": "boolean"
@@ -1484,6 +1522,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "collapseGroups",
@@ -1496,12 +1535,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "convertColors",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "currentColor": {
                   "anyOf": [
@@ -1532,6 +1573,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "convertEllipseToCircle",
@@ -1544,12 +1586,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "convertPathData",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "applyTransforms": {
                   "type": "boolean"
@@ -1584,6 +1628,7 @@
                   "type": "boolean"
                 },
                 "makeArcs": {
+                  "additionalProperties": false,
                   "properties": {
                     "threshold": {
                       "type": "number"
@@ -1619,12 +1664,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "convertShapeToPath",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "convertArcs": {
                   "type": "boolean"
@@ -1639,12 +1686,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "convertTransform",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "collapseIntoOne": {
                   "type": "boolean"
@@ -1689,6 +1738,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "mergeStyles",
@@ -1701,12 +1751,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "inlineStyles",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "onlyMatchedOnce": {
                   "type": "boolean"
@@ -1733,12 +1785,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "mergePaths",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "floatPrecision": {
                   "type": "number"
@@ -1756,12 +1810,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "minifyStyles",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "comments": {
                   "default": true,
@@ -1781,6 +1837,7 @@
                 "usage": {
                   "anyOf": [
                     {
+                      "additionalProperties": false,
                       "properties": {
                         "classes": {
                           "type": "boolean"
@@ -1810,6 +1867,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "moveElemsAttrsToGroup",
@@ -1822,6 +1880,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "moveGroupAttrsToElems",
@@ -1834,6 +1893,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeComments",
@@ -1846,12 +1906,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeDesc",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "removeAny": {
                   "type": "boolean"
@@ -1863,6 +1925,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeDoctype",
@@ -1875,12 +1938,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeEditorsNSData",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "additionalNamespaces": {
                   "items": {
@@ -1895,6 +1960,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeEmptyAttrs",
@@ -1907,6 +1973,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeEmptyContainers",
@@ -1919,12 +1986,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeEmptyText",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "text": {
                   "type": "boolean"
@@ -1942,12 +2011,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeHiddenElems",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "circleR0": {
                   "type": "boolean"
@@ -2001,6 +2072,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeMetadata",
@@ -2013,6 +2085,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeNonInheritableGroupAttrs",
@@ -2025,6 +2098,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeTitle",
@@ -2037,12 +2111,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeUnknownsAndDefaults",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "defaultAttrs": {
                   "type": "boolean"
@@ -2072,6 +2148,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeUnusedNS",
@@ -2084,6 +2161,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeUselessDefs",
@@ -2096,12 +2174,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeUselessStrokeAndFill",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "fill": {
                   "type": "boolean"
@@ -2119,6 +2199,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeViewBox",
@@ -2131,6 +2212,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeXMLProcInst",
@@ -2143,12 +2225,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "sortAttrs",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "order": {
                   "items": {
@@ -2167,6 +2251,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "sortDefsChildren",
@@ -2179,12 +2264,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "preset-default",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "floatPrecision": {
                   "type": "number"
@@ -2200,12 +2287,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "cleanupListOfValues",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "convertToPx": {
                   "type": "boolean"
@@ -2226,12 +2315,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "convertStyleToAttrs",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "keepImportant": {
                   "type": "boolean"
@@ -2243,18 +2334,28 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "prefixIds",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "delim": {
                   "type": "string"
                 },
                 "prefix": {
-                  "type": ["string", "object", "boolean"]
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "type": "object"
+                    },
+                    {
+                      "type": ["string", "boolean"]
+                    }
+                  ]
                 },
                 "prefixClassNames": {
                   "type": "boolean"
@@ -2269,6 +2370,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeDimensions",
@@ -2281,6 +2383,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeOffCanvasPaths",
@@ -2293,6 +2396,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeRasterImages",
@@ -2305,6 +2409,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeScriptElement",
@@ -2317,6 +2422,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeStyleElement",
@@ -2329,6 +2435,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeXMLNS",
@@ -2341,6 +2448,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "reusePaths",
@@ -2353,12 +2461,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "addAttributesToSVGElement",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "attribute": {
                   "anyOf": [
@@ -2390,12 +2500,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "addClassesToSVGElement",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "className": {
                   "type": "string"
@@ -2413,6 +2525,7 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeAttributesBySelector",
@@ -2423,12 +2536,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeAttrs",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "attrs": {
                   "anyOf": [
@@ -2456,12 +2571,14 @@
           "type": "object"
         },
         {
+          "additionalProperties": false,
           "properties": {
             "name": {
               "const": "removeElementsByAttr",
               "type": "string"
             },
             "params": {
+              "additionalProperties": false,
               "properties": {
                 "class": {
                   "anyOf": [
@@ -2559,6 +2676,10 @@
           "$ref": "#/definitions/ConfigItem"
         },
         {
+          "additionalProperties": false,
+          "type": "object"
+        },
+        {
           "$ref": "#/definitions/PluginObj<any>"
         },
         {
@@ -2591,11 +2712,12 @@
           "type": "array"
         },
         {
-          "type": ["string", "object"]
+          "type": "string"
         }
       ]
     },
     "PluginObj<any>": {
+      "additionalProperties": false,
       "properties": {
         "inherits": {},
         "name": {
@@ -2625,15 +2747,21 @@
           "type": "object"
         },
         {
-          "type": ["string", "object"]
+          "additionalProperties": false,
+          "type": "object"
+        },
+        {
+          "type": "string"
         }
       ]
     },
     "PresetDefaultOverrides": {
+      "additionalProperties": false,
       "properties": {
         "cleanupAttrs": {
           "anyOf": [
             {
+              "additionalProperties": false,
               "properties": {
                 "newlines": {
                   "type": "boolean"
@@ -2667,6 +2795,7 @@
         "cleanupIds": {
           "anyOf": [
             {
+              "additionalProperties": false,
               "properties": {
                 "force": {
                   "type": "boolean"
@@ -2701,6 +2830,7 @@
         "cleanupNumericValues": {
           "anyOf": [
             {
+              "additionalProperties": false,
               "properties": {
                 "convertToPx": {
                   "type": "boolean"
@@ -2737,6 +2867,7 @@
         "convertColors": {
           "anyOf": [
             {
+              "additionalProperties": false,
               "properties": {
                 "currentColor": {
                   "anyOf": [
@@ -2783,6 +2914,7 @@
         "convertPathData": {
           "anyOf": [
             {
+              "additionalProperties": false,
               "properties": {
                 "applyTransforms": {
                   "type": "boolean"
@@ -2817,6 +2949,7 @@
                   "type": "boolean"
                 },
                 "makeArcs": {
+                  "additionalProperties": false,
                   "properties": {
                     "threshold": {
                       "type": "number"
@@ -2857,6 +2990,7 @@
         "convertShapeToPath": {
           "anyOf": [
             {
+              "additionalProperties": false,
               "properties": {
                 "convertArcs": {
                   "type": "boolean"
@@ -2876,6 +3010,7 @@
         "convertTransform": {
           "anyOf": [
             {
+              "additionalProperties": false,
               "properties": {
                 "collapseIntoOne": {
                   "type": "boolean"
@@ -2925,6 +3060,7 @@
         "inlineStyles": {
           "anyOf": [
             {
+              "additionalProperties": false,
               "properties": {
                 "onlyMatchedOnce": {
                   "type": "boolean"
@@ -2956,6 +3092,7 @@
         "mergePaths": {
           "anyOf": [
             {
+              "additionalProperties": false,
               "properties": {
                 "floatPrecision": {
                   "type": "number"
@@ -2989,6 +3126,7 @@
         "minifyStyles": {
           "anyOf": [
             {
+              "additionalProperties": false,
               "properties": {
                 "comments": {
                   "default": true,
@@ -3008,6 +3146,7 @@
                 "usage": {
                   "anyOf": [
                     {
+                      "additionalProperties": false,
                       "properties": {
                         "classes": {
                           "type": "boolean"
@@ -3075,6 +3214,7 @@
         "removeDesc": {
           "anyOf": [
             {
+              "additionalProperties": false,
               "properties": {
                 "removeAny": {
                   "type": "boolean"
@@ -3102,6 +3242,7 @@
         "removeEditorsNSData": {
           "anyOf": [
             {
+              "additionalProperties": false,
               "properties": {
                 "additionalNamespaces": {
                   "items": {
@@ -3143,6 +3284,7 @@
         "removeEmptyText": {
           "anyOf": [
             {
+              "additionalProperties": false,
               "properties": {
                 "text": {
                   "type": "boolean"
@@ -3165,6 +3307,7 @@
         "removeHiddenElems": {
           "anyOf": [
             {
+              "additionalProperties": false,
               "properties": {
                 "circleR0": {
                   "type": "boolean"
@@ -3256,6 +3399,7 @@
         "removeUnknownsAndDefaults": {
           "anyOf": [
             {
+              "additionalProperties": false,
               "properties": {
                 "defaultAttrs": {
                   "type": "boolean"
@@ -3312,6 +3456,7 @@
         "removeUselessStrokeAndFill": {
           "anyOf": [
             {
+              "additionalProperties": false,
               "properties": {
                 "fill": {
                   "type": "boolean"
@@ -3356,6 +3501,7 @@
         "sortAttrs": {
           "anyOf": [
             {
+              "additionalProperties": false,
               "properties": {
                 "order": {
                   "items": {
@@ -3391,55 +3537,71 @@
       "type": "object"
     },
     "Printer<T>": {
+      "additionalProperties": false,
       "properties": {
         "canAttachComment": {
+          "additionalProperties": false,
           "type": "object"
         },
         "embed": {
+          "additionalProperties": false,
           "type": "object"
         },
         "handleComments": {
+          "additionalProperties": false,
           "properties": {
             "endOfLine": {
+              "additionalProperties": false,
               "type": "object"
             },
             "ownLine": {
+              "additionalProperties": false,
               "type": "object"
             },
             "remaining": {
+              "additionalProperties": false,
               "type": "object"
             }
           },
           "type": "object"
         },
         "hasPrettierIgnore": {
+          "additionalProperties": false,
           "type": "object"
         },
         "insertPragma": {
+          "additionalProperties": false,
           "type": "object"
         },
         "isBlockComment": {
+          "additionalProperties": false,
           "type": "object"
         },
         "massageAstNode": {
+          "additionalProperties": false,
           "type": "object"
         },
         "preprocess": {
+          "additionalProperties": false,
           "type": "object"
         },
         "printComment": {
+          "additionalProperties": false,
           "type": "object"
         },
         "willPrintOwnComments": {
+          "additionalProperties": false,
           "type": "object"
         }
       },
       "type": "object"
     },
     "Record<string,string>": {
+      "additionalProperties": false,
       "type": "object"
     },
     "RegExp": {
+      "additionalProperties": false,
       "properties": {
         "dotAll": {
           "type": "boolean"
@@ -3472,6 +3634,7 @@
       "type": "object"
     },
     "SupportLanguage": {
+      "additionalProperties": false,
       "properties": {
         "aceMode": {
           "type": "string"
@@ -3547,9 +3710,11 @@
       "type": "object"
     },
     "SupportOptions": {
+      "additionalProperties": false,
       "type": "object"
     },
     "Svg2vectordrawableOptions": {
+      "additionalProperties": false,
       "properties": {
         "fillBlack": {
           "type": "boolean"
@@ -3570,9 +3735,11 @@
       "type": "object"
     },
     "Template": {
+      "additionalProperties": false,
       "type": "object"
     },
     "TransformCaller": {
+      "additionalProperties": false,
       "properties": {
         "name": {
           "type": "string"
@@ -3593,6 +3760,7 @@
       "type": "object"
     },
     "TransformOptions": {
+      "additionalProperties": false,
       "properties": {
         "assumptions": {
           "additionalProperties": {
@@ -3623,13 +3791,17 @@
               "$ref": "#/definitions/RegExp"
             },
             {
+              "additionalProperties": false,
+              "type": "object"
+            },
+            {
               "items": {
                 "$ref": "#/definitions/MatchPattern"
               },
               "type": "array"
             },
             {
-              "type": ["string", "object", "boolean"]
+              "type": ["string", "boolean"]
             }
           ],
           "description": "Specify which packages should be search for .babelrc files when they are being compiled. `true` to always search, or a path string or an array of paths to packages to search\ninside of. Defaults to only searching the \"root\" package.\n\nDefault: `(root)`"
@@ -3687,13 +3859,17 @@
               "$ref": "#/definitions/RegExp"
             },
             {
+              "additionalProperties": false,
+              "type": "object"
+            },
+            {
               "items": {
                 "$ref": "#/definitions/MatchPattern"
               },
               "type": "array"
             },
             {
-              "type": ["string", "object"]
+              "type": "string"
             }
           ],
           "description": "If any of patterns match, the current configuration object is considered inactive and is ignored during config processing."
@@ -3715,6 +3891,7 @@
           "description": "An object containing the options to be passed down to the babel code generator, @babel/generator\n\nDefault: `{}`"
         },
         "getModuleId": {
+          "additionalProperties": false,
           "description": "Specify a custom callback to generate a module id with. Called as `getModuleId(moduleName)`. If falsy value is returned then the generated module id is used\n\nDefault: `null`",
           "type": "object"
         },
@@ -3735,13 +3912,17 @@
               "$ref": "#/definitions/RegExp"
             },
             {
+              "additionalProperties": false,
+              "type": "object"
+            },
+            {
               "items": {
                 "$ref": "#/definitions/MatchPattern"
               },
               "type": "array"
             },
             {
-              "type": ["string", "object"]
+              "type": "string"
             }
           ],
           "description": "This option is a synonym for \"test\""
@@ -3812,6 +3993,7 @@
           "type": "string"
         },
         "shouldPrintComment": {
+          "additionalProperties": false,
           "description": "An optional callback that controls whether a comment should be output or not. Called as `shouldPrintComment(commentContents)`. **NOTE**: This overrides the `comment` option when used\n\nDefault: `null`",
           "type": "object"
         },
@@ -3841,6 +4023,7 @@
               "type": "array"
             },
             {
+              "additionalProperties": false,
               "properties": {
                 "android": {
                   "type": "string"
@@ -3939,13 +4122,17 @@
               "$ref": "#/definitions/RegExp"
             },
             {
+              "additionalProperties": false,
+              "type": "object"
+            },
+            {
               "items": {
                 "$ref": "#/definitions/MatchPattern"
               },
               "type": "array"
             },
             {
-              "type": ["string", "object"]
+              "type": "string"
             }
           ],
           "description": "If all patterns fail to match, the current configuration object is considered inactive and is ignored during config processing."
