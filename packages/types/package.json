@@ -1,7 +1,6 @@
 {
   "name": "@icona/types",
   "version": "0.0.2",
-  "private": true,
   "main": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
@@ -18,5 +17,8 @@
     "typescript": "^5.1.3",
     "typescript-json-schema": "^0.57.0"
   },
-  "packageManager": "yarn@3.5.1"
+  "packageManager": "yarn@3.5.1",
+  "publishConfig": {
+    "access": "public"
+  }
 }
