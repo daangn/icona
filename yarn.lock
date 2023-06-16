@@ -2080,8 +2080,8 @@ __metadata:
   resolution: "@icona/cli@workspace:packages/icona-cli"
   dependencies:
     "@icona/generator": ^0.0.6
-    "@icona/types": "workspace:^"
-    "@icona/utils": "workspace:^"
+    "@icona/types": ^0.0.6
+    "@icona/utils": ^0.0.6
     "@types/dedent": ^0.7.0
     "@types/findup-sync": ^4.0.2
     "@types/node": ^20.2.5
@@ -2136,7 +2136,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/types@^0.0.6, @icona/types@workspace:^, @icona/types@workspace:packages/types":
+"@icona/types@^0.0.6, @icona/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@icona/types@workspace:packages/types"
   dependencies:
@@ -2151,7 +2151,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/utils@^0.0.6, @icona/utils@workspace:^, @icona/utils@workspace:packages/icona-utils":
+"@icona/utils@^0.0.6, @icona/utils@workspace:packages/icona-utils":
   version: 0.0.0-use.local
   resolution: "@icona/utils@workspace:packages/icona-utils"
   dependencies:
