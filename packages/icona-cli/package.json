@@ -1,6 +1,6 @@
 {
   "name": "@icona/cli",
-  "version": "0.0.6-2",
+  "version": "0.0.6",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/daangn/icona.git",
