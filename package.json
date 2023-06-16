@@ -6,7 +6,10 @@
   "author": "junghyeonsu <jung660317@naver.com>",
   "main": "index.js",
   "workspaces": [
-    "packages/*"
+    "packages/types",
+    "packages/icona-cli",
+    "packages/icona-utils",
+    "packages/icona-generator"
   ],
   "scripts": {
     "build": "ultra -r build",
