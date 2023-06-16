@@ -103,6 +103,11 @@ export interface GenerateDrawableConfig {
 }
 
 export interface IconaConfig {
+  /**
+   * This is for the schema version of the config file.
+   */
+  $schema?: string;
+
   svg?: GenerateSVGConfig;
   react?: GenerateReactConfig;
   pdf?: GeneratePDFConfig;

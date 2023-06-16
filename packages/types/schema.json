@@ -4142,6 +4142,10 @@
     }
   },
   "properties": {
+    "$schema": {
+      "description": "This is for the schema version of the config file.",
+      "type": "string"
+    },
     "drawable": {
       "$ref": "#/definitions/GenerateDrawableConfig"
     },
