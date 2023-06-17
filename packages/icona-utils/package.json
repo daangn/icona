@@ -1,6 +1,6 @@
 {
   "name": "@icona/utils",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/daangn/icona.git",
@@ -28,7 +28,7 @@
     "findup-sync": "^5.0.0"
   },
   "devDependencies": {
-    "@icona/types": "^0.0.8",
+    "@icona/types": "^0.0.9",
     "@types/node": "^20.3.1",
     "nanobundle": "^1.6.0",
     "typescript": "^5.1.3"

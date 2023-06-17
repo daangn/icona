@@ -1,5 +1,11 @@
 # @icona/utils
 
+## 0.0.9
+
+### Patch Changes
+
+- 68f7418: bump test
+
 ## 0.0.8
 
 ### Patch Changes
