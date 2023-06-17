@@ -1,5 +1,11 @@
 # @icona/types
 
+## 0.0.8
+
+### Patch Changes
+
+- 8bd5ea3: bump test
+
 ## 0.0.7
 
 ### Patch Changes

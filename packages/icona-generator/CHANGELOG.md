@@ -1,5 +1,13 @@
 # @icona/generator
 
+## 0.0.8
+
+### Patch Changes
+
+- 8bd5ea3: bump test
+- Updated dependencies [8bd5ea3]
+  - @icona/utils@0.0.8
+
 ## 0.0.7
 
 ### Patch Changes
