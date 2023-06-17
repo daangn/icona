@@ -27,9 +27,9 @@ jobs:
             '.yarn/unplugged/'
             '.yarn/build-state.yml'
             '.yarn/install-state.gz'
-          key: ${{ runner.os }}-yarn-v1-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn--v1-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-v1-
+            ${{ runner.os }}-yarn--v1-
 
       - name: Unplugged된 의존성을 설치하고 Yarn 파일들이 설치과정중에 변하지 않는지 확인해요. (만약 이 스텝에서 오류가 발생한다면 "yarn install"을 수행하고 커밋, 푸시하세요)
         run: |
