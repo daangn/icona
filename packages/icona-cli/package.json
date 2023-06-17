@@ -1,6 +1,6 @@
 {
   "name": "@icona/cli",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/daangn/icona.git",
@@ -17,14 +17,14 @@
     "prepack": "yarn build"
   },
   "dependencies": {
-    "@icona/generator": "^0.0.7",
-    "@icona/utils": "^0.0.7",
+    "@icona/generator": "^0.0.8",
+    "@icona/utils": "^0.0.8",
     "commander": "^10.0.1",
     "dedent": "^0.7.0",
     "findup-sync": "^5.0.0"
   },
   "devDependencies": {
-    "@icona/types": "^0.0.7",
+    "@icona/types": "^0.0.8",
     "@types/dedent": "^0.7.0",
     "@types/findup-sync": "^4.0.2",
     "@types/node": "^20.2.5",
