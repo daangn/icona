@@ -4,11 +4,6 @@ import { writeFileSync } from "fs";
 import { resolve } from "path";
 import svg2vectordrawable from "svg2vectordrawable";
 
-/**
- * 
-/#FF212124/g, "@color/gray900"
- */
-
 const DRAWABLE_DEFAULT_COLOR = "#FF212124";
 
 export const generateDrawable = (

@@ -5,14 +5,6 @@ import { resolve } from "path";
 import PDFDocument from "pdfkit";
 import SVGtoPDF from "svg-to-pdfkit";
 
-/**
- * 
-{
-      size: [24, 24],
-      margin: 0,
-    }
- */
-
 export const generatePDF = (
   icons: IconaIconData[],
   config: GeneratePDFConfig,

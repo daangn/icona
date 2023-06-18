@@ -4,24 +4,6 @@ import { writeFileSync } from "fs";
 import { resolve } from "path";
 import { optimize } from "svgo";
 
-/**
- * 
- {
-      js2svg: {
-        indent: 2,
-        pretty: true,
-      },
-      plugins: [
-        {
-          name: "convertColors",
-          params: {
-            currentColor: true,
-          },
-        },
-      ],
-    }
- */
-
 export const generateSVG = (
   icons: IconaIconData[],
   config: GenerateSVGConfig,

@@ -5,38 +5,6 @@ import { transform } from "@svgr/core";
 import { writeFileSync } from "fs";
 import { resolve } from "path";
 
-/**
- * 
-{
-        plugins: [
-          "@svgr/plugin-svgo",
-          "@svgr/plugin-jsx",
-          "@svgr/plugin-prettier",
-        ],
-        replaceAttrValues: {
-          "#212124": "currentColor",
-        },
-        prettierConfig: {
-          tabWidth: 2,
-          useTabs: false,
-          singleQuote: true,
-          semi: true,
-        },
-        svgoConfig: {
-          // plugins: [
-          //   {
-          //     name: "addAttributesToSVGElement",
-          //     params: {
-          //       attributes: [{ "data-karrot-ui-icon": true }],
-          //     },
-          //   },
-          // ],
-        },
-        typescript: true,
-        dimensions: false,
-      },
- */
-
 export const generateReact = (
   icons: IconaIconData[],
   config: GenerateReactConfig,
