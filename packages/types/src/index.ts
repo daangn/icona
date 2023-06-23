@@ -1,18 +1,17 @@
-import type { Config as SvgoConfig } from "./lib/svgo";
-import type { Config as SvgrConfig } from "./lib/svgr";
+import type { Config as SvgrConfig } from "@svgr/core";
+import type { Config as SvgoConfig } from "svgo";
 
 export type IconaIconData = {
   name: string;
   svg: string;
 };
 
-type PdfKitConfig = PDFKit.PDFDocumentOptions;
 export interface GeneratePDFConfig {
   /**
    * generate drawable pdf files
    * @default false
    */
-  active?: boolean;
+  active: boolean;
 
   /**
    * pdf files path that will be generated
@@ -24,7 +23,7 @@ export interface GeneratePDFConfig {
    * PDFKit.PDFDocumentOptions
    * @see https://pdfkit.org/docs/getting_started.html#document-structure
    */
-  pdfKitConfig?: PdfKitConfig;
+  pdfKitConfig?: PDFKit.PDFDocumentOptions;
 }
 
 export interface GenerateReactConfig {
@@ -32,7 +31,7 @@ export interface GenerateReactConfig {
    * generate drawable react files
    * @default false
    */
-  active?: boolean;
+  active: boolean;
 
   /**
    * react component files path that will be generated
@@ -52,7 +51,7 @@ export interface GenerateSVGConfig {
    * generate drawable svg files
    * @default true
    */
-  active?: boolean;
+  active: boolean;
 
   /**
    * svg files path that will be generated
@@ -80,7 +79,7 @@ export interface GenerateDrawableConfig {
    * generate drawable xml files
    * @default false
    */
-  active?: boolean;
+  active: boolean;
 
   /**
    * xml files path that will be generated
@@ -103,13 +102,8 @@ export interface GenerateDrawableConfig {
 }
 
 export interface IconaConfig {
-  /**
-   * This is for the schema version of the config file.
-   */
-  $schema?: string;
-
-  svg?: GenerateSVGConfig;
-  react?: GenerateReactConfig;
-  pdf?: GeneratePDFConfig;
-  drawable?: GenerateDrawableConfig;
+  svg: GenerateSVGConfig;
+  react: GenerateReactConfig;
+  pdf: GeneratePDFConfig;
+  drawable: GenerateDrawableConfig;
 }
