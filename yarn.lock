@@ -3623,9 +3623,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@icona/cli@workspace:packages/icona-cli"
   dependencies:
-    "@icona/generator": ^0.0.9
-    "@icona/types": ^0.0.9
-    "@icona/utils": ^0.0.9
+    "@icona/generator": ^0.0.10
+    "@icona/types": ^0.0.11
+    "@icona/utils": ^0.0.10
     "@types/dedent": ^0.7.0
     "@types/findup-sync": ^4.0.2
     "@types/node": ^20.2.5
@@ -3670,26 +3670,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/generator@npm:^0.0.9":
-  version: 0.0.9
-  resolution: "@icona/generator@npm:0.0.9"
-  dependencies:
-    "@icona/utils": ^0.0.9
-    "@svgr/core": ^8.0.0
-    pdfkit: ^0.13.0
-    svg-to-pdfkit: ^0.1.8
-    svg2vectordrawable: ^2.9.1
-    svgo: ^3.0.2
-  checksum: 39fad4d7969120f0f4106a72291e21da35d051b71d193e93ffff7f14d414e07d176397b4a041b8aeddb25d77f561fc8c79e4a04478d34baab4fe7cddbc156c4f
-  languageName: node
-  linkType: hard
-
-"@icona/generator@workspace:packages/icona-generator":
+"@icona/generator@^0.0.10, @icona/generator@workspace:packages/icona-generator":
   version: 0.0.0-use.local
   resolution: "@icona/generator@workspace:packages/icona-generator"
   dependencies:
-    "@icona/types": ^0.0.10
-    "@icona/utils": ^0.0.9
+    "@icona/types": ^0.0.11
+    "@icona/utils": ^0.0.10
     "@svgr/core": ^8.0.0
     nanobundle: ^1.6.0
     pdfkit: ^0.13.0
@@ -3725,7 +3711,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/types@^0.0.10, @icona/types@workspace:^, @icona/types@workspace:packages/types":
+"@icona/types@^0.0.11, @icona/types@workspace:^, @icona/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@icona/types@workspace:packages/types"
   dependencies:
@@ -3741,18 +3727,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/types@npm:^0.0.9":
-  version: 0.0.9
-  resolution: "@icona/types@npm:0.0.9"
-  checksum: 87769cb4bbbb6bf44c95f9214389d64738f29c523adab932add2f64b50a7a2acbd372a45614362eab1014c9210977099392ed411213665e76b53777170010083
-  languageName: node
-  linkType: hard
-
-"@icona/utils@^0.0.9, @icona/utils@workspace:packages/icona-utils":
+"@icona/utils@^0.0.10, @icona/utils@workspace:packages/icona-utils":
   version: 0.0.0-use.local
   resolution: "@icona/utils@workspace:packages/icona-utils"
   dependencies:
-    "@icona/types": ^0.0.10
+    "@icona/types": ^0.0.11
     "@types/node": ^20.3.1
     findup-sync: ^5.0.0
     nanobundle: ^1.6.0

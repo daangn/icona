@@ -1,5 +1,11 @@
 # @icona/utils
 
+## 0.0.10
+
+### Patch Changes
+
+- c62dc32: Not use CLI, instead Generator
+
 ## 0.0.9
 
 ### Patch Changes
