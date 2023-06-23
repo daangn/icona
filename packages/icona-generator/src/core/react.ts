@@ -1,17 +1,34 @@
 import type { GenerateReactConfig, IconaIconData } from "@icona/types";
-import { getProjectRootPath, makeFolderIfNotExistFromRoot } from "@icona/utils";
+import {
+  getIconaIconsFile,
+  getProjectRootPath,
+  makeFolderIfNotExistFromRoot,
+} from "@icona/utils";
 import type { Config } from "@svgr/core";
 import { transform } from "@svgr/core";
 import { writeFileSync } from "fs";
 import { resolve } from "path";
 
-export const generateReact = (
-  icons: IconaIconData[],
-  config: GenerateReactConfig,
-) => {
+interface GenerateReactFunction {
+  /**
+   * @description Icona icons data
+   * @default .icona/icons.json
+   */
+  icons?: IconaIconData[] | null;
+  config: GenerateReactConfig;
+}
+
+export const generateReact = ({
+  icons = getIconaIconsFile(),
+  config,
+}: GenerateReactFunction) => {
   const projectPath = getProjectRootPath();
   const path = config.path || "react";
   const svgrConfig = config.svgrConfig || {};
+
+  if (!icons) {
+    throw new Error("There is no icons data");
+  }
 
   // TODO: Name transform option
   icons.forEach(async ({ name, svg }) => {

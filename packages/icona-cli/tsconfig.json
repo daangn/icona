@@ -6,10 +6,9 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "isolatedModules": false,
     "strict": true,
     "declaration": true,
-    "outDir": "dist"
+    "outDir": "dist",
   },
   "include": ["src", "package.json"],
 }

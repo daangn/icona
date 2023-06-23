@@ -1,17 +1,34 @@
 import type { GeneratePDFConfig, IconaIconData } from "@icona/types";
-import { getProjectRootPath, makeFolderIfNotExistFromRoot } from "@icona/utils";
+import {
+  getIconaIconsFile,
+  getProjectRootPath,
+  makeFolderIfNotExistFromRoot,
+} from "@icona/utils";
 import { createWriteStream } from "fs";
 import { resolve } from "path";
 import PDFDocument from "pdfkit";
 import SVGtoPDF from "svg-to-pdfkit";
 
-export const generatePDF = (
-  icons: IconaIconData[],
-  config: GeneratePDFConfig,
-) => {
+interface GeneratePDFFunction {
+  /**
+   * @description Icona icons data
+   * @default .icona/icons.json
+   */
+  icons?: IconaIconData[] | null;
+  config: GeneratePDFConfig;
+}
+
+export const generatePDF = ({
+  icons = getIconaIconsFile(),
+  config,
+}: GeneratePDFFunction) => {
   const projectPath = getProjectRootPath();
   const path = config.path || "pdf";
   const pdfkitConfig = config.pdfKitConfig || {};
+
+  if (!icons) {
+    throw new Error("There is no icons data");
+  }
 
   // TODO: Name transform option
   icons.forEach(async ({ name, svg }) => {

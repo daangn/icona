@@ -1,26 +1,30 @@
 {
   "name": "@icona/types",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/daangn/icona.git",
     "directory": "packages/types"
   },
-  "main": "./dist/src/index.d.ts",
+  "main": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "tsc",
-    "clean": "rm -rf ./dist",
-    "generate:json-schema": "yarn typescript-json-schema ./src/index.ts IconaConfig --out schema.json --noExtraProps"
+    "clean": "rm -rf ./dist"
   },
   "devDependencies": {
     "@svgr/babel-preset": "^8.0.0",
+    "@svgr/cli": "^8.0.1",
     "@types/babel__core": "^7.20.1",
     "@types/node": "^20.3.1",
     "@types/pdfkit": "^0.12.10",
     "@types/prettier": "^2.7.3",
     "@types/svg-to-pdfkit": "^0.1.0",
-    "typescript": "^5.1.3",
-    "typescript-json-schema": "^0.57.0"
+    "svgo": "^3.0.2",
+    "typescript": "^5.1.3"
   },
   "packageManager": "yarn@3.5.1",
   "publishConfig": {

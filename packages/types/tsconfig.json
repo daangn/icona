@@ -5,8 +5,8 @@
     "esModuleInterop": true,
     "declaration": true,
     "outDir": "dist",
+    "rootDir": "src",
     "emitDeclarationOnly": true
   },
-  "include": ["src", "index.ts"],
-  "exclude": []
+  "include": ["./src"],
 }
