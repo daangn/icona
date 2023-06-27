@@ -3670,7 +3670,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/generator@^0.0.10, @icona/generator@workspace:packages/icona-generator":
+"@icona/generator@npm:^0.0.10":
+  version: 0.0.10
+  resolution: "@icona/generator@npm:0.0.10"
+  dependencies:
+    "@icona/utils": ^0.0.10
+    "@svgr/core": ^8.0.0
+    pdfkit: ^0.13.0
+    svg-to-pdfkit: ^0.1.8
+    svg2vectordrawable: ^2.9.1
+    svgo: ^3.0.2
+  checksum: 734fc7a8266ff0808741b9734e798ca08ed026799fddf169b45b094baa5d90f971584a1593e1e366c22fc2a6527ca7271fdd19d171cb430c0492595f01a344c5
+  languageName: node
+  linkType: hard
+
+"@icona/generator@workspace:packages/icona-generator":
   version: 0.0.0-use.local
   resolution: "@icona/generator@workspace:packages/icona-generator"
   dependencies:
@@ -3727,7 +3741,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/utils@^0.0.10, @icona/utils@workspace:packages/icona-utils":
+"@icona/utils@npm:^0.0.10":
+  version: 0.0.10
+  resolution: "@icona/utils@npm:0.0.10"
+  dependencies:
+    findup-sync: ^5.0.0
+  checksum: 2c3f64ee609b7169cb8c41e189aac77327d36a2a9af212a0ff4ba93cb94a1065dcf7fba16a8df4cafe62bcd4cc9e8c3565702721147df3dffe515b4c801a8eaa
+  languageName: node
+  linkType: hard
+
+"@icona/utils@workspace:packages/icona-utils":
   version: 0.0.0-use.local
   resolution: "@icona/utils@workspace:packages/icona-utils"
   dependencies:
