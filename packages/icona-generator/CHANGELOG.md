@@ -1,5 +1,13 @@
 # @icona/generator
 
+## 0.0.12
+
+### Patch Changes
+
+- 6475f78: fix pdf options
+- Updated dependencies [6475f78]
+  - @icona/utils@0.0.12
+
 ## 0.0.10
 
 ### Patch Changes

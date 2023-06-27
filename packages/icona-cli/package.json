@@ -32,15 +32,15 @@
     "prepack": "yarn build"
   },
   "dependencies": {
-    "@icona/generator": "^0.0.10",
-    "@icona/utils": "^0.0.10",
+    "@icona/generator": "^0.0.12",
+    "@icona/utils": "^0.0.12",
     "commander": "^10.0.1",
     "dedent": "^0.7.0",
     "findup-sync": "^5.0.0",
     "ts-node": "^10.9.1"
   },
   "devDependencies": {
-    "@icona/types": "^0.0.11",
+    "@icona/types": "^0.0.12",
     "@types/dedent": "^0.7.0",
     "@types/findup-sync": "^4.0.2",
     "@types/node": "^20.2.5",
