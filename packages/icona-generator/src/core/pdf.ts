@@ -25,6 +25,7 @@ export const generatePDF = ({
   const projectPath = getProjectRootPath();
   const path = config.path || "pdf";
   const pdfkitConfig = config.pdfKitConfig || {};
+  const { x, y, ...restSvgToPdfOptions } = config.svgToPdfOptions || {};
 
   if (!icons) {
     throw new Error("There is no icons data");
@@ -36,7 +37,8 @@ export const generatePDF = ({
 
     const svgPath = resolve(projectPath, path, `${name}.pdf`);
     const pdfDoc = new PDFDocument(pdfkitConfig);
-    SVGtoPDF(pdfDoc, svg, 0, 0);
+    SVGtoPDF(pdfDoc, svg, x, y, restSvgToPdfOptions);
     pdfDoc.pipe(createWriteStream(svgPath));
+    pdfDoc.end();
   });
 };
