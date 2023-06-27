@@ -1,4 +1,5 @@
 import type { Config as SvgrConfig } from "@svgr/core";
+import type { SVGtoPDFOptions } from "svg-to-pdfkit";
 import type { Config as SvgoConfig } from "svgo";
 
 export type IconaIconData = {
@@ -6,6 +7,10 @@ export type IconaIconData = {
   svg: string;
 };
 
+export interface SvgToPdfOptions extends SVGtoPDFOptions {
+  x?: number;
+  y?: number;
+}
 export interface GeneratePDFConfig {
   /**
    * generate drawable pdf files
@@ -24,6 +29,8 @@ export interface GeneratePDFConfig {
    * @see https://pdfkit.org/docs/getting_started.html#document-structure
    */
   pdfKitConfig?: PDFKit.PDFDocumentOptions;
+
+  svgToPdfOptions?: SvgToPdfOptions;
 }
 
 export interface GenerateReactConfig {
