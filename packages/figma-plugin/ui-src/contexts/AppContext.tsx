@@ -2,8 +2,7 @@ import type { IconaIconData } from "@icona/types";
 import type { Dispatch } from "react";
 import React, { createContext, useContext, useReducer } from "react";
 
-import { STATUS } from "../../common/constants";
-import { ACTION } from "../../common/constants";
+import { ACTION, STATUS } from "../../common/constants";
 import type { GithubData, Messages, Status } from "../../common/types";
 import { postMessage } from "../utils/figma";
 import { getFigmaFileKeyFromUrl, getGithubDataFromUrl } from "../utils/string";
@@ -16,7 +15,6 @@ type State = {
   // Input
   githubRepositoryUrl: string;
   githubApiKey: string;
-  iconFrameId: string;
   figmaFileUrl: string;
   iconPreview: IconaIconData[];
 
@@ -47,11 +45,6 @@ function reducer(state: State, action: Messages): State {
         ...state,
         figmaFileUrl: action.payload,
         figmaFileKey: getFigmaFileKeyFromUrl(action.payload),
-      };
-    case ACTION.GET_ICON_FRAME_ID:
-      return {
-        ...state,
-        iconFrameId: action.payload,
       };
     case ACTION.GET_GITHUB_REPO_URL:
       return {
@@ -92,15 +85,6 @@ function reducer(state: State, action: Messages): State {
         figmaFileUrl: action.payload,
         figmaFileKey: getFigmaFileKeyFromUrl(action.payload),
       };
-    case ACTION.SET_ICON_FRAME_ID:
-      postMessage({
-        type: action.type,
-        payload: action.payload,
-      });
-      return {
-        ...state,
-        iconFrameId: action.payload,
-      };
     case ACTION.SET_GITHUB_REPO_URL:
       postMessage({
         type: action.type,
@@ -140,7 +124,6 @@ function reducer(state: State, action: Messages): State {
         type: ACTION.DEPLOY_ICON,
         payload: {
           githubData: action.payload.githubData,
-          iconFrameId: action.payload.iconFrameId,
         },
       });
       return state;
@@ -172,7 +155,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     // Input
     githubApiKey: "",
     githubRepositoryUrl: "",
-    iconFrameId: "",
     figmaFileUrl: "",
 
     // Status
@@ -190,9 +172,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
           break;
         case ACTION.GET_GITHUB_REPO_URL:
-          if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
-          break;
-        case ACTION.GET_ICON_FRAME_ID:
           if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
           break;
         case ACTION.GET_FIGMA_FILE_URL:

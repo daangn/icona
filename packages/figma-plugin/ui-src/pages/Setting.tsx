@@ -13,12 +13,9 @@ const Setting = () => {
     githubRepositoryUrl,
     githubApiKey,
     figmaFileUrl,
-    iconFrameId,
     githubData,
     settingStatus,
   } = useAppState();
-
-  const isExistIconFrameId = Boolean(iconFrameId);
 
   const settingButtonInfo = {
     [STATUS.IDLE]: {
@@ -85,15 +82,6 @@ const Setting = () => {
           });
         }}
       />
-
-      <Button
-        isDisabled={isExistIconFrameId}
-        onClick={() => dispatch({ type: ACTION.CREATE_ICON_FRAME })}
-      >
-        {isExistIconFrameId
-          ? "Icon Frame already created"
-          : "Create Icon Frame"}
-      </Button>
 
       <Button
         isDisabled={

@@ -41,25 +41,19 @@ async function init() {
     });
   });
 
-  const frameId = await getLocalData(DATA.ICON_FRAME_ID);
-  const iconFrame = figma.getNodeById(frameId);
+  const iconaFrame = figma.currentPage.findOne((node) => {
+    return node.name === DATA.ICON_FRAME_ID;
+  });
 
-  // NOTE: iconFrame이 없으면 빈 문자열을 보내준다.
-  if (iconFrame) {
-    const svgDatas = await getSvgInIconFrame(frameId);
-    figma.ui.postMessage({
-      type: ACTION.GET_ICON_FRAME_ID,
-      payload: frameId,
-    });
+  if (!iconaFrame) {
+    figma.notify("Icona frame not found");
+    return;
+  } else {
+    const svgDatas = await getSvgInIconFrame(iconaFrame.id);
+
     figma.ui.postMessage({
       type: ACTION.GET_ICON_PREVIEW,
       payload: svgDatas,
-    });
-  } else {
-    await setLocalData(DATA.ICON_FRAME_ID, "");
-    figma.ui.postMessage({
-      type: ACTION.GET_ICON_FRAME_ID,
-      payload: "",
     });
   }
 }
@@ -79,11 +73,6 @@ figma.ui.onmessage = async (msg: Messages) => {
     case ACTION.SET_FIGMA_FILE_URL:
       if (!msg.payload) return;
       setLocalData(DATA.FIGMA_FILE_URL, msg.payload);
-      break;
-
-    case ACTION.SET_ICON_FRAME_ID:
-      if (!msg.payload) return;
-      setLocalData(DATA.ICON_FRAME_ID, msg.payload);
       break;
 
     case ACTION.SETTING_DONE: {
@@ -126,12 +115,17 @@ figma.ui.onmessage = async (msg: Messages) => {
         type: ACTION.DEPLOY_ICON_STATUS,
         payload: STATUS.LOADING,
       });
-      const { githubData, iconFrameId } = msg.payload;
+      const { githubData } = msg.payload;
 
       try {
         const { owner, name, apiKey } = githubData;
         const { createDeployPR } = createGithubClient(owner, name, apiKey);
-        const svgs = await getSvgInIconFrame(iconFrameId);
+        const iconaFrame = figma.currentPage.findOne((node) => {
+          return node.name === DATA.ICON_FRAME_ID;
+        });
+
+        if (!iconaFrame) throw new Error("Icona frame not found");
+        const svgs = await getSvgInIconFrame(iconaFrame.id);
 
         await createDeployPR(svgs);
         figma.ui.postMessage({
@@ -158,26 +152,6 @@ figma.ui.onmessage = async (msg: Messages) => {
       }
       break;
     }
-
-    case ACTION.CREATE_ICON_FRAME:
-      const frameId = await getLocalData(DATA.ICON_FRAME_ID);
-      const iconFrame = figma.getNodeById(frameId);
-      if (iconFrame) {
-        figma.notify("Icon frame already exists");
-        return;
-      }
-
-      const frame = figma.createFrame();
-
-      frame.resize(300, 300);
-      frame.name = "icon-frame";
-
-      setLocalData(DATA.ICON_FRAME_ID, frame.id);
-      figma.ui.postMessage({
-        type: ACTION.GET_ICON_FRAME_ID,
-        payload: frame.id,
-      });
-      break;
 
     // case "cancel":
     // figma.closePlugin();

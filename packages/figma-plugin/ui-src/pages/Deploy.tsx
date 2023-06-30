@@ -7,7 +7,7 @@ import * as styles from "./Deploy.css";
 
 const Deploy = () => {
   const dispatch = useAppDispatch();
-  const { deployIconStatus, githubData, iconFrameId } = useAppState();
+  const { deployIconStatus, githubData } = useAppState();
 
   const buttonInfo = {
     [STATUS.IDLE]: {
@@ -41,7 +41,6 @@ const Deploy = () => {
             type: ACTION.DEPLOY_ICON,
             payload: {
               githubData,
-              iconFrameId,
             },
           })
         }

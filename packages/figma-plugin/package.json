@@ -2,13 +2,14 @@
   "name": "@icona/figma-plugin",
   "version": "0.0.0",
   "scripts": {
-    "build": "yarn build:ui && yarn build:main -- --minify",
-    "build:main": "node ./esbuild.plugin.js",
+    "build": "yarn build:ui && yarn build:plugin -- --minify",
+    "build:plugin": "node ./esbuild.plugin.js",
+    "build:plugin:watch": "WATCH=true node ./esbuild.plugin.js",
     "build:ui": "yarn vite build --minify esbuild --emptyOutDir=false",
-    "build:watch": "yarn build:ui --watch && yarn build:main --watch",
+    "build:ui:watch": "yarn vite build --watch --emptyOutDir=false",
     "dev": "yarn build:watch",
-    "tsc": "yarn tsc:main && yarn tsc:ui",
-    "tsc:main": "tsc --noEmit -p plugin-src",
+    "tsc": "yarn tsc:plugin && yarn tsc:ui",
+    "tsc:plugin": "tsc --noEmit -p plugin",
     "tsc:ui": "tsc --noEmit -p ui-src"
   },
   "dependencies": {
