@@ -49,9 +49,10 @@ export const getIconaIconsFile = () => {
     return null;
   }
 
-  return JSON.parse(
-    readFileSync(getIconaIconsPath(), "utf-8"),
-  ) as IconaIconData[];
+  return JSON.parse(readFileSync(getIconaIconsPath(), "utf-8")) as Record<
+    string,
+    IconaIconData
+  >;
 };
 
 export const makeFolderIfNotExistFromRoot = (targetPath: string) => {

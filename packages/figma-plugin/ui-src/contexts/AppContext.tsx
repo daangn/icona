@@ -15,7 +15,7 @@ type State = {
   githubRepositoryUrl: string;
   githubApiKey: string;
 
-  iconPreview: IconaIconData[];
+  iconPreview: Record<string, IconaIconData>;
 
   // Status
   deployIconStatus: Status;
@@ -113,7 +113,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       name: "",
       apiKey: "",
     },
-    iconPreview: [],
+    iconPreview: {},
 
     // Input
     githubApiKey: "",

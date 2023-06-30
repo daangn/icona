@@ -15,7 +15,7 @@ interface GenerateDrawableFunction {
    * @description Icona icons data
    * @default .icona/icons.json
    */
-  icons?: IconaIconData[] | null;
+  icons?: Record<string, IconaIconData> | null;
   config: GenerateDrawableConfig;
 }
 
@@ -33,7 +33,8 @@ export const generateDrawable = ({
   }
 
   // TODO: Name transform option
-  icons.forEach(async ({ name, svg }) => {
+  Object.entries(icons).forEach(async ([name, data]) => {
+    const { svg } = data;
     makeFolderIfNotExistFromRoot(path);
 
     const drawablePath = resolve(projectPath, path, `${name}.xml`);

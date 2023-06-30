@@ -8,6 +8,7 @@ import * as styles from "./Deploy.css";
 const Deploy = () => {
   const dispatch = useAppDispatch();
   const { deployIconStatus, githubData, iconPreview } = useAppState();
+  const icons = Object.entries(iconPreview);
 
   const buttonInfo = {
     [STATUS.IDLE]: {
@@ -31,7 +32,7 @@ const Deploy = () => {
   return (
     <Box className={styles.container}>
       <Text>
-        {iconPreview.length} icons found in{" "}
+        {icons.length} icons found in{" "}
         <Text as="span" color="red.600">
           `{DATA.ICON_FRAME_ID}`
         </Text>{" "}
@@ -60,7 +61,7 @@ const Deploy = () => {
       <Button
         className={styles.exportButton}
         isDisabled={
-          iconPreview.length === 0 ||
+          icons.length === 0 ||
           deployIconStatus === STATUS.LOADING ||
           deployIconStatus === STATUS.SUCCESS ||
           deployIconStatus === STATUS.ERROR
@@ -78,7 +79,8 @@ const Deploy = () => {
         {buttonInfo[deployIconStatus].children}
       </Button>
       <Box className={styles.preview}>
-        {iconPreview.map(({ name, svg }) => {
+        {icons.map(([name, data]) => {
+          const { svg } = data;
           return (
             <Tooltip hasArrow label={name} key={name}>
               <Box dangerouslySetInnerHTML={{ __html: svg }} />

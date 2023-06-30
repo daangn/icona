@@ -14,7 +14,7 @@ interface GeneratePDFFunction {
    * @description Icona icons data
    * @default .icona/icons.json
    */
-  icons?: IconaIconData[] | null;
+  icons?: Record<string, IconaIconData> | null;
   config: GeneratePDFConfig;
 }
 
@@ -32,7 +32,8 @@ export const generatePDF = ({
   }
 
   // TODO: Name transform option
-  icons.forEach(async ({ name, svg }) => {
+  Object.entries(icons).forEach(async ([name, data]) => {
+    const { svg } = data;
     makeFolderIfNotExistFromRoot(path);
 
     const svgPath = resolve(projectPath, path, `${name}.pdf`);

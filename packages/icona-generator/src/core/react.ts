@@ -14,7 +14,7 @@ interface GenerateReactFunction {
    * @description Icona icons data
    * @default .icona/icons.json
    */
-  icons?: IconaIconData[] | null;
+  icons?: Record<string, IconaIconData> | null;
   config: GenerateReactConfig;
 }
 
@@ -31,7 +31,8 @@ export const generateReact = ({
   }
 
   // TODO: Name transform option
-  icons.forEach(async ({ name, svg }) => {
+  Object.entries(icons).forEach(async ([name, data]) => {
+    const { svg } = data;
     makeFolderIfNotExistFromRoot(path);
 
     const componentName = name

@@ -6,7 +6,10 @@ import { generatePDF } from "./core/pdf";
 import { generateReact } from "./core/react";
 import { generateSVG } from "./core/svg";
 
-export const generator = (icons: IconaIconData[], config: IconaConfig) => {
+export const generator = (
+  icons: Record<string, IconaIconData>,
+  config: IconaConfig,
+) => {
   const { pdf, drawable, react, svg } = config;
 
   const generate = () => {
@@ -24,7 +27,7 @@ interface GenerateFunction {
    * @description Icona icons data
    * @default .icona/icons.json
    */
-  icons?: IconaIconData[] | null;
+  icons?: Record<string, IconaIconData> | null;
   config: IconaConfig;
 }
 export const generate = ({

@@ -13,7 +13,7 @@ interface GenerateSVGFunction {
    * @description Icona icons data
    * @default .icona/icons.json
    */
-  icons?: IconaIconData[] | null;
+  icons?: Record<string, IconaIconData> | null;
   config: GenerateSVGConfig;
 }
 
@@ -30,7 +30,8 @@ export const generateSVG = ({
   }
 
   // TODO: Name transform option
-  icons.forEach(({ name, svg }) => {
+  Object.entries(icons).forEach(([name, data]) => {
+    const { svg } = data;
     makeFolderIfNotExistFromRoot(path);
 
     const { data: optimizedSvg } = optimize(svg, svgoConfig);

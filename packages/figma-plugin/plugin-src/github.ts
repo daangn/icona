@@ -204,7 +204,7 @@ export function createGithubClient(
     await createPullRequest(newBranch, baseBranch, prTitle, prBody);
   }
 
-  async function createDeployPR(svgs: IconaIconData[]) {
+  async function createDeployPR(svgs: Record<string, IconaIconData>) {
     const baseBranch = "main";
     const newBranch = `icona-update-${new Date().getTime()}`;
     const prTitle = "[Icona]: Update Icons";
@@ -212,12 +212,7 @@ export function createGithubClient(
 
     const head = await getHead(baseBranch);
 
-    const json = svgs.map((file) => ({
-      name: file.name,
-      svg: file.svg,
-    }));
-
-    const treeBody = await uploadBlob(JSON.stringify(json)).then((blob) => ({
+    const treeBody = await uploadBlob(JSON.stringify(svgs)).then((blob) => ({
       path: `.icona/icons.json`,
       mode: "100644",
       type: "blob",
