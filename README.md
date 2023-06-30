@@ -57,7 +57,7 @@ yarn add -D @icona/generator
    - You can see example in [here (seed-icon)](https://github.com/daangn/seed-icon/blob/main/icona.js)
    - You can see `@icona/generator` library api in [here](https://github.com/daangn/icona/tree/main/packages/icona-generator)
 
-7. Run build script. (ex: `yarn node icona.js`)
+7. Run build script. (ex: `node icona.js`)
 8. That's it. You can deploy it or use it in your project.
 
 ## Products
