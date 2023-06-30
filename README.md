@@ -60,6 +60,14 @@ yarn add -D @icona/generator
 7. Run build script. (ex: `node icona.js`)
 8. That's it. You can deploy it or use it in your project.
 
+## Auto Generate (Github Action)
+
+If you want to automate the process of generating assets when PR uploaded, you can use github action.
+
+- [Example](https://github.com/daangn/seed-icon/blob/main/.github/workflows/icona-generate-svg-files.yml)
+
+Then you can use the generated assets that are automatically generated in the PR.
+
 ## Products
 
 - [figma-plugin (Figma Plugin)](https://github.com/daangn/icona/tree/main/packages/figma-plugin)
