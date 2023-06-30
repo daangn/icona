@@ -64,3 +64,9 @@ yarn add -D @icona/generator
 
 - [figma-plugin (Figma Plugin)](https://github.com/daangn/icona/tree/main/packages/figma-plugin)
 - [@icona/generator (Asset Generator)](https://github.com/daangn/icona/tree/main/packages/icona-generator)
+
+## Where use this?
+
+If you use this library, please send PR to add your project in this list.
+
+- [daangn/seed-icon](https://github.com/daangn/seed-icon)
