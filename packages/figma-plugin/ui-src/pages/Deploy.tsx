@@ -31,12 +31,34 @@ const Deploy = () => {
   return (
     <Box className={styles.container}>
       <Text>
-        {iconPreview.length} icons found in `{DATA.ICON_FRAME_ID}` frame
+        {iconPreview.length} icons found in{" "}
+        <Text as="span" color="red.600">
+          `{DATA.ICON_FRAME_ID}`
+        </Text>{" "}
+        frame
       </Text>
-      <Text as="sub" marginBottom={4}>
-        you must have at least 1 icon in `{DATA.ICON_FRAME_ID}` frame
+      <Text fontSize={12} margin={0}>
+        • will be deployed to{" "}
+        <Text as="span" color="blue.600" textDecoration="underline">
+          <a
+            target="_blank"
+            href={`https://github.com/${githubData.owner}/${githubData.name}`}
+            rel="noreferrer"
+          >
+            {githubData.name}
+          </a>
+        </Text>{" "}
+        repository
+      </Text>
+      <Text fontSize={12} margin={0}>
+        • you must have at least 1 icon in{" "}
+        <Text as="span" color="red.600">
+          `{DATA.ICON_FRAME_ID}`
+        </Text>{" "}
+        frame
       </Text>
       <Button
+        className={styles.exportButton}
         isDisabled={
           iconPreview.length === 0 ||
           deployIconStatus === STATUS.LOADING ||
