@@ -1,5 +1,13 @@
 # @icona/cli
 
+## 0.0.11
+
+### Patch Changes
+
+- Updated dependencies [6868b2a]
+  - @icona/generator@0.0.13
+  - @icona/utils@0.0.13
+
 ## 0.0.10
 
 ### Patch Changes
