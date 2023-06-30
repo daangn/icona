@@ -83,20 +83,6 @@ function reducer(state: State, action: Messages): State {
         },
       };
 
-    // FIXME: 아마도 필요 없을지도? 세팅 어떻게 할건지 다시 생각하기
-    case ACTION.SETTING_DONE:
-      postMessage({
-        type: ACTION.SETTING_DONE,
-        payload: action.payload,
-      });
-      return state;
-
-    case ACTION.SETTING_DONE_STATUS:
-      return {
-        ...state,
-        settingStatus: action.payload,
-      };
-
     case ACTION.DEPLOY_ICON: {
       postMessage({
         type: ACTION.DEPLOY_ICON,
@@ -154,10 +140,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
           break;
         case ACTION.DEPLOY_ICON_STATUS: {
-          dispatch({ type: msg.type, payload: msg.payload });
-          return;
-        }
-        case ACTION.SETTING_DONE_STATUS: {
           dispatch({ type: msg.type, payload: msg.payload });
           return;
         }

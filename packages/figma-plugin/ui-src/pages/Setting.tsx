@@ -1,7 +1,8 @@
-import { Box, Button, Spinner } from "@chakra-ui/react";
+/* eslint-disable @typescript-eslint/no-shadow */
+import { Box, Progress } from "@chakra-ui/react";
 import * as React from "react";
 
-import { ACTION, STATUS } from "../../common/constants";
+import { ACTION } from "../../common/constants";
 import { PasswordInput } from "../components/PasswordInput";
 import { TextInput } from "../components/TextInput";
 import { useAppDispatch, useAppState } from "../contexts/AppContext";
@@ -9,30 +10,23 @@ import * as styles from "./Setting.css";
 
 const Setting = () => {
   const dispatch = useAppDispatch();
-  const { githubRepositoryUrl, githubApiKey, githubData, settingStatus } =
-    useAppState();
+  const { githubRepositoryUrl, githubApiKey } = useAppState();
 
-  const settingButtonInfo = {
-    [STATUS.IDLE]: {
-      children: "Setting",
-      colorScheme: "gray",
-    },
-    [STATUS.LOADING]: {
-      children: <Spinner size="sm" />,
-      colorScheme: "gray",
-    },
-    [STATUS.SUCCESS]: {
-      children: "Setting Success!",
-      colorScheme: "green",
-    },
-    [STATUS.ERROR]: {
-      children: "Setting Failed!",
-      colorScheme: "red",
-    },
+  const githubRepositoryUrlRegex = /https:\/\/github.com\/.*/;
+  const isErrorGithubRepositoryUrl =
+    githubRepositoryUrl.match(githubRepositoryUrlRegex) === null;
+  const isInvalidGithubApiKey = githubApiKey === "";
+
+  const getProgress = () => {
+    if (isErrorGithubRepositoryUrl && isInvalidGithubApiKey) return 0;
+    if (isErrorGithubRepositoryUrl || isInvalidGithubApiKey) return 50;
+    return 100;
   };
 
   return (
     <Box className={styles.container}>
+      <Progress value={getProgress()} hasStripe colorScheme="blue" />
+
       <TextInput
         label="Github Repository URL"
         placeholder="Github Repository URL"
@@ -53,6 +47,7 @@ const Setting = () => {
         label="Github API Key"
         helperText="Github API Key from your Github Account."
         placeholder="Github API Key"
+        isInvalid={githubApiKey === ""}
         handleChange={(event) => {
           dispatch({
             type: ACTION.SET_GITHUB_API_KEY,
@@ -60,20 +55,6 @@ const Setting = () => {
           });
         }}
       />
-
-      <Button
-        isDisabled={
-          settingStatus === STATUS.LOADING ||
-          settingStatus === STATUS.SUCCESS ||
-          settingStatus === STATUS.ERROR
-        }
-        colorScheme={settingButtonInfo[settingStatus].colorScheme}
-        onClick={() =>
-          dispatch({ type: ACTION.SETTING_DONE, payload: githubData })
-        }
-      >
-        {settingButtonInfo[settingStatus].children}
-      </Button>
     </Box>
   );
 };

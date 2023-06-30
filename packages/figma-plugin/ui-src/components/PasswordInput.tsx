@@ -13,6 +13,7 @@ interface PasswordInputProps {
   value: string;
   label: string;
   helperText: string;
+  isInvalid?: boolean;
   placeholder: string;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -21,6 +22,7 @@ export const PasswordInput = ({
   value,
   label,
   helperText,
+  isInvalid,
   placeholder,
   handleChange,
 }: PasswordInputProps) => {
@@ -37,6 +39,7 @@ export const PasswordInput = ({
           placeholder={placeholder}
           value={value}
           onChange={handleChange}
+          isInvalid={isInvalid}
         />
         <InputRightElement width="4.5rem">
           <Button h="1.75rem" size="sm" onClick={handleClick}>

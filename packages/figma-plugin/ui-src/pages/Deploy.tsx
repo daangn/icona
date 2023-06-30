@@ -1,7 +1,7 @@
 import { Box, Button, Spinner, Text, Tooltip } from "@chakra-ui/react";
 import * as React from "react";
 
-import { ACTION, STATUS } from "../../common/constants";
+import { ACTION, DATA, STATUS } from "../../common/constants";
 import { useAppDispatch, useAppState } from "../contexts/AppContext";
 import * as styles from "./Deploy.css";
 
@@ -30,9 +30,15 @@ const Deploy = () => {
 
   return (
     <Box className={styles.container}>
-      <Text>{iconPreview.length} icons found</Text>
+      <Text>
+        {iconPreview.length} icons found in `{DATA.ICON_FRAME_ID}` frame
+      </Text>
+      <Text as="sub" marginBottom={4}>
+        you must have at least 1 icon in `{DATA.ICON_FRAME_ID}` frame
+      </Text>
       <Button
         isDisabled={
+          iconPreview.length === 0 ||
           deployIconStatus === STATUS.LOADING ||
           deployIconStatus === STATUS.SUCCESS ||
           deployIconStatus === STATUS.ERROR

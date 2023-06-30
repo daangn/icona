@@ -6,9 +6,6 @@ export const ACTION = {
   SET_GITHUB_REPO_URL: "set-github-repo-url",
   SET_GITHUB_API_KEY: "set-github-api-key",
 
-  SETTING_DONE: "setting-done",
-  SETTING_DONE_STATUS: "setting-done-status",
-
   DEPLOY_ICON: "deploy-icon",
   DEPLOY_ICON_STATUS: "deploy-icon-status",
 } as const;

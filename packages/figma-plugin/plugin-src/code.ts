@@ -66,41 +66,6 @@ figma.ui.onmessage = async (msg: Messages) => {
       setLocalData(DATA.GITHUB_API_KEY, msg.payload);
       break;
 
-    case ACTION.SETTING_DONE: {
-      figma.ui.postMessage({
-        type: ACTION.SETTING_DONE_STATUS,
-        payload: STATUS.LOADING,
-      });
-      const { owner, name, apiKey } = msg.payload;
-      const { createSettingPR } = createGithubClient(owner, name, apiKey);
-
-      try {
-        await createSettingPR();
-        figma.ui.postMessage({
-          type: ACTION.SETTING_DONE_STATUS,
-          payload: STATUS.SUCCESS,
-        });
-        setTimeout(() => {
-          figma.ui.postMessage({
-            type: ACTION.SETTING_DONE_STATUS,
-            payload: STATUS.IDLE,
-          });
-        }, 3000);
-      } catch (error) {
-        figma.ui.postMessage({
-          type: ACTION.SETTING_DONE_STATUS,
-          payload: STATUS.ERROR,
-        });
-        setTimeout(() => {
-          figma.ui.postMessage({
-            type: ACTION.SETTING_DONE_STATUS,
-            payload: STATUS.IDLE,
-          });
-        }, 3000);
-      }
-      break;
-    }
-
     case ACTION.DEPLOY_ICON: {
       figma.ui.postMessage({
         type: ACTION.DEPLOY_ICON_STATUS,
