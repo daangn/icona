@@ -1,5 +1,13 @@
 # @icona/generator
 
+## 0.0.13
+
+### Patch Changes
+
+- 6868b2a: change .icons file data struct
+- Updated dependencies [6868b2a]
+  - @icona/utils@0.0.13
+
 ## 0.0.12
 
 ### Patch Changes
