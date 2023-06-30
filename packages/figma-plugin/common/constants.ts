@@ -1,14 +1,10 @@
 export const ACTION = {
   GET_GITHUB_REPO_URL: "get-github-repo-url",
   GET_GITHUB_API_KEY: "get-github-api-key",
-  GET_FIGMA_FILE_URL: "get-figma-file-url",
   GET_ICON_PREVIEW: "get-icon-preview",
 
   SET_GITHUB_REPO_URL: "set-github-repo-url",
   SET_GITHUB_API_KEY: "set-github-api-key",
-  SET_FIGMA_FILE_URL: "set-figma-file-url",
-
-  CREATE_ICON_FRAME: "create-icon-frame",
 
   SETTING_DONE: "setting-done",
   SETTING_DONE_STATUS: "setting-done-status",
@@ -22,7 +18,6 @@ export const DATA = {
   GITHUB_REPO_URL: "github-repo-url",
 
   ICON_FRAME_ID: "icona-frame",
-  FIGMA_FILE_URL: "figma-file-url",
 } as const;
 
 export const STATUS = {

@@ -9,13 +9,8 @@ import * as styles from "./Setting.css";
 
 const Setting = () => {
   const dispatch = useAppDispatch();
-  const {
-    githubRepositoryUrl,
-    githubApiKey,
-    figmaFileUrl,
-    githubData,
-    settingStatus,
-  } = useAppState();
+  const { githubRepositoryUrl, githubApiKey, githubData, settingStatus } =
+    useAppState();
 
   const settingButtonInfo = {
     [STATUS.IDLE]: {
@@ -61,23 +56,6 @@ const Setting = () => {
         handleChange={(event) => {
           dispatch({
             type: ACTION.SET_GITHUB_API_KEY,
-            payload: event.target.value,
-          });
-        }}
-      />
-
-      <TextInput
-        label="Figma Page URL"
-        placeholder="Figma Page URL"
-        value={figmaFileUrl}
-        helperText="Figma Page URL that your icons are in."
-        errorMessage="It's not a figma file URL."
-        isError={
-          figmaFileUrl.match(/https:\/\/www.figma.com\/file\/.*/) === null
-        }
-        handleChange={(event) => {
-          dispatch({
-            type: ACTION.SET_FIGMA_FILE_URL,
             payload: event.target.value,
           });
         }}

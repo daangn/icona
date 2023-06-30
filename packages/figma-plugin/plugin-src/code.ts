@@ -29,10 +29,6 @@ async function init() {
       data: DATA.GITHUB_REPO_URL,
       type: ACTION.GET_GITHUB_REPO_URL,
     },
-    {
-      data: DATA.FIGMA_FILE_URL,
-      type: ACTION.GET_FIGMA_FILE_URL,
-    },
   ];
 
   events.forEach((event) => {
@@ -68,11 +64,6 @@ figma.ui.onmessage = async (msg: Messages) => {
     case ACTION.SET_GITHUB_API_KEY:
       if (!msg.payload) return;
       setLocalData(DATA.GITHUB_API_KEY, msg.payload);
-      break;
-
-    case ACTION.SET_FIGMA_FILE_URL:
-      if (!msg.payload) return;
-      setLocalData(DATA.FIGMA_FILE_URL, msg.payload);
       break;
 
     case ACTION.SETTING_DONE: {

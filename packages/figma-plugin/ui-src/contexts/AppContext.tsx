@@ -5,17 +5,16 @@ import React, { createContext, useContext, useReducer } from "react";
 import { ACTION, STATUS } from "../../common/constants";
 import type { GithubData, Messages, Status } from "../../common/types";
 import { postMessage } from "../utils/figma";
-import { getFigmaFileKeyFromUrl, getGithubDataFromUrl } from "../utils/string";
+import { getGithubDataFromUrl } from "../utils/string";
 
 type State = {
   // Computed
   githubData: GithubData;
-  figmaFileKey: string;
 
   // Input
   githubRepositoryUrl: string;
   githubApiKey: string;
-  figmaFileUrl: string;
+
   iconPreview: IconaIconData[];
 
   // Status
@@ -39,12 +38,6 @@ function reducer(state: State, action: Messages): State {
           ...state.githubData,
           apiKey: action.payload,
         },
-      };
-    case ACTION.GET_FIGMA_FILE_URL:
-      return {
-        ...state,
-        figmaFileUrl: action.payload,
-        figmaFileKey: getFigmaFileKeyFromUrl(action.payload),
       };
     case ACTION.GET_GITHUB_REPO_URL:
       return {
@@ -75,16 +68,7 @@ function reducer(state: State, action: Messages): State {
           apiKey: action.payload,
         },
       };
-    case ACTION.SET_FIGMA_FILE_URL:
-      postMessage({
-        type: action.type,
-        payload: action.payload,
-      });
-      return {
-        ...state,
-        figmaFileUrl: action.payload,
-        figmaFileKey: getFigmaFileKeyFromUrl(action.payload),
-      };
+
     case ACTION.SET_GITHUB_REPO_URL:
       postMessage({
         type: action.type,
@@ -98,12 +82,6 @@ function reducer(state: State, action: Messages): State {
           ...getGithubDataFromUrl(action.payload),
         },
       };
-
-    case ACTION.CREATE_ICON_FRAME:
-      postMessage({
-        type: ACTION.CREATE_ICON_FRAME,
-      });
-      return state;
 
     // FIXME: 아마도 필요 없을지도? 세팅 어떻게 할건지 다시 생각하기
     case ACTION.SETTING_DONE:
@@ -149,13 +127,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       name: "",
       apiKey: "",
     },
-    figmaFileKey: "",
     iconPreview: [],
 
     // Input
     githubApiKey: "",
     githubRepositoryUrl: "",
-    figmaFileUrl: "",
 
     // Status
     deployIconStatus: STATUS.IDLE,
@@ -172,9 +148,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
           break;
         case ACTION.GET_GITHUB_REPO_URL:
-          if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
-          break;
-        case ACTION.GET_FIGMA_FILE_URL:
           if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
           break;
         case ACTION.GET_ICON_PREVIEW:
