@@ -1,4 +1,4 @@
-import { Box, Button, Spinner } from "@chakra-ui/react";
+import { Box, Button, Spinner, Text, Tooltip } from "@chakra-ui/react";
 import * as React from "react";
 
 import { ACTION, STATUS } from "../../common/constants";
@@ -7,7 +7,7 @@ import * as styles from "./Deploy.css";
 
 const Deploy = () => {
   const dispatch = useAppDispatch();
-  const { deployIconStatus, githubData } = useAppState();
+  const { deployIconStatus, githubData, iconPreview } = useAppState();
 
   const buttonInfo = {
     [STATUS.IDLE]: {
@@ -30,6 +30,7 @@ const Deploy = () => {
 
   return (
     <Box className={styles.container}>
+      <Text>{iconPreview.length} icons found</Text>
       <Button
         isDisabled={
           deployIconStatus === STATUS.LOADING ||
@@ -48,6 +49,15 @@ const Deploy = () => {
       >
         {buttonInfo[deployIconStatus].children}
       </Button>
+      <Box className={styles.preview}>
+        {iconPreview.map(({ name, svg }) => {
+          return (
+            <Tooltip hasArrow label={name} key={name}>
+              <Box dangerouslySetInnerHTML={{ __html: svg }} />
+            </Tooltip>
+          );
+        })}
+      </Box>
     </Box>
   );
 };
