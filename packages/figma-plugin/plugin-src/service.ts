@@ -51,7 +51,7 @@ const findComponentInNode = (
 
 export async function getSvgInIconFrame(
   iconFrameId: string,
-): Promise<IconaIconData[]> {
+): Promise<Record<string, IconaIconData>> {
   const frame = figma.getNodeById(iconFrameId) as FrameNode;
 
   const components = findComponentInNode(frame) as {
@@ -72,5 +72,10 @@ export async function getSvgInIconFrame(
     }),
   );
 
-  return svgs;
+  const svgsMap = svgs.reduce((acc, cur) => {
+    acc[cur.name] = cur;
+    return acc;
+  }, {} as Record<string, IconaIconData>);
+
+  return svgsMap;
 }
