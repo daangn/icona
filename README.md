@@ -2,6 +2,9 @@
 
 > You can export Figma SVG files to GitHub with only one click.
 
+- [How and why Icona came to be: en](https://junghyeonsu.com/en/posts/quickly-apply-icons-that-exist-in-figma-to-your-dev-team/)
+- [How and why Icona came to be: ko](https://junghyeonsu.com/posts/quickly-apply-icons-that-exist-in-figma-to-your-dev-team/)
+
 This is a Figma plugin to export SVG files to GitHub with only one click.
 Shorten the process between designers (Figma) and developers (GitHub).
 
