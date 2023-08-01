@@ -1,6 +1,6 @@
 {
   "name": "@icona/cli",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/daangn/icona.git",
@@ -32,7 +32,7 @@
     "prepack": "yarn build"
   },
   "dependencies": {
-    "@icona/generator": "^0.0.13",
+    "@icona/generator": "^0.0.14",
     "@icona/utils": "^0.0.13",
     "commander": "^10.0.1",
     "dedent": "^0.7.0",
