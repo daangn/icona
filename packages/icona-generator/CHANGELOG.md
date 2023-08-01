@@ -1,5 +1,11 @@
 # @icona/generator
 
+## 0.0.14
+
+### Patch Changes
+
+- 44aca2d: fix: drawable defaultColor 옵션 안 먹던거 수정
+
 ## 0.0.13
 
 ### Patch Changes

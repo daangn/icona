@@ -3623,7 +3623,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@icona/cli@workspace:packages/icona-cli"
   dependencies:
-    "@icona/generator": ^0.0.13
+    "@icona/generator": ^0.0.14
     "@icona/types": ^0.0.12
     "@icona/utils": ^0.0.13
     "@types/dedent": ^0.7.0
@@ -3670,7 +3670,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/generator@^0.0.13, @icona/generator@workspace:packages/icona-generator":
+"@icona/generator@^0.0.14, @icona/generator@workspace:packages/icona-generator":
   version: 0.0.0-use.local
   resolution: "@icona/generator@workspace:packages/icona-generator"
   dependencies:
