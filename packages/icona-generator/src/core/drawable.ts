@@ -8,8 +8,6 @@ import { writeFileSync } from "fs";
 import { resolve } from "path";
 import svg2vectordrawable from "svg2vectordrawable";
 
-const DRAWABLE_DEFAULT_COLOR = "#FF212124";
-
 interface GenerateDrawableFunction {
   /**
    * @description Icona icons data
@@ -26,7 +24,7 @@ export const generateDrawable = ({
   const projectPath = getProjectRootPath();
   const path = config.path || "drawable";
   const drawableConfig = config.svg2vectordrawableConfig || {};
-  const defaultColor = config.defaultColor || DRAWABLE_DEFAULT_COLOR;
+  const defaultColor = config.defaultColor;
 
   if (!icons) {
     throw new Error("There is no icons data");
@@ -42,7 +40,7 @@ export const generateDrawable = ({
 
     // NOTE(@junghyeonsu): DRAWABLE_DEFAULT_COLOR = "#FF212124"
     if (defaultColor) {
-      drawable.replace(/#FF212124/g, defaultColor);
+      drawable = drawable.replace(/#FF212124/g, defaultColor);
     }
 
     writeFileSync(drawablePath, drawable);
