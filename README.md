@@ -81,3 +81,8 @@ Then you can use the generated assets that are automatically generated in the PR
 If you use this library, please send PR to add your project in this list.
 
 - [daangn/seed-icon](https://github.com/daangn/seed-icon)
+
+## TODO
+
+- [ ] Check diff and update only changed icons. (Now, always update all icons)
+  - ISSUE: PDF generate occur all file changes when generate.
