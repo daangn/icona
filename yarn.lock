@@ -3644,7 +3644,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@icona/generator@workspace:packages/icona-generator"
   dependencies:
-    "@icona/types": ^0.0.12
+    "@icona/types": ^0.0.13
     "@icona/utils": ^0.0.13
     "@svgr/core": ^8.0.0
     nanobundle: ^1.6.0
@@ -3681,7 +3681,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/types@^0.0.12, @icona/types@workspace:^, @icona/types@workspace:packages/types":
+"@icona/types@^0.0.13, @icona/types@workspace:^, @icona/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@icona/types@workspace:packages/types"
   dependencies:
@@ -3701,7 +3701,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@icona/utils@workspace:packages/icona-utils"
   dependencies:
-    "@icona/types": ^0.0.12
+    "@icona/types": ^0.0.13
     "@types/findup-sync": ^4.0.2
     "@types/node": ^20.3.1
     findup-sync: ^5.0.0
