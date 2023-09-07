@@ -3702,6 +3702,7 @@ __metadata:
   resolution: "@icona/utils@workspace:packages/icona-utils"
   dependencies:
     "@icona/types": ^0.0.12
+    "@types/findup-sync": ^4.0.2
     "@types/node": ^20.3.1
     findup-sync: ^5.0.0
     nanobundle: ^1.6.0
@@ -4331,6 +4332,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/braces@npm:*":
+  version: 3.0.2
+  resolution: "@types/braces@npm:3.0.2"
+  checksum: 0b1bee5e8332fabf57397de8dec1a24c3bf53efc3284d15d64d7dd67c0ba9853e0191e5220464ff171a4963c1db2b0cfd3926e2b363a95909ff723a4426a1964
+  languageName: node
+  linkType: hard
+
+"@types/findup-sync@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "@types/findup-sync@npm:4.0.2"
+  dependencies:
+    "@types/micromatch": "*"
+  checksum: b8ec6a9f6cf30424ddcc44120a0a6cfa596924f17cb8b08a79d8737524b5fbcf957a5ecbc79c4927059b9399666d1c14739dd46f9bcde8b0d869df71b8af82bd
+  languageName: node
+  linkType: hard
+
 "@types/glob@npm:^7.1.1":
   version: 7.2.0
   resolution: "@types/glob@npm:7.2.0"
@@ -4377,6 +4394,15 @@ __metadata:
   version: 4.14.195
   resolution: "@types/lodash@npm:4.14.195"
   checksum: 39b75ca635b3fa943d17d3d3aabc750babe4c8212485a4df166fe0516e39288e14b0c60afc6e21913cc0e5a84734633c71e617e2bd14eaa1cf51b8d7799c432e
+  languageName: node
+  linkType: hard
+
+"@types/micromatch@npm:*":
+  version: 4.0.2
+  resolution: "@types/micromatch@npm:4.0.2"
+  dependencies:
+    "@types/braces": "*"
+  checksum: 6c678e9c625d5b422c6d2c1001da1c502ecc4457248343bbd324b79fd798a6563e336a4d79630d80e8202312013dd7cf8b4440afa644d04477abd26fde6fba24
   languageName: node
   linkType: hard
 
