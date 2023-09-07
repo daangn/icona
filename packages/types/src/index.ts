@@ -2,6 +2,30 @@ import type { Config as SvgrConfig } from "@svgr/core";
 import type { SVGtoPDFOptions } from "svg-to-pdfkit";
 import type { Config as SvgoConfig } from "svgo";
 
+type PDFKitConfig = PDFKit.PDFDocumentOptions & {
+  /**
+   * @readme
+   * If you use `info` option, pdf output will be different every time.
+   * So it occur git diff. So we use default info option.
+   * If user want change info option, they can change it.
+   * **But not recommend.**
+   * 
+   * ```ts
+   *  const defaultPdfkitConfigInfo = {
+        Author: "Icona",
+        Creator: "Icona",
+        Producer: "Icona",
+        Title: IconName,
+        Subject: IconName,
+        Keywords: IconName,
+        CreationDate: new Date(0),
+        ModDate: new Date(0),
+      };
+   * ```
+   */
+  info?: PDFKit.PDFDocumentOptions["info"];
+};
+
 export type IconaIconData = {
   name: string;
   svg: string;
@@ -27,8 +51,15 @@ export interface GeneratePDFConfig {
   /**
    * PDFKit.PDFDocumentOptions
    * @see https://pdfkit.org/docs/getting_started.html#document-structure
+   *
+   * @readme
+   * If you use `info` option, pdf output will be different every time.
+   * So it occur git diff. So we use default info option.
+   *
+   * If user want change info option, they can change it.
+   * But not recommend.
    */
-  pdfKitConfig?: PDFKit.PDFDocumentOptions;
+  pdfKitConfig?: PDFKitConfig;
 
   svgToPdfOptions?: SvgToPdfOptions;
 }
