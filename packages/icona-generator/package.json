@@ -1,6 +1,6 @@
 {
   "name": "@icona/generator",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/daangn/icona.git",
@@ -33,7 +33,7 @@
     "svgo": "^3.0.2"
   },
   "devDependencies": {
-    "@icona/types": "^0.0.12",
+    "@icona/types": "^0.0.13",
     "nanobundle": "^1.6.0",
     "prettier": "^2.8.8",
     "typescript": "^5.1.3"

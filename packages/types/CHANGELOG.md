@@ -1,5 +1,11 @@
 # @icona/types
 
+## 0.0.13
+
+### Patch Changes
+
+- 8265bdf: feat(generator, type): Add description about pdfkit info option and add default option
+
 ## 0.0.12
 
 ### Patch Changes

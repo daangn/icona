@@ -1,5 +1,12 @@
 # @icona/generator
 
+## 0.0.15
+
+### Patch Changes
+
+- 8265bdf: feat(generator, type): Add description about pdfkit info option and add default option
+- 8265bdf: delete CreationDate in pdfkit
+
 ## 0.0.14
 
 ### Patch Changes
