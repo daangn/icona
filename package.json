@@ -4,11 +4,9 @@
   "repository": "https://github.com/daangn/icona.git",
   "license": "MIT",
   "author": "junghyeonsu <jung660317@naver.com>",
-  "main": "index.js",
   "workspaces": [
     "packages/figma-plugin",
     "packages/types",
-    "packages/icona-cli",
     "packages/icona-utils",
     "packages/icona-generator"
   ],

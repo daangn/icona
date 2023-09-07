@@ -3,5 +3,8 @@
   "include": [
     "packages",
     ".eslintrc.js",
+  ],
+  "exclude": [
+    "packages/legacy",
   ]
 }
