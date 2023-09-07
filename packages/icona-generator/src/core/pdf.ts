@@ -37,7 +37,33 @@ export const generatePDF = ({
     makeFolderIfNotExistFromRoot(path);
 
     const svgPath = resolve(projectPath, path, `${name}.pdf`);
-    const pdfDoc = new PDFDocument(pdfkitConfig);
+
+    /**
+     * @see https://github.com/foliojs/pdfkit/blob/4ec77ddc8c090c8d0d57fbd72cff433e9ce0d733/docs/getting_started.md?plain=1#L194
+     * @description
+     * If you use `info` option, pdf output will be different every time.
+     * So it occur git diff. So we use default info option.
+     *
+     * If user want change info option, they can change it.
+     * But not recommend.
+     */
+    const defaultPdfkitConfigInfo = {
+      Author: "Icona",
+      Creator: "Icona",
+      Producer: "Icona",
+      Title: name,
+      Subject: name,
+      Keywords: name,
+      CreationDate: new Date(0),
+      ModDate: new Date(0),
+    };
+
+    const pdfkitConfigInfo = pdfkitConfig.info || defaultPdfkitConfigInfo;
+    const pdfDoc = new PDFDocument({
+      ...pdfkitConfig,
+      info: pdfkitConfigInfo,
+    });
+
     SVGtoPDF(pdfDoc, svg, x, y, restSvgToPdfOptions);
     pdfDoc.pipe(createWriteStream(svgPath));
     pdfDoc.end();
