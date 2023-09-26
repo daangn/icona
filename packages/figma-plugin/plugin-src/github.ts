@@ -8,9 +8,10 @@ export function createGithubClient(
   repoOwner: string,
   repoName: string,
   accessToken: string,
+  apiUrl: string,
 ) {
   const ACCESS_TOKEN = accessToken;
-  const API_URL = `https://api.github.com/repos/${repoOwner}/${repoName}`;
+  const API_URL = apiUrl;
 
   async function uploadBlob(
     content: string,

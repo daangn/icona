@@ -10,16 +10,12 @@ import * as styles from "./Setting.css";
 
 const Setting = () => {
   const dispatch = useAppDispatch();
-  const { githubRepositoryUrl, githubApiKey } = useAppState();
-
-  const githubRepositoryUrlRegex = /https:\/\/github.com\/.*/;
-  const isErrorGithubRepositoryUrl =
-    githubRepositoryUrl.match(githubRepositoryUrlRegex) === null;
+  const { githubApiUrl, githubRepositoryUrl, githubApiKey } = useAppState();
   const isInvalidGithubApiKey = githubApiKey === "";
 
   const getProgress = () => {
-    if (isErrorGithubRepositoryUrl && isInvalidGithubApiKey) return 0;
-    if (isErrorGithubRepositoryUrl || isInvalidGithubApiKey) return 50;
+    if (isInvalidGithubApiKey) return 0;
+    if (isInvalidGithubApiKey) return 50;
     return 100;
   };
 
@@ -28,12 +24,27 @@ const Setting = () => {
       <Progress value={getProgress()} hasStripe colorScheme="blue" />
 
       <TextInput
+        label="Git API URL"
+        placeholder="Git API URL"
+        value={githubApiUrl}
+        helperText="Git API URL that you want to deploy."
+        errorMessage=""
+        isError={false}
+        handleChange={(event) => {
+          dispatch({
+            type: ACTION.SET_GITHUB_API_URL,
+            payload: event.target.value,
+          });
+        }}
+      />
+
+      <TextInput
         label="Github Repository URL"
         placeholder="Github Repository URL"
         value={githubRepositoryUrl}
         helperText="Github Repository URL that you want to deploy."
-        errorMessage="It's not a valid Github Repository URL."
-        isError={githubRepositoryUrl.match(/https:\/\/github.com\/.*/) === null}
+        errorMessage=""
+        isError={false}
         handleChange={(event) => {
           dispatch({
             type: ACTION.SET_GITHUB_REPO_URL,

@@ -12,6 +12,7 @@ type State = {
   githubData: GithubData;
 
   // Input
+  githubApiUrl: string;
   githubRepositoryUrl: string;
   githubApiKey: string;
 
@@ -30,6 +31,15 @@ const AppDispatchContext = createContext<AppDispatch | null>(null);
 function reducer(state: State, action: Messages): State {
   switch (action.type) {
     /* GETTER */
+    case ACTION.GET_GITHUB_API_URL:
+      return {
+        ...state,
+        githubApiUrl: action.payload,
+        githubData: {
+          ...state.githubData,
+          apiUrl: action.payload,
+        },
+      };
     case ACTION.GET_GITHUB_API_KEY:
       return {
         ...state,
@@ -55,6 +65,19 @@ function reducer(state: State, action: Messages): State {
       };
 
     /* SETTER */
+    case ACTION.SET_GITHUB_API_URL:
+      postMessage({
+        type: action.type,
+        payload: action.payload,
+      });
+      return {
+        ...state,
+        githubApiUrl: action.payload,
+        githubData: {
+          ...state.githubData,
+          apiUrl: action.payload,
+        },
+      };
     case ACTION.SET_GITHUB_API_KEY:
       postMessage({
         type: action.type,
@@ -130,6 +153,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     window.onmessage = (event) => {
       const msg = event.data.pluginMessage as Messages;
       switch (msg.type) {
+        case ACTION.GET_GITHUB_API_URL:
+          if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
+          break;
         case ACTION.GET_GITHUB_API_KEY:
           if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
           break;

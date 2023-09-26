@@ -22,6 +22,10 @@ async function setLocalData(key: string, data: any) {
 async function init() {
   const events = [
     {
+      data: DATA.GITHUB_API_URL,
+      type: ACTION.GET_GITHUB_API_URL,
+    },
+    {
       data: DATA.GITHUB_API_KEY,
       type: ACTION.GET_GITHUB_API_KEY,
     },
@@ -56,6 +60,11 @@ async function init() {
 
 figma.ui.onmessage = async (msg: Messages) => {
   switch (msg.type) {
+    case ACTION.SET_GITHUB_API_URL:
+      if (!msg.payload) return;
+      setLocalData(DATA.GITHUB_API_URL, msg.payload);
+      break;
+
     case ACTION.SET_GITHUB_REPO_URL:
       if (!msg.payload) return;
       setLocalData(DATA.GITHUB_REPO_URL, msg.payload);
@@ -74,8 +83,8 @@ figma.ui.onmessage = async (msg: Messages) => {
       const { githubData } = msg.payload;
 
       try {
-        const { owner, name, apiKey } = githubData;
-        const { createDeployPR } = createGithubClient(owner, name, apiKey);
+        const { owner, name, apiKey, apiUrl } = githubData;
+        const { createDeployPR } = createGithubClient(owner, name, apiKey, apiUrl);
         const iconaFrame = figma.currentPage.findOne((node) => {
           return node.name === DATA.ICON_FRAME_ID;
         });

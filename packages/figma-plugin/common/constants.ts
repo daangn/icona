@@ -1,8 +1,10 @@
 export const ACTION = {
+  GET_GITHUB_API_URL: "get-github-api-url",
   GET_GITHUB_REPO_URL: "get-github-repo-url",
   GET_GITHUB_API_KEY: "get-github-api-key",
   GET_ICON_PREVIEW: "get-icon-preview",
 
+  SET_GITHUB_API_URL: "set-github-api-url",
   SET_GITHUB_REPO_URL: "set-github-repo-url",
   SET_GITHUB_API_KEY: "set-github-api-key",
 
@@ -11,6 +13,7 @@ export const ACTION = {
 } as const;
 
 export const DATA = {
+  GITHUB_API_URL: "github-api-url",
   GITHUB_API_KEY: "github-api-key",
   GITHUB_REPO_URL: "github-repo-url",
 
