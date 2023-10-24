@@ -1,5 +1,11 @@
 import type { IconaIconData } from "@icona/types";
 
+type TargetNode = ComponentNode | InstanceNode | VectorNode | ComponentSetNode;
+type Extracted = {
+  id: string;
+  name: string;
+};
+
 const makeComponentName = ({
   componentSetName,
   componentName,
@@ -24,28 +30,32 @@ const makeComponentName = ({
   return name;
 };
 
-// FIXME:(june): 인스턴스 타입 들어왔을 때 처리
 const findComponentInNode = (
-  node: ComponentSetNode | ComponentNode | FrameNode,
+  node: TargetNode,
   setName?: string,
-): any => {
-  if (node.type === "COMPONENT") {
-    const svgName = makeComponentName({
-      componentSetName: setName,
-      componentName: node.name,
-      stringCase: "lower",
-      separator: "_",
-    });
+): Extracted | Extracted[] => {
+  switch (node.type) {
+    case "COMPONENT":
+    case "INSTANCE":
+    case "VECTOR": {
+      const svgName = makeComponentName({
+        componentSetName: setName,
+        componentName: node.name,
+        stringCase: "lower",
+        separator: "_",
+      });
 
-    return { id: node.id, name: svgName };
-  } else if (node.type === "COMPONENT_SET") {
-    return node.children.flatMap((child: any) =>
-      findComponentInNode(child, node.name),
-    );
-  } else if (node.children) {
-    return node.children.flatMap((child: any) => findComponentInNode(child));
-  } else {
-    return null;
+      return { id: node.id, name: svgName };
+    }
+
+    case "COMPONENT_SET": {
+      return node.children.flatMap((child: any) =>
+        findComponentInNode(child, node.name),
+      );
+    }
+
+    default:
+      return [];
   }
 };
 
@@ -54,15 +64,22 @@ export async function getSvgInIconFrame(
 ): Promise<Record<string, IconaIconData>> {
   const frame = figma.getNodeById(iconFrameId) as FrameNode;
 
-  const components = findComponentInNode(frame) as {
-    id: string;
-    name: string;
-  }[];
+  const targetNodes = frame.children.flatMap((child) => {
+    if (
+      child.type === "COMPONENT" ||
+      child.type === "INSTANCE" ||
+      child.type === "VECTOR" ||
+      child.type === "COMPONENT_SET"
+    ) {
+      return findComponentInNode(child);
+    }
+    return [];
+  });
 
-  const filteredComponents = components.filter((component) => component);
+  const targetComponents = targetNodes.filter((component) => component);
 
   const svgs = await Promise.all(
-    filteredComponents.map(async (component) => {
+    targetComponents.map(async (component) => {
       const node = figma.getNodeById(component.id) as ComponentNode;
       const svg = await node.exportAsync({
         format: "SVG_STRING",
@@ -74,6 +91,7 @@ export async function getSvgInIconFrame(
 
   const svgsMap = svgs.reduce((acc, cur) => {
     acc[cur.name] = cur;
+
     return acc;
   }, {} as Record<string, IconaIconData>);
 

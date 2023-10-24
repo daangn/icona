@@ -2,7 +2,8 @@
   "extends": "./tsconfig.json",
   "include": [
     "packages",
-    ".eslintrc.js",
+    "figma-plugin/**/*",
+    ".eslintrc.js"
   ],
   "exclude": [
     "packages/legacy",

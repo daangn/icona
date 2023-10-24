@@ -8,6 +8,7 @@ export const container = style({
 
 export const preview = style({
   display: "flex",
+  alignItems: "center",
   flexWrap: "wrap",
   borderRadius: "4px",
   border: "1px solid #ddd",
