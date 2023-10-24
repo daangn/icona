@@ -5,10 +5,10 @@
   "license": "MIT",
   "author": "junghyeonsu <jung660317@naver.com>",
   "workspaces": [
-    "packages/figma-plugin",
     "packages/types",
     "packages/icona-utils",
-    "packages/icona-generator"
+    "packages/icona-generator",
+    "figma-plugin"
   ],
   "scripts": {
     "build": "ultra -r build",
