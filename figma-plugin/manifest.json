@@ -6,5 +6,7 @@
   "ui": "dist/index.html",
   "editorType": ["figma", "dev"],
   "capabilities": ["inspect"],
-  "networkAccess": { "allowedDomains": ["https://www.figma.com"] }
+  "networkAccess": {
+    "allowedDomains": ["https://www.figma.com", "https://api.github.com"]
+  }
 }

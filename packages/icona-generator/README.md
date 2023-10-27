@@ -12,7 +12,6 @@ yarn add -D @icona/generator
 
 ```js
 import { generate } from "@icona/generator";
-import seedIconsPkg from "./package.json" assert { type: "json" };
 
 generate({
   config: {
