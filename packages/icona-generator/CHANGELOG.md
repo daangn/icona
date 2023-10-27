@@ -1,5 +1,11 @@
 # @icona/generator
 
+## 0.0.16
+
+### Patch Changes
+
+- 3cfbfa1: Enhance error message
+
 ## 0.0.15
 
 ### Patch Changes
