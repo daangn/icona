@@ -35,7 +35,9 @@ export const generate = ({
   config,
 }: GenerateFunction) => {
   if (!icons) {
-    throw new Error("There is no icons data");
+    throw new Error(
+      "[@Icona/generator] There is no `icons.json` file in .icona folder",
+    );
   }
 
   const { generate: fn } = generator(icons, config);

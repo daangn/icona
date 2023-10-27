@@ -8,7 +8,7 @@ export const generate = (config: IconaConfig) => {
   const icons = getIconaIconsFile();
 
   if (!icons) {
-    console.log("No icons.json file found");
+    console.log("[@Icona/generator] No icons.json file found");
     return;
   }
 
