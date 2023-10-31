@@ -39,6 +39,10 @@ export function useJune({ writeKey }: UseJuneProps) {
    * 현재는 figma에서는 이메일을 받아올 수 있는 수단이 없음
    */
   const identify = async ({ userName }: IdentifyProps) => {
+    if (!userName) {
+      return;
+    }
+
     try {
       await fetch(`${BASE_URL}/identify`, {
         method: "POST",
