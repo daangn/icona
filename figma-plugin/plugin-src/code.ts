@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable @typescript-eslint/no-shadow */
 import { ACTION, DATA, STATUS } from "../common/constants";
 import type { Messages } from "../common/types";
 import { createGithubClient } from "./github";
@@ -16,6 +14,18 @@ async function getLocalData(key: string) {
 // set github settings
 async function setLocalData(key: string, data: any) {
   await figma.clientStorage.setAsync(key, data);
+}
+
+function sendUserInfo() {
+  if (!figma.currentUser) return;
+
+  figma.ui.postMessage({
+    type: ACTION.GET_USER_INFO,
+    payload: {
+      id: figma.currentUser.id,
+      name: figma.currentUser.name,
+    },
+  });
 }
 
 // send github data to UI
@@ -36,6 +46,8 @@ async function init() {
       figma.ui.postMessage({ type: event.type, payload });
     });
   });
+
+  sendUserInfo();
 
   const iconaFrame = figma.currentPage.findOne((node) => {
     return node.name === DATA.ICON_FRAME_ID;

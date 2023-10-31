@@ -4,10 +4,10 @@
   "scripts": {
     "build": "yarn build:ui && yarn build:plugin -- --minify",
     "build:plugin": "node ./esbuild.plugin.js",
-    "build:plugin:watch": "WATCH=true node ./esbuild.plugin.js",
-    "build:ui": "yarn vite build --minify esbuild --emptyOutDir=false",
-    "build:ui:watch": "yarn vite build --watch --emptyOutDir=false",
-    "dev": "yarn build:watch",
+    "build:ui": "yarn vite build --mode prod --minify esbuild --emptyOutDir=false",
+    "dev": "yarn build:ui:watch && yarn build:plugin:watch",
+    "dev:plugin": "WATCH=true node ./esbuild.plugin.js",
+    "dev:ui": "yarn vite build --mode dev --watch --emptyOutDir=false",
     "tsc": "yarn tsc:plugin && yarn tsc:ui",
     "tsc:plugin": "tsc --noEmit -p plugin",
     "tsc:ui": "tsc --noEmit -p ui-src"
@@ -20,6 +20,7 @@
     "@vanilla-extract/recipes": "^0.4.0",
     "@vanilla-extract/vite-plugin": "^3.8.1",
     "@vitejs/plugin-react-refresh": "^1.3.6",
+    "axios": "^1.6.0",
     "framer-motion": "^10.12.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

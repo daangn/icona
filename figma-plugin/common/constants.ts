@@ -1,4 +1,6 @@
 export const ACTION = {
+  GET_USER_INFO: "get-user-info",
+
   GET_GITHUB_REPO_URL: "get-github-repo-url",
   GET_GITHUB_API_KEY: "get-github-api-key",
   GET_ICON_PREVIEW: "get-icon-preview",

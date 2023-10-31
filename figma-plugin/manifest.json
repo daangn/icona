@@ -6,7 +6,12 @@
   "ui": "dist/index.html",
   "editorType": ["figma", "dev"],
   "capabilities": ["inspect"],
+  "permissions": ["currentuser"],
   "networkAccess": {
-    "allowedDomains": ["https://www.figma.com", "https://api.github.com"]
+    "allowedDomains": [
+      "https://www.figma.com",
+      "https://api.github.com",
+      "https://api.june.so"
+    ]
   }
 }

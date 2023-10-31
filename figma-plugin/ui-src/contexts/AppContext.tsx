@@ -8,6 +8,10 @@ import { postMessage } from "../utils/figma";
 import { getGithubDataFromUrl } from "../utils/string";
 
 type State = {
+  // Info
+  userId?: string;
+  userName?: string;
+
   // Computed
   githubData: GithubData;
 
@@ -30,6 +34,13 @@ const AppDispatchContext = createContext<AppDispatch | null>(null);
 function reducer(state: State, action: Messages): State {
   switch (action.type) {
     /* GETTER */
+    case ACTION.GET_USER_INFO: {
+      return {
+        ...state,
+        userId: action.payload.id,
+        userName: action.payload.name,
+      };
+    }
     case ACTION.GET_GITHUB_API_KEY:
       return {
         ...state,
@@ -107,6 +118,10 @@ function reducer(state: State, action: Messages): State {
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(reducer, {
+    // Info
+    userName: "",
+    userId: "",
+
     // Computed
     githubData: {
       owner: "",
@@ -130,6 +145,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     window.onmessage = (event) => {
       const msg = event.data.pluginMessage as Messages;
       switch (msg.type) {
+        case ACTION.GET_USER_INFO: {
+          if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
+          return;
+        }
         case ACTION.GET_GITHUB_API_KEY:
           if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
           break;

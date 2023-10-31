@@ -24,4 +24,11 @@ export type Messages =
   | { type: `${typeof ACTION.SET_GITHUB_API_KEY}`; payload: string }
   | { type: `${typeof ACTION.SET_GITHUB_REPO_URL}`; payload: string }
   | { type: `${typeof ACTION.DEPLOY_ICON}`; payload: IconaMetaData }
-  | { type: `${typeof ACTION.DEPLOY_ICON_STATUS}`; payload: Status };
+  | { type: `${typeof ACTION.DEPLOY_ICON_STATUS}`; payload: Status }
+  | {
+      type: `${typeof ACTION.GET_USER_INFO}`;
+      payload: {
+        id: string;
+        name: string;
+      };
+    };
