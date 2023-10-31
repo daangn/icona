@@ -1,6 +1,12 @@
 import type { IconaIconData } from "@icona/types";
 
-type TargetNode = ComponentNode | InstanceNode | VectorNode | ComponentSetNode;
+type TargetNode =
+  | ComponentNode
+  | InstanceNode
+  | VectorNode
+  | ComponentSetNode
+  | FrameNode
+  | GroupNode;
 type Extracted = {
   id: string;
   name: string;
@@ -35,6 +41,8 @@ const findComponentInNode = (
   setName?: string,
 ): Extracted | Extracted[] => {
   switch (node.type) {
+    case "FRAME":
+    case "GROUP":
     case "COMPONENT":
     case "INSTANCE":
     case "VECTOR": {
@@ -54,8 +62,9 @@ const findComponentInNode = (
       );
     }
 
-    default:
+    default: {
       return [];
+    }
   }
 };
 
@@ -64,13 +73,19 @@ export async function getSvgInIconFrame(
 ): Promise<Record<string, IconaIconData>> {
   const frame = figma.getNodeById(iconFrameId) as FrameNode;
 
+  console.log("frame", frame.children);
+
   const targetNodes = frame.children.flatMap((child) => {
     if (
       child.type === "COMPONENT" ||
       child.type === "INSTANCE" ||
       child.type === "VECTOR" ||
+      child.type === "FRAME" ||
+      child.type === "GROUP" ||
       child.type === "COMPONENT_SET"
     ) {
+      console.log("child", child.type);
+
       return findComponentInNode(child);
     }
     return [];
