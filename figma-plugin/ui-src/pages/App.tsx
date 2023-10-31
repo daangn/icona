@@ -11,11 +11,13 @@ const App = () => {
   const { userName } = useAppState();
   const { track } = useJune();
 
-  track({
-    event: "icona:plugin_open",
-    properties: { userName },
-    timestamp: new Date(),
-  });
+  if (userName) {
+    track({
+      event: "icona:plugin_open",
+      properties: { userName },
+      timestamp: new Date(),
+    });
+  }
 
   return (
     <Box className={styles.container}>
