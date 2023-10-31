@@ -1,5 +1,11 @@
 # @icona/generator
 
+## 0.0.17
+
+### Patch Changes
+
+- 99cffa8: @icona/types move to dependencies
+
 ## 0.0.16
 
 ### Patch Changes
