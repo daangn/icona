@@ -3622,7 +3622,7 @@ __metadata:
     axios: ^1.6.0
     esbuild: ^0.17.19
     framer-motion: ^10.12.11
-    june-so-client-react: ^0.0.1
+    june-so-sandbox-react: ^0.0.2
     react: ^18.2.0
     react-dom: ^18.2.0
     ts-dedent: ^2.2.0
@@ -7953,21 +7953,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"june-so-client-react@npm:^0.0.1":
-  version: 0.0.1
-  resolution: "june-so-client-react@npm:0.0.1"
+"june-so-sandbox-react@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "june-so-sandbox-react@npm:0.0.2"
   dependencies:
-    june-so-client-types: ^0.0.1
+    june-so-sandbox-types: ^0.0.2
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
-  checksum: af9ed338e65b450f9e15842cb7fe30f5e2783ddf099421b05fd4ce641bfccc14949f96c51ccc336a446e0a094ef2da61da5f3939c5896b251f8c0d44fcef7c8a
+  checksum: 99adedbc039e4be9ec4437e75be06378527d9171507405795ebdff076f33c9c04fa991bdaed96a00f76d367f56d236b469b7820a3a03a0825e9b55afa552b5be
   languageName: node
   linkType: hard
 
-"june-so-client-types@npm:^0.0.1":
-  version: 0.0.1
-  resolution: "june-so-client-types@npm:0.0.1"
-  checksum: d6ff8e5bfc4abeefa4b35fb15bb4ffa1819d072bebbaadc50a4851203ac954647ef2310924a3939d446d4e8e7c9781ad91a690ed65594925fcee01ea8b9fcd17
+"june-so-sandbox-types@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "june-so-sandbox-types@npm:0.0.2"
+  checksum: 15339636ed03b39f5ad2dc15e48f7d27b9df4b1a6af2fc57ddc5207e190689591b6ad37162115279e5b6209a372fa7aaedf837c355496ae4478f8ba83e787157
   languageName: node
   linkType: hard
 

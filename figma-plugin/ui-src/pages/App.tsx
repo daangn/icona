@@ -1,5 +1,5 @@
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
-import { useJune } from "june-so-client-react";
+import { useJune } from "june-so-sandbox-react";
 import * as React from "react";
 
 import { useAppState } from "../contexts/AppContext";

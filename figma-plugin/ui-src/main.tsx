@@ -2,7 +2,7 @@
 import "./styles/global.css";
 
 import { ChakraProvider } from "@chakra-ui/react";
-import { JuneProvider } from "june-so-client-react";
+import { JuneProvider } from "june-so-sandbox-react";
 import * as React from "react";
 import { createRoot } from "react-dom/client";
 

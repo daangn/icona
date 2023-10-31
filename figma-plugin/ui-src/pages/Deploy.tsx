@@ -1,5 +1,5 @@
 import { Box, Button, Spinner, Text, Tooltip } from "@chakra-ui/react";
-import { useJune } from "june-so-client-react";
+import { useJune } from "june-so-sandbox-react";
 import * as React from "react";
 
 import { ACTION, DATA, STATUS } from "../../common/constants";
