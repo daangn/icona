@@ -6,15 +6,21 @@ import * as React from "react";
 import { createRoot } from "react-dom/client";
 
 import { AppProvider } from "./contexts/AppContext";
+import { JuneProvider } from "./contexts/JuneContext";
 import App from "./pages/App";
 
 const root = createRoot(document.getElementById("root")!);
 root.render(
   <React.StrictMode>
-    <ChakraProvider>
-      <AppProvider>
-        <App />
-      </AppProvider>
-    </ChakraProvider>
+    <JuneProvider
+      writeKey={import.meta.env.VITE_JUNE_SO_WRITE_KEY}
+      disabled={import.meta.env.MODE === "dev"}
+    >
+      <ChakraProvider>
+        <AppProvider>
+          <App />
+        </AppProvider>
+      </ChakraProvider>
+    </JuneProvider>
   </React.StrictMode>,
 );

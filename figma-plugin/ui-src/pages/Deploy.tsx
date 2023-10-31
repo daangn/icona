@@ -3,12 +3,14 @@ import * as React from "react";
 
 import { ACTION, DATA, STATUS } from "../../common/constants";
 import { useAppDispatch, useAppState } from "../contexts/AppContext";
+import { useJune } from "../contexts/JuneContext";
 import * as styles from "./Deploy.css";
 
 const Deploy = () => {
   const dispatch = useAppDispatch();
   const { deployIconStatus, githubData, iconPreview } = useAppState();
   const icons = Object.entries(iconPreview);
+  const { track } = useJune();
 
   const buttonInfo = {
     [STATUS.IDLE]: {
@@ -27,6 +29,23 @@ const Deploy = () => {
       children: "Deploy Failed!",
       colorScheme: "red",
     },
+  };
+
+  const deploy = () => {
+    dispatch({
+      type: ACTION.DEPLOY_ICON,
+      payload: {
+        githubData,
+      },
+    });
+    track({
+      event: "icona:deploy_icon",
+      properties: {
+        githubRepositoryName: githubData.name,
+        githubRepositoryOwner: githubData.owner,
+      },
+      timestamp: new Date(),
+    });
   };
 
   return (
@@ -66,14 +85,7 @@ const Deploy = () => {
           deployIconStatus === STATUS.SUCCESS ||
           deployIconStatus === STATUS.ERROR
         }
-        onClick={() =>
-          dispatch({
-            type: ACTION.DEPLOY_ICON,
-            payload: {
-              githubData,
-            },
-          })
-        }
+        onClick={deploy}
         colorScheme={buttonInfo[deployIconStatus].colorScheme}
       >
         {buttonInfo[deployIconStatus].children}
