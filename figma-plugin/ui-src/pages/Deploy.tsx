@@ -1,9 +1,9 @@
 import { Box, Button, Spinner, Text, Tooltip } from "@chakra-ui/react";
+import { useJune } from "june-so-client-react";
 import * as React from "react";
 
 import { ACTION, DATA, STATUS } from "../../common/constants";
 import { useAppDispatch, useAppState } from "../contexts/AppContext";
-import { useJune } from "../contexts/JuneContext";
 import * as styles from "./Deploy.css";
 
 const Deploy = () => {

@@ -2,11 +2,11 @@
 import "./styles/global.css";
 
 import { ChakraProvider } from "@chakra-ui/react";
+import { JuneProvider } from "june-so-client-react";
 import * as React from "react";
 import { createRoot } from "react-dom/client";
 
 import { AppProvider } from "./contexts/AppContext";
-import { JuneProvider } from "./contexts/JuneContext";
 import App from "./pages/App";
 
 const root = createRoot(document.getElementById("root")!);
