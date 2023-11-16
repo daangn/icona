@@ -30,8 +30,13 @@ export function createGithubClient(
   }
 
   async function getHead(branch: string): Promise<{ object: { sha: string } }> {
-    return fetch(`${API_URL}/git/refs/heads/${branch}`, {
-      headers: {},
+    return fetch(`${API_URL}/git/ref/heads/${branch}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": GITHUB_API_VERSION,
+      },
     }).then((res) => res.json());
   }
 
