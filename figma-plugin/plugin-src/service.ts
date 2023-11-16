@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import type { IconaIconData } from "@icona/types";
+import { Base64 } from "js-base64";
 
 type TargetNode =
   | ComponentNode
@@ -68,12 +70,15 @@ const findComponentInNode = (
   }
 };
 
-export async function getSvgInIconFrame(
+export async function getAssetInIconFrame(
   iconFrameId: string,
+  options?: {
+    withPng?: boolean;
+  },
 ): Promise<Record<string, IconaIconData>> {
   const frame = figma.getNodeById(iconFrameId) as FrameNode;
 
-  console.log("frame", frame.children);
+  const withPng = options?.withPng ?? true;
 
   const targetNodes = frame.children.flatMap((child) => {
     if (
@@ -84,8 +89,6 @@ export async function getSvgInIconFrame(
       child.type === "GROUP" ||
       child.type === "COMPONENT_SET"
     ) {
-      console.log("child", child.type);
-
       return findComponentInNode(child);
     }
     return [];
@@ -96,10 +99,21 @@ export async function getSvgInIconFrame(
   const svgs = await Promise.all(
     targetComponents.map(async (component) => {
       const node = figma.getNodeById(component.id) as ComponentNode;
+
+      // svg
       const svg = await node.exportAsync({
         format: "SVG_STRING",
         svgIdAttribute: true,
       });
+
+      // png
+      if (withPng) {
+        const png = await node.exportAsync({
+          format: "PNG",
+        });
+        const base64String = Base64.fromUint8Array(png);
+        return { name: component.name, svg, png: base64String };
+      }
       return { name: component.name, svg };
     }),
   );

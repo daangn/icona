@@ -1,7 +1,7 @@
 import { ACTION, DATA, STATUS } from "../common/constants";
 import type { Messages } from "../common/types";
 import { createGithubClient } from "./github";
-import { getSvgInIconFrame } from "./service";
+import { getAssetInIconFrame } from "./service";
 
 figma.showUI(__html__, { width: 360, height: 436 });
 
@@ -39,6 +39,10 @@ async function init() {
       data: DATA.GITHUB_REPO_URL,
       type: ACTION.GET_GITHUB_REPO_URL,
     },
+    {
+      data: DATA.DEPLOY_WITH_PNG,
+      type: ACTION.GET_DEPLOY_WITH_PNG,
+    },
   ];
 
   events.forEach((event) => {
@@ -57,7 +61,9 @@ async function init() {
     figma.notify("Icona frame not found");
     return;
   } else {
-    const svgDatas = await getSvgInIconFrame(iconaFrame.id);
+    const svgDatas = await getAssetInIconFrame(iconaFrame.id, {
+      withPng: false,
+    });
 
     figma.ui.postMessage({
       type: ACTION.GET_ICON_PREVIEW,
@@ -78,12 +84,17 @@ figma.ui.onmessage = async (msg: Messages) => {
       setLocalData(DATA.GITHUB_API_KEY, msg.payload);
       break;
 
+    case ACTION.SET_DEPLOY_WITH_PNG:
+      setLocalData(DATA.DEPLOY_WITH_PNG, msg.payload);
+      break;
+
     case ACTION.DEPLOY_ICON: {
       figma.ui.postMessage({
         type: ACTION.DEPLOY_ICON_STATUS,
         payload: STATUS.LOADING,
       });
-      const { githubData } = msg.payload;
+      const { githubData, options } = msg.payload;
+      const { withPng } = options ?? { withPng: true };
 
       try {
         const { owner, name, apiKey } = githubData;
@@ -93,7 +104,9 @@ figma.ui.onmessage = async (msg: Messages) => {
         });
 
         if (!iconaFrame) throw new Error("Icona frame not found");
-        const svgs = await getSvgInIconFrame(iconaFrame.id);
+        const svgs = await getAssetInIconFrame(iconaFrame.id, {
+          withPng,
+        });
 
         await createDeployPR(svgs);
         figma.ui.postMessage({
@@ -120,10 +133,6 @@ figma.ui.onmessage = async (msg: Messages) => {
       }
       break;
     }
-
-    // case "cancel":
-    // figma.closePlugin();
-    // break;
   }
 };
 

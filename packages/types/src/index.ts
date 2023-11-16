@@ -26,9 +26,11 @@ type PDFKitConfig = PDFKit.PDFDocumentOptions & {
   info?: PDFKit.PDFDocumentOptions["info"];
 };
 
+type Base64 = string;
 export type IconaIconData = {
   name: string;
   svg: string;
+  png?: Base64;
 };
 
 export interface SvgToPdfOptions extends SVGtoPDFOptions {
@@ -139,9 +141,24 @@ export interface GenerateDrawableConfig {
   defaultColor?: string;
 }
 
+export interface GeneratePNGConfig {
+  /**
+   * generate drawable xml files
+   * @default false
+   */
+  active: boolean;
+
+  /**
+   * xml files path that will be generated
+   * @default xml
+   */
+  path?: string;
+}
+
 export interface IconaConfig {
   svg: GenerateSVGConfig;
   react: GenerateReactConfig;
   pdf: GeneratePDFConfig;
   drawable: GenerateDrawableConfig;
+  png: GeneratePNGConfig;
 }

@@ -1,4 +1,11 @@
-import { Box, Button, Spinner, Text, Tooltip } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Spinner,
+  Text,
+  Tooltip,
+} from "@chakra-ui/react";
 import { useJune } from "june-so-sandbox-react";
 import * as React from "react";
 
@@ -8,7 +15,14 @@ import * as styles from "./Deploy.css";
 
 const Deploy = () => {
   const dispatch = useAppDispatch();
-  const { deployIconStatus, githubData, iconPreview } = useAppState();
+  const {
+    deployIconStatus,
+    githubData,
+    iconPreview,
+    githubApiKey,
+    githubRepositoryUrl,
+    isDeployWithPng,
+  } = useAppState();
   const icons = Object.entries(iconPreview);
   const { track } = useJune();
 
@@ -80,6 +94,8 @@ const Deploy = () => {
       <Button
         className={styles.exportButton}
         isDisabled={
+          githubApiKey === "" ||
+          githubRepositoryUrl === "" ||
           icons.length === 0 ||
           deployIconStatus === STATUS.LOADING ||
           deployIconStatus === STATUS.SUCCESS ||
@@ -90,6 +106,26 @@ const Deploy = () => {
       >
         {buttonInfo[deployIconStatus].children}
       </Button>
+
+      <Checkbox
+        marginTop={2}
+        isChecked={isDeployWithPng}
+        onChange={() => {
+          dispatch({
+            type: ACTION.SET_DEPLOY_WITH_PNG,
+            payload: !isDeployWithPng,
+          });
+        }}
+      >
+        <Text fontWeight="bold" fontSize={14}>
+          with png
+        </Text>
+      </Checkbox>
+      <Text fontSize={10}>will deploy with png data as base64.</Text>
+      <Text fontSize={10}>
+        you can convert png file with `@icona/generator`
+      </Text>
+
       <Box className={styles.preview}>
         {icons.map(([name, data]) => {
           const { svg } = data;
