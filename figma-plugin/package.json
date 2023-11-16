@@ -1,6 +1,7 @@
 {
   "name": "@icona/figma-plugin",
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "build": "yarn build:ui && yarn build:plugin -- --minify",
     "build:plugin": "node ./esbuild.plugin.js",
