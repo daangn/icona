@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import { Box, Progress } from "@chakra-ui/react";
+import { Box, Link, Text } from "@chakra-ui/react";
 import * as React from "react";
 
 import { ACTION } from "../../common/constants";
@@ -12,21 +12,8 @@ const Setting = () => {
   const dispatch = useAppDispatch();
   const { githubRepositoryUrl, githubApiKey } = useAppState();
 
-  const githubRepositoryUrlRegex = /https:\/\/github.com\/.*/;
-  const isErrorGithubRepositoryUrl =
-    githubRepositoryUrl.match(githubRepositoryUrlRegex) === null;
-  const isInvalidGithubApiKey = githubApiKey === "";
-
-  const getProgress = () => {
-    if (isErrorGithubRepositoryUrl && isInvalidGithubApiKey) return 0;
-    if (isErrorGithubRepositoryUrl || isInvalidGithubApiKey) return 50;
-    return 100;
-  };
-
   return (
     <Box className={styles.container}>
-      <Progress value={getProgress()} hasStripe colorScheme="blue" />
-
       <TextInput
         label="Github Repository URL"
         placeholder="Github Repository URL"
@@ -42,6 +29,14 @@ const Setting = () => {
         }}
       />
 
+      <Text fontSize={12} margin={0}>
+        <Text as="span" color="blue.600" textDecoration="underline">
+          <a target="_blank" href={githubRepositoryUrl} rel="noreferrer">
+            {githubRepositoryUrl}
+          </a>
+        </Text>
+      </Text>
+
       <PasswordInput
         value={githubApiKey}
         label="Github API Key"
@@ -55,6 +50,26 @@ const Setting = () => {
           });
         }}
       />
+      <Text fontSize={12}>
+        You can get api key in{" "}
+        <Link
+          color={"blue.500"}
+          href="https://github.com/settings/tokens/new"
+          target="_blank"
+          rel="noreferrer"
+        >
+          github create token page.
+        </Link>{" "}
+        Need{" "}
+        <Text fontWeight="bold" as="span" color="red.600">
+          repo
+        </Text>
+        ,{" "}
+        <Text fontWeight="bold" as="span" color="red.600">
+          workflow
+        </Text>{" "}
+        permissions of the repo.
+      </Text>
     </Box>
   );
 };

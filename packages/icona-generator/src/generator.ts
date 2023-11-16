@@ -3,6 +3,7 @@ import { getIconaIconsFile } from "@icona/utils";
 
 import { generateDrawable } from "./core/drawable";
 import { generatePDF } from "./core/pdf";
+import { generatePNG } from "./core/png";
 import { generateReact } from "./core/react";
 import { generateSVG } from "./core/svg";
 
@@ -10,13 +11,14 @@ export const generator = (
   icons: Record<string, IconaIconData>,
   config: IconaConfig,
 ) => {
-  const { pdf, drawable, react, svg } = config;
+  const { pdf, drawable, react, svg, png } = config;
 
   const generate = () => {
     if (svg?.active) generateSVG({ icons, config: svg });
     if (react?.active) generateReact({ icons, config: react });
     if (pdf?.active) generatePDF({ icons, config: pdf });
     if (drawable?.active) generateDrawable({ icons, config: drawable });
+    if (png?.active) generatePNG({ icons, config: png });
   };
 
   return { generate };

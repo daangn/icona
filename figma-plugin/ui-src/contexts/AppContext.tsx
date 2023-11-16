@@ -20,6 +20,7 @@ type State = {
   githubApiKey: string;
 
   iconPreview: Record<string, IconaIconData>;
+  isDeployWithPng: boolean;
 
   // Status
   deployIconStatus: Status;
@@ -34,6 +35,12 @@ const AppDispatchContext = createContext<AppDispatch | null>(null);
 function reducer(state: State, action: Messages): State {
   switch (action.type) {
     /* GETTER */
+    case ACTION.GET_DEPLOY_WITH_PNG: {
+      return {
+        ...state,
+        isDeployWithPng: action.payload,
+      };
+    }
     case ACTION.GET_USER_INFO: {
       return {
         ...state,
@@ -66,6 +73,17 @@ function reducer(state: State, action: Messages): State {
       };
 
     /* SETTER */
+    case ACTION.SET_DEPLOY_WITH_PNG: {
+      postMessage({
+        type: action.type,
+        payload: action.payload,
+      });
+      return {
+        ...state,
+        isDeployWithPng: action.payload,
+      };
+    }
+
     case ACTION.SET_GITHUB_API_KEY:
       postMessage({
         type: action.type,
@@ -99,6 +117,9 @@ function reducer(state: State, action: Messages): State {
         type: ACTION.DEPLOY_ICON,
         payload: {
           githubData: action.payload.githubData,
+          options: {
+            withPng: state.isDeployWithPng,
+          },
         },
       });
       return state;
@@ -133,6 +154,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     // Input
     githubApiKey: "",
     githubRepositoryUrl: "",
+    isDeployWithPng: true,
 
     // Status
     deployIconStatus: STATUS.IDLE,
@@ -145,26 +167,30 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     window.onmessage = (event) => {
       const msg = event.data.pluginMessage as Messages;
       switch (msg.type) {
+        case ACTION.GET_DEPLOY_WITH_PNG: {
+          dispatch({ type: msg.type, payload: msg.payload });
+          break;
+        }
         case ACTION.GET_USER_INFO: {
-          if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
-          return;
+          dispatch({ type: msg.type, payload: msg.payload });
+          break;
         }
         case ACTION.GET_GITHUB_API_KEY:
-          if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
+          dispatch({ type: msg.type, payload: msg.payload });
           break;
         case ACTION.GET_GITHUB_REPO_URL:
-          if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
+          dispatch({ type: msg.type, payload: msg.payload });
           break;
         case ACTION.GET_ICON_PREVIEW:
-          if (msg.payload) dispatch({ type: msg.type, payload: msg.payload });
+          dispatch({ type: msg.type, payload: msg.payload });
           break;
         case ACTION.DEPLOY_ICON_STATUS: {
           dispatch({ type: msg.type, payload: msg.payload });
-          return;
+          break;
         }
       }
     };
-  }, [dispatch]);
+  }, []);
 
   return (
     <AppStateContext.Provider value={state}>
