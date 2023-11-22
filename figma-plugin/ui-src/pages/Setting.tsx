@@ -2,7 +2,6 @@
 import { Box, Link, Text } from "@chakra-ui/react";
 import * as React from "react";
 
-import { ACTION } from "../../common/constants";
 import { PasswordInput } from "../components/PasswordInput";
 import { TextInput } from "../components/TextInput";
 import { useAppDispatch, useAppState } from "../contexts/AppContext";
@@ -23,8 +22,10 @@ const Setting = () => {
         isError={githubRepositoryUrl.match(/https:\/\/github.com\/.*/) === null}
         handleChange={(event) => {
           dispatch({
-            type: ACTION.SET_GITHUB_REPO_URL,
-            payload: event.target.value,
+            name: "SET_GITHUB_URL",
+            payload: {
+              url: event.target.value,
+            },
           });
         }}
       />
@@ -45,8 +46,10 @@ const Setting = () => {
         isInvalid={githubApiKey === ""}
         handleChange={(event) => {
           dispatch({
-            type: ACTION.SET_GITHUB_API_KEY,
-            payload: event.target.value,
+            name: "SET_GITHUB_API_KEY",
+            payload: {
+              apiKey: event.target.value,
+            },
           });
         }}
       />

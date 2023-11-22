@@ -9,14 +9,14 @@ import {
 import { useJune } from "june-so-sandbox-react";
 import * as React from "react";
 
-import { ACTION, DATA, STATUS } from "../../common/constants";
+import { FRAME_NAME } from "../../common/constants";
 import { useAppDispatch, useAppState } from "../contexts/AppContext";
 import * as styles from "./Deploy.css";
 
 const Deploy = () => {
   const dispatch = useAppDispatch();
   const {
-    deployIconStatus,
+    isDeploying,
     githubData,
     iconPreview,
     githubApiKey,
@@ -26,34 +26,15 @@ const Deploy = () => {
   const icons = Object.entries(iconPreview);
   const { track } = useJune();
 
-  const buttonInfo = {
-    [STATUS.IDLE]: {
-      children: "Deploy",
-      colorScheme: "gray",
-    },
-    [STATUS.LOADING]: {
-      children: <Spinner size="sm" />,
-      colorScheme: "gray",
-    },
-    [STATUS.SUCCESS]: {
-      children: "Deploy Success!",
-      colorScheme: "green",
-    },
-    [STATUS.ERROR]: {
-      children: "Deploy Failed!",
-      colorScheme: "red",
-    },
-  };
-
   const deploy = () => {
     dispatch({
-      type: ACTION.DEPLOY_ICON,
+      name: "DEPLOY_ICON",
       payload: {
         githubData,
       },
     });
     track({
-      event: "icona:deploy_icon",
+      event: "Icona: Deploy Icon",
       properties: {
         githubRepositoryName: githubData.name,
         githubRepositoryOwner: githubData.owner,
@@ -67,7 +48,7 @@ const Deploy = () => {
       <Text>
         {icons.length} icons found in{" "}
         <Text as="span" color="red.600">
-          `{DATA.ICON_FRAME_ID}`
+          {FRAME_NAME}
         </Text>{" "}
         frame
       </Text>
@@ -87,7 +68,7 @@ const Deploy = () => {
       <Text fontSize={12} margin={0}>
         • you must have at least 1 icon in{" "}
         <Text as="span" color="red.600">
-          `{DATA.ICON_FRAME_ID}`
+          {FRAME_NAME}
         </Text>{" "}
         frame
       </Text>
@@ -97,14 +78,18 @@ const Deploy = () => {
           githubApiKey === "" ||
           githubRepositoryUrl === "" ||
           icons.length === 0 ||
-          deployIconStatus === STATUS.LOADING ||
-          deployIconStatus === STATUS.SUCCESS ||
-          deployIconStatus === STATUS.ERROR
+          isDeploying
         }
         onClick={deploy}
-        colorScheme={buttonInfo[deployIconStatus].colorScheme}
+        colorScheme={isDeploying ? "gray" : "blue"}
       >
-        {buttonInfo[deployIconStatus].children}
+        {isDeploying ? (
+          <Spinner size="sm" />
+        ) : (
+          <Text fontWeight="bold" fontSize={14}>
+            Deploy
+          </Text>
+        )}
       </Button>
 
       <Checkbox
@@ -112,8 +97,10 @@ const Deploy = () => {
         isChecked={isDeployWithPng}
         onChange={() => {
           dispatch({
-            type: ACTION.SET_DEPLOY_WITH_PNG,
-            payload: !isDeployWithPng,
+            name: "SET_PNG_OPTION",
+            payload: {
+              withPng: !isDeployWithPng,
+            },
           });
         }}
       >

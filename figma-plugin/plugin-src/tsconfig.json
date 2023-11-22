@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "strict": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "isolatedModules": true,
-    "jsx": "react",
-    "lib": ["DOM", "ES2020"],
-    "module": "ES2020",
-    "moduleResolution": "Node",
-    "strict": true,
     "types": ["@figma/plugin-typings"]
   }
 }

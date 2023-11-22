@@ -2,9 +2,9 @@ import type { IconaIconData } from "@icona/types";
 import type { Dispatch } from "react";
 import React, { createContext, useContext, useReducer } from "react";
 
-import { ACTION, STATUS } from "../../common/constants";
-import type { GithubData, Messages, Status } from "../../common/types";
-import { postMessage } from "../utils/figma";
+import { type Events as PluginEvents } from "../../common/fromPlugin";
+import { emit, type Events as UiEvents } from "../../common/fromUi";
+import type { GithubData } from "../../common/types";
 import { getGithubDataFromUrl } from "../utils/string";
 
 type State = {
@@ -20,115 +20,124 @@ type State = {
   githubApiKey: string;
 
   iconPreview: Record<string, IconaIconData>;
-  isDeployWithPng: boolean;
 
-  // Status
-  deployIconStatus: Status;
-  settingStatus: Status;
+  /* status */
+  isDeployWithPng: boolean;
+  isDeploying: boolean;
 };
 
-type AppDispatch = Dispatch<Messages>;
+type Actions =
+  | Omit<PluginEvents["GET_GITHUB_API_KEY"], "handler">
+  | Omit<PluginEvents["GET_GITHUB_REPO_URL"], "handler">
+  | Omit<PluginEvents["GET_DEPLOY_WITH_PNG"], "handler">
+  | Omit<PluginEvents["GET_USER_INFO"], "handler">
+  | Omit<PluginEvents["GET_ICON_PREVIEW"], "handler">
+  | Omit<PluginEvents["DEPLOY_DONE"], "handler">
+  | Omit<UiEvents["DEPLOY_ICON"], "handler">
+  | Omit<UiEvents["SET_PNG_OPTION"], "handler">
+  | Omit<UiEvents["SET_GITHUB_API_KEY"], "handler">
+  | Omit<UiEvents["SET_GITHUB_URL"], "handler">;
+
+type AppDispatch = Dispatch<Actions>;
 
 const AppStateContext = createContext<State | null>(null);
 const AppDispatchContext = createContext<AppDispatch | null>(null);
 
-function reducer(state: State, action: Messages): State {
-  switch (action.type) {
-    /* GETTER */
-    case ACTION.GET_DEPLOY_WITH_PNG: {
+function reducer(state: State, action: Actions): State {
+  switch (action.name) {
+    /* from Plugin */
+    case "GET_DEPLOY_WITH_PNG": {
+      const { deployWithPng = false } = action.payload;
       return {
         ...state,
-        isDeployWithPng: action.payload,
+        isDeployWithPng: deployWithPng,
       };
     }
-    case ACTION.GET_USER_INFO: {
+    case "GET_GITHUB_API_KEY": {
+      const { apiKey = "" } = action.payload;
+      return {
+        ...state,
+        githubApiKey: apiKey,
+        githubData: {
+          ...state.githubData,
+          apiKey,
+        },
+      };
+    }
+    case "GET_GITHUB_REPO_URL": {
+      const { repoUrl = "" } = action.payload;
+      return {
+        ...state,
+        githubRepositoryUrl: repoUrl,
+        githubData: {
+          ...state.githubData,
+          ...getGithubDataFromUrl(repoUrl),
+        },
+      };
+    }
+
+    case "GET_USER_INFO": {
       return {
         ...state,
         userId: action.payload.id,
         userName: action.payload.name,
       };
     }
-    case ACTION.GET_GITHUB_API_KEY:
-      return {
-        ...state,
-        githubApiKey: action.payload,
-        githubData: {
-          ...state.githubData,
-          apiKey: action.payload,
-        },
-      };
-    case ACTION.GET_GITHUB_REPO_URL:
-      return {
-        ...state,
-        githubRepositoryUrl: action.payload,
-        githubData: {
-          ...state.githubData,
-          ...getGithubDataFromUrl(action.payload),
-        },
-      };
-    case ACTION.GET_ICON_PREVIEW:
-      return {
-        ...state,
-        iconPreview: action.payload,
-      };
 
-    /* SETTER */
-    case ACTION.SET_DEPLOY_WITH_PNG: {
-      postMessage({
-        type: action.type,
-        payload: action.payload,
-      });
+    case "DEPLOY_DONE": {
       return {
         ...state,
-        isDeployWithPng: action.payload,
+        isDeploying: false,
       };
     }
 
-    case ACTION.SET_GITHUB_API_KEY:
-      postMessage({
-        type: action.type,
-        payload: action.payload,
-      });
+    /* from UI */
+    case "DEPLOY_ICON": {
+      emit("DEPLOY_ICON", action.payload);
+
       return {
         ...state,
-        githubApiKey: action.payload,
-        githubData: {
-          ...state.githubData,
-          apiKey: action.payload,
-        },
+        isDeploying: true,
       };
-
-    case ACTION.SET_GITHUB_REPO_URL:
-      postMessage({
-        type: action.type,
-        payload: action.payload,
-      });
-      return {
-        ...state,
-        githubRepositoryUrl: action.payload,
-        githubData: {
-          ...state.githubData,
-          ...getGithubDataFromUrl(action.payload),
-        },
-      };
-
-    case ACTION.DEPLOY_ICON: {
-      postMessage({
-        type: ACTION.DEPLOY_ICON,
-        payload: {
-          githubData: action.payload.githubData,
-          options: {
-            withPng: state.isDeployWithPng,
-          },
-        },
-      });
-      return state;
     }
 
-    case ACTION.DEPLOY_ICON_STATUS: {
+    case "SET_GITHUB_API_KEY": {
+      emit("SET_GITHUB_API_KEY", action.payload);
+
       return {
         ...state,
-        deployIconStatus: action.payload,
+        githubApiKey: action.payload.apiKey,
+      };
+    }
+
+    case "SET_GITHUB_URL": {
+      emit("SET_GITHUB_URL", action.payload);
+
+      return {
+        ...state,
+        githubRepositoryUrl: action.payload.url,
+        githubData: {
+          ...state.githubData,
+          ...getGithubDataFromUrl(action.payload.url),
+        },
+      };
+    }
+
+    case "SET_PNG_OPTION": {
+      emit("SET_PNG_OPTION", action.payload);
+
+      return {
+        ...state,
+        isDeployWithPng: action.payload.withPng,
+      };
+    }
+
+    case "GET_ICON_PREVIEW": {
+      const { icons } = action.payload;
+
+      return {
+        ...state,
+        iconPreview: icons,
       };
     }
 
@@ -154,43 +163,31 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     // Input
     githubApiKey: "",
     githubRepositoryUrl: "",
-    isDeployWithPng: true,
 
     // Status
-    deployIconStatus: STATUS.IDLE,
-    settingStatus: STATUS.IDLE,
+    isDeployWithPng: true,
+    isDeploying: false,
   });
 
-  // Init
-  React.useEffect(() => {
-    // NOTE: Event listener from figma
-    window.onmessage = (event) => {
-      const msg = event.data.pluginMessage as Messages;
-      switch (msg.type) {
-        case ACTION.GET_DEPLOY_WITH_PNG: {
-          dispatch({ type: msg.type, payload: msg.payload });
-          break;
-        }
-        case ACTION.GET_USER_INFO: {
-          dispatch({ type: msg.type, payload: msg.payload });
-          break;
-        }
-        case ACTION.GET_GITHUB_API_KEY:
-          dispatch({ type: msg.type, payload: msg.payload });
-          break;
-        case ACTION.GET_GITHUB_REPO_URL:
-          dispatch({ type: msg.type, payload: msg.payload });
-          break;
-        case ACTION.GET_ICON_PREVIEW:
-          dispatch({ type: msg.type, payload: msg.payload });
-          break;
-        case ACTION.DEPLOY_ICON_STATUS: {
-          dispatch({ type: msg.type, payload: msg.payload });
-          break;
-        }
-      }
-    };
-  }, []);
+  window.onmessage = (event) => {
+    if (typeof event.data.pluginMessage === "undefined") {
+      console.warn("not plugin message");
+      return;
+    }
+
+    const args = event.data.pluginMessage;
+    if (!Array.isArray(args)) {
+      return;
+    }
+
+    const [name, payload] = event.data.pluginMessage;
+    if (typeof name !== "string") {
+      return;
+    }
+
+    console.log("onmessage", name, payload);
+    dispatch({ name: name as Actions["name"], payload });
+  };
 
   return (
     <AppStateContext.Provider value={state}>
