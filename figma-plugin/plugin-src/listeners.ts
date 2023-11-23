@@ -11,7 +11,6 @@ export function listenDeployIcon() {
 
     try {
       const { owner, name, apiKey } = githubData;
-      console.log("DEPLOY: ", owner, name, apiKey);
 
       const { createDeployPR } = createGithubClient(owner, name, apiKey);
       const iconaFrame = figma.currentPage.findOne((node) => {
@@ -25,6 +24,7 @@ export function listenDeployIcon() {
 
       await createDeployPR(svgs);
       emit("DEPLOY_DONE", null);
+      figma.notify("Icons deployed", { timeout: 5000 });
     } catch (error) {
       figma.notify("Error while deploying icons", {
         timeout: 5000,

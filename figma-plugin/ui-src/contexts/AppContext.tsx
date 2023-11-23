@@ -185,7 +185,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    console.log("onmessage", name, payload);
     dispatch({ name: name as Actions["name"], payload });
   };
 

@@ -41,8 +41,6 @@ async function setPreviewIcons() {
       withPng: false,
     });
 
-    console.log("svgDatas", svgDatas);
-
     emit("GET_ICON_PREVIEW", {
       icons: svgDatas,
     });
