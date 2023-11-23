@@ -24,7 +24,7 @@ We need github repository url, github api token
 1. **Repository URL**: GitHub repository full url.
 2. **Github API Key**: GitHub API Key
 
-API Key need `repo` scope.
+API Key need `repo`, `workflow` scope.
 
 ![repo-scope](./images/repo-scope.png)
 
