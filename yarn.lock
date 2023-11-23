@@ -3646,9 +3646,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/generator@workspace:packages/icona-generator":
+"@icona/generator@workspace:packages/generator":
   version: 0.0.0-use.local
-  resolution: "@icona/generator@workspace:packages/icona-generator"
+  resolution: "@icona/generator@workspace:packages/generator"
   dependencies:
     "@icona/types": ^0.0.13
     "@icona/utils": ^0.0.13
@@ -3703,9 +3703,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/utils@^0.0.13, @icona/utils@workspace:packages/icona-utils":
+"@icona/utils@^0.0.13, @icona/utils@workspace:packages/utils":
   version: 0.0.0-use.local
-  resolution: "@icona/utils@workspace:packages/icona-utils"
+  resolution: "@icona/utils@workspace:packages/utils"
   dependencies:
     "@icona/types": ^0.0.13
     "@types/findup-sync": ^4.0.2

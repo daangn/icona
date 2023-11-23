@@ -1,11 +1,11 @@
 import type { IconaConfig, IconaIconData } from "@icona/types";
 import { getIconaIconsFile } from "@icona/utils";
 
-import { generateDrawable } from "./core/drawable";
-import { generatePDF } from "./core/pdf";
-import { generatePNG } from "./core/png";
-import { generateReact } from "./core/react";
-import { generateSVG } from "./core/svg";
+import { generateDrawable } from "./core/drawable.js";
+import { generatePDF } from "./core/pdf.js";
+import { generatePNG } from "./core/png.js";
+import { generateReact } from "./core/react.js";
+import { generateSVG } from "./core/svg.js";
 
 export const generator = (
   icons: Record<string, IconaIconData>,

@@ -25,10 +25,10 @@
     "prepack": "yarn build"
   },
   "dependencies": {
+    "@icona/types": "^0.0.13",
     "findup-sync": "^5.0.0"
   },
   "devDependencies": {
-    "@icona/types": "^0.0.13",
     "@types/findup-sync": "^4.0.2",
     "@types/node": "^20.3.1",
     "nanobundle": "^1.6.0",
