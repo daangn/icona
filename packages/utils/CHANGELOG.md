@@ -1,5 +1,18 @@
 # @icona/utils
 
+## 0.1.0
+
+### Minor Changes
+
+- 9e98a6d: PNG 내보내기 & width, height 정보 받기
+- ae02a6f: Add png export
+
+### Patch Changes
+
+- Updated dependencies [9e98a6d]
+- Updated dependencies [ae02a6f]
+  - @icona/types@0.1.0
+
 ## 0.0.13
 
 ### Patch Changes
