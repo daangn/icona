@@ -36,6 +36,7 @@ const Deploy = () => {
     track({
       event: "Icona: Deploy Icon",
       properties: {
+        githubRepositoryUrl,
         githubRepositoryName: githubData.name,
         githubRepositoryOwner: githubData.owner,
       },
