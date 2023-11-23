@@ -96,33 +96,41 @@ export async function getAssetInIconFrame(
 
   const targetComponents = targetNodes.filter((component) => component);
 
-  const svgs = await Promise.all(
+  const datas = await Promise.all(
     targetComponents.map(async (component) => {
+      const data = {} as IconaIconData;
       const node = figma.getNodeById(component.id) as ComponentNode;
+
+      // base
+      data.style = {
+        width: node.width,
+        height: node.height,
+      };
+      data.name = component.name;
 
       // svg
       const svg = await node.exportAsync({
         format: "SVG_STRING",
         svgIdAttribute: true,
       });
+      data.svg = svg;
 
       // png
       if (withPng) {
-        const png = await node.exportAsync({
-          format: "PNG",
-        });
+        const png = await node.exportAsync({ format: "PNG" });
         const base64String = Base64.fromUint8Array(png);
-        return { name: component.name, svg, png: base64String };
+        data.png = base64String;
       }
-      return { name: component.name, svg };
+
+      return data;
     }),
   );
 
-  const svgsMap = svgs.reduce((acc, cur) => {
+  const dataMap = datas.reduce((acc, cur) => {
     acc[cur.name] = cur;
 
     return acc;
   }, {} as Record<string, IconaIconData>);
 
-  return svgsMap;
+  return dataMap;
 }

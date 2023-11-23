@@ -6,8 +6,8 @@
   "author": "junghyeonsu <jung660317@naver.com>",
   "workspaces": [
     "packages/types",
-    "packages/icona-utils",
-    "packages/icona-generator",
+    "packages/utils",
+    "packages/generator",
     "figma-plugin"
   ],
   "scripts": {

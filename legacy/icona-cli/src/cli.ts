@@ -4,7 +4,7 @@ import { Command } from "commander";
 
 import pkg from "../package.json" assert { type: "json" };
 // import { generateCommand } from "./commands/generate";
-import { initCommand } from "./commands/init";
+import { initCommand } from "./commands/init.js";
 
 const program = new Command();
 const version = pkg.version;

@@ -37,7 +37,8 @@ export const generateReact = ({
 
     const componentName = name
       .replace(/^[a-z]/, (ch) => ch.toUpperCase())
-      .replace(/_[a-z]/g, (ch) => ch[1].toUpperCase());
+      .replace(/_[a-z]/g, (ch) => ch[1].toUpperCase())
+      .replace(/-[a-z]/g, (ch) => ch[1].toUpperCase());
 
     const component = await transform(svg, svgrConfig as Config, {
       componentName,
