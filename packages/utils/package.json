@@ -1,6 +1,6 @@
 {
   "name": "@icona/utils",
-  "version": "0.0.13",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/daangn/icona.git",
@@ -25,7 +25,7 @@
     "prepack": "yarn build"
   },
   "dependencies": {
-    "@icona/types": "^0.0.13",
+    "@icona/types": "^0.1.0",
     "findup-sync": "^5.0.0"
   },
   "devDependencies": {
