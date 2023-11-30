@@ -3650,8 +3650,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@icona/generator@workspace:packages/generator"
   dependencies:
-    "@icona/types": ^0.1.0
-    "@icona/utils": ^0.1.0
+    "@icona/types": ^0.2.0
+    "@icona/utils": ^0.2.0
     "@svgr/core": ^8.0.0
     nanobundle: ^1.6.0
     pdfkit: ^0.13.0
@@ -3687,7 +3687,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/types@^0.1.0, @icona/types@workspace:^, @icona/types@workspace:packages/types":
+"@icona/types@^0.2.0, @icona/types@workspace:^, @icona/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@icona/types@workspace:packages/types"
   dependencies:
@@ -3703,11 +3703,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/utils@^0.1.0, @icona/utils@workspace:packages/utils":
+"@icona/utils@^0.2.0, @icona/utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "@icona/utils@workspace:packages/utils"
   dependencies:
-    "@icona/types": ^0.1.0
+    "@icona/types": ^0.2.0
     "@types/findup-sync": ^4.0.2
     "@types/node": ^20.3.1
     findup-sync: ^5.0.0

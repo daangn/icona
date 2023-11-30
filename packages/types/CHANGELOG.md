@@ -1,5 +1,14 @@
 # @icona/types
 
+## 0.2.0
+
+### Minor Changes
+
+- c43e052: feat: add generate mode option
+
+  - `overwrite` (default): overwrite existing files in folder
+  - `recreate`: rm -rf all files and generate new files in folder
+
 ## 0.1.0
 
 ### Minor Changes
