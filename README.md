@@ -13,7 +13,7 @@ Shorten the process between designers (Figma) and developers (GitHub).
 
 ## Boilerplate
 
-- [junghyeonsu/test-icona](https://github.com/junghyeonsu/test-icona)
+- [junghyeonsu/icona-boilerplate](https://github.com/junghyeonsu/icona-boilerplate)
 
 ## Preview
 
