@@ -1,5 +1,6 @@
 import type { GeneratePNGConfig, IconaIconData } from "@icona/types";
 import {
+  deleteAllFilesInDir,
   getIconaIconsFile,
   getProjectRootPath,
   makeFolderIfNotExistFromRoot,
@@ -25,6 +26,10 @@ export const generatePNG = ({
 
   if (!icons) {
     throw new Error("There is no icons data");
+  }
+
+  if (config.genMode === "recreate") {
+    deleteAllFilesInDir(resolve(projectPath, path));
   }
 
   // TODO: Name transform option

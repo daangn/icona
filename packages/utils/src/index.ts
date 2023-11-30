@@ -1,8 +1,15 @@
 // TODO: Need test code for this file.
 import type { IconaIconData } from "@icona/types";
 import findup from "findup-sync";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
-import { dirname, resolve } from "path";
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  unlinkSync,
+  writeFileSync,
+} from "fs";
+import path, { dirname, resolve } from "path";
 
 export const ICONA_FOLDER = ".icona";
 export const ICONA_ICONS_FILE = "icons.json";
@@ -69,4 +76,14 @@ export const generateConfigFile = (config: string) => {
   makeFolderIfNotExistFromRoot(iconaFolderPath);
 
   writeFileSync(configPath, config);
+};
+
+export const deleteAllFilesInDir = (dirPath: string) => {
+  try {
+    readdirSync(dirPath).forEach((file) => {
+      unlinkSync(path.join(dirPath, file));
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
