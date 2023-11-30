@@ -1,5 +1,14 @@
 # @icona/generator
 
+## 0.2.1
+
+### Patch Changes
+
+- 76e145e: chore: change SvgToPdfOptions type
+- Updated dependencies [76e145e]
+  - @icona/types@0.2.1
+  - @icona/utils@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes
