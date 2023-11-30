@@ -1,5 +1,5 @@
 import type { Config as SvgrConfig } from "@svgr/core";
-import type { SVGtoPDFOptions } from "svg-to-pdfkit";
+import type { SVGtoPDFOptions as LibSVGtoPDFOptions } from "svg-to-pdfkit";
 import type { Config as SvgoConfig } from "svgo";
 
 type PDFKitConfig = PDFKit.PDFDocumentOptions & {
@@ -26,10 +26,10 @@ type PDFKitConfig = PDFKit.PDFDocumentOptions & {
   info?: PDFKit.PDFDocumentOptions["info"];
 };
 
-export interface SvgToPdfOptions extends SVGtoPDFOptions {
+export type SvgToPdfOptions = {
   x?: number;
   y?: number;
-}
+} & LibSVGtoPDFOptions;
 /**
  * @param overwrite overwrite existing files in folder
  * @param recreate rm -rf all files and generate new files in folder
