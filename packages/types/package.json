@@ -10,10 +10,7 @@
   "files": [
     "src"
   ],
-  "scripts": {
-    "build": "tsc",
-    "clean": "rm -rf ./dist"
-  },
+  "scripts": {},
   "devDependencies": {
     "@svgr/babel-preset": "^8.0.0",
     "@svgr/cli": "^8.0.1",
