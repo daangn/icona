@@ -11,6 +11,10 @@ Shorten the process between designers (Figma) and developers (GitHub).
 - **Designer**: Build icon set in Figma and click deploy button, that's it.
 - **Developer**: Check the PR and use the icon svg set in your project. (Make react component, Make Pdf, Make XML, ...etc)
 
+## Boilerplate
+
+- [junghyeonsu/test-icona](https://github.com/junghyeonsu/test-icona)
+
 ## Preview
 
 ![preview](./images/preview.png)

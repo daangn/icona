@@ -30,7 +30,18 @@ export interface SvgToPdfOptions extends SVGtoPDFOptions {
   x?: number;
   y?: number;
 }
+/**
+ * @param overwrite overwrite existing files in folder
+ * @param recreate rm -rf all files and generate new files in folder
+ */
+export type GenerateMode = "recreate" | "overwrite";
+
 export interface GeneratePDFConfig {
+  /**
+   * @default overwrite
+   */
+  genMode?: GenerateMode;
+
   /**
    * generate drawable pdf files
    * @default false
@@ -61,6 +72,11 @@ export interface GeneratePDFConfig {
 
 export interface GenerateReactConfig {
   /**
+   * @default overwrite
+   */
+  genMode?: GenerateMode;
+
+  /**
    * generate drawable react files
    * @default false
    */
@@ -80,6 +96,11 @@ export interface GenerateReactConfig {
 }
 
 export interface GenerateSVGConfig {
+  /**
+   * @default overwrite
+   */
+  genMode?: GenerateMode;
+
   /**
    * generate drawable svg files
    * @default true
@@ -109,6 +130,11 @@ interface Svg2vectordrawableOptions {
 
 export interface GenerateDrawableConfig {
   /**
+   * @default overwrite
+   */
+  genMode?: GenerateMode;
+
+  /**
    * generate drawable xml files
    * @default false
    */
@@ -135,6 +161,11 @@ export interface GenerateDrawableConfig {
 }
 
 export interface GeneratePNGConfig {
+  /**
+   * @default overwrite
+   */
+  genMode?: GenerateMode;
+
   /**
    * generate drawable xml files
    * @default false

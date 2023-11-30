@@ -6,9 +6,8 @@
     "url": "git+https://github.com/daangn/icona.git",
     "directory": "packages/types"
   },
-  "main": "./dist/index.d.ts",
+  "main": "./src/index.d.ts",
   "files": [
-    "dist",
     "src"
   ],
   "scripts": {
