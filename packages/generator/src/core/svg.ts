@@ -30,12 +30,17 @@ export const generateSVG = ({
     throw new Error("There is no icons data");
   }
 
+  const iconData = Object.entries(icons);
+  if (iconData.length !== 0) {
+    makeFolderIfNotExistFromRoot(path);
+  }
+
   if (config.genMode === "recreate") {
     deleteAllFilesInDir(resolve(projectPath, path));
   }
 
   // TODO: Name transform option
-  Object.entries(icons).forEach(([name, data]) => {
+  iconData.forEach(([name, data]) => {
     const { svg } = data;
     makeFolderIfNotExistFromRoot(path);
 

@@ -32,15 +32,18 @@ export const generatePDF = ({
     throw new Error("There is no icons data");
   }
 
+  const iconData = Object.entries(icons);
+  if (iconData.length !== 0) {
+    makeFolderIfNotExistFromRoot(path);
+  }
+
   if (config.genMode === "recreate") {
     deleteAllFilesInDir(resolve(projectPath, path));
   }
 
   // TODO: Name transform option
-  Object.entries(icons).forEach(async ([name, data]) => {
+  iconData.forEach(async ([name, data]) => {
     const { svg } = data;
-    makeFolderIfNotExistFromRoot(path);
-
     const svgPath = resolve(projectPath, path, `${name}.pdf`);
 
     /**

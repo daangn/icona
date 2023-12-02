@@ -31,14 +31,18 @@ export const generateDrawable = ({
     throw new Error("There is no icons data");
   }
 
+  const iconData = Object.entries(icons);
+  if (iconData.length !== 0) {
+    makeFolderIfNotExistFromRoot(path);
+  }
+
   if (config.genMode === "recreate") {
     deleteAllFilesInDir(resolve(projectPath, path));
   }
 
   // TODO: Name transform option
-  Object.entries(icons).forEach(async ([name, data]) => {
+  iconData.forEach(async ([name, data]) => {
     const { svg } = data;
-    makeFolderIfNotExistFromRoot(path);
 
     const drawablePath = resolve(projectPath, path, `${name}.xml`);
     let drawable = await svg2vectordrawable(svg, drawableConfig);

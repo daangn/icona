@@ -79,6 +79,8 @@ export const generateConfigFile = (config: string) => {
 };
 
 export const deleteAllFilesInDir = (dirPath: string) => {
+  if (!existsSync(dirPath)) return;
+
   try {
     readdirSync(dirPath).forEach((file) => {
       unlinkSync(path.join(dirPath, file));
