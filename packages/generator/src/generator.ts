@@ -14,11 +14,15 @@ export const generator = (
   const { pdf, drawable, react, svg, png } = config;
 
   const generate = () => {
+    console.log("[@Icona/generator] Start generating...");
+
     if (svg?.active) generateSVG({ icons, config: svg });
     if (react?.active) generateReact({ icons, config: react });
     if (pdf?.active) generatePDF({ icons, config: pdf });
     if (drawable?.active) generateDrawable({ icons, config: drawable });
     if (png?.active) generatePNG({ icons, config: png });
+
+    console.log("[@Icona/generator] Finish generating!");
   };
 
   return { generate };

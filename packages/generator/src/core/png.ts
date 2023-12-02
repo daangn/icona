@@ -28,16 +28,20 @@ export const generatePNG = ({
     throw new Error("There is no icons data");
   }
 
+  const iconData = Object.entries(icons);
+  if (iconData.length !== 0) {
+    makeFolderIfNotExistFromRoot(path);
+  }
+
   if (config.genMode === "recreate") {
     deleteAllFilesInDir(resolve(projectPath, path));
   }
 
   // TODO: Name transform option
-  Object.entries(icons).forEach(([name, data]) => {
+  iconData.forEach(([name, data]) => {
     const { png } = data;
     if (!png) return;
 
-    makeFolderIfNotExistFromRoot(path);
     const buffer = Buffer.from(png, "base64");
     const pngPath = resolve(projectPath, path, `${name}.png`);
     writeFileSync(pngPath, buffer);
