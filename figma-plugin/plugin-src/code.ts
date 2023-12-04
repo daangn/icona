@@ -38,7 +38,7 @@ async function setPreviewIcons() {
     return;
   } else {
     const svgDatas = await getAssetInIconFrame(iconaFrame.id, {
-      withPng: false,
+      withPng: await getLocalData(KEY.DEPLOY_WITH_PNG),
     });
 
     emit("GET_ICON_PREVIEW", {

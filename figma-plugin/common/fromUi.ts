@@ -1,4 +1,5 @@
 import { emit as e, on as o } from "@create-figma-plugin/utilities";
+import type { IconaIconData } from "@icona/types";
 
 interface GithubData {
   owner: string;
@@ -8,6 +9,7 @@ interface GithubData {
 
 interface IconaMetaData {
   githubData: GithubData;
+  icons: Record<string, IconaIconData>;
   options?: {
     withPng?: boolean;
   };

@@ -96,7 +96,7 @@ export async function getAssetInIconFrame(
 
   const targetComponents = targetNodes.filter((component) => component);
 
-  const datas = await Promise.all(
+  const datas = await Promise.allSettled(
     targetComponents.map(async (component) => {
       const data = {} as IconaIconData;
       const node = figma.getNodeById(component.id) as ComponentNode;
@@ -127,7 +127,17 @@ export async function getAssetInIconFrame(
   );
 
   const dataMap = datas.reduce((acc, cur) => {
-    acc[cur.name] = cur;
+    if (cur.status === "rejected") {
+      console.error(cur.reason);
+    }
+
+    if (cur.status === "fulfilled") {
+      const { name, ...rest } = cur.value as IconaIconData;
+      acc[name] = {
+        ...rest,
+        name,
+      };
+    }
 
     return acc;
   }, {} as Record<string, IconaIconData>);

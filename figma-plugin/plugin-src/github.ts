@@ -217,12 +217,14 @@ export function createGithubClient(
 
     const head = await getHead(baseBranch);
 
-    const treeBody = await uploadBlob(JSON.stringify(svgs)).then((blob) => ({
-      path: `.icona/icons.json`,
-      mode: "100644",
-      type: "blob",
-      sha: blob.sha,
-    }));
+    const treeBody = await uploadBlob(JSON.stringify(svgs, null, 2)).then(
+      (blob) => ({
+        path: `.icona/icons.json`,
+        mode: "100644",
+        type: "blob",
+        sha: blob.sha,
+      }),
+    );
 
     const tree = await createTree([treeBody], head.object.sha);
     const commit = await createCommit(tree.sha, commitTitle, [head.object.sha]);

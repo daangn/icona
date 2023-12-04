@@ -30,6 +30,7 @@ const Deploy = () => {
     dispatch({
       name: "DEPLOY_ICON",
       payload: {
+        icons: iconPreview,
         githubData,
       },
     });
