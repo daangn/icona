@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Checkbox,
+  Flex,
   Spinner,
   Text,
   Tooltip,
@@ -21,7 +22,7 @@ const Deploy = () => {
     iconPreview,
     githubApiKey,
     githubRepositoryUrl,
-    isDeployWithPng,
+    pngOption,
   } = useAppState();
   const icons = Object.entries(iconPreview);
   const { track } = useJune();
@@ -32,6 +33,9 @@ const Deploy = () => {
       payload: {
         icons: iconPreview,
         githubData,
+        options: {
+          png: pngOption,
+        },
       },
     });
     track({
@@ -94,26 +98,112 @@ const Deploy = () => {
         )}
       </Button>
 
-      <Checkbox
-        marginTop={2}
-        isChecked={isDeployWithPng}
-        onChange={() => {
-          dispatch({
-            name: "SET_PNG_OPTION",
-            payload: {
-              withPng: !isDeployWithPng,
-            },
-          });
-        }}
-      >
-        <Text fontWeight="bold" fontSize={14}>
-          with png
+      <Box marginTop={4} fontSize={14}>
+        <Text fontWeight="bold">Export Options</Text>
+      </Box>
+
+      <Box className={styles.optionContainer}>
+        <Text fontSize={12} fontWeight="bold">
+          PNG
         </Text>
-      </Checkbox>
-      <Text fontSize={10}>will deploy with png data as base64.</Text>
-      <Text fontSize={10}>
-        you can convert png file with `@icona/generator`
-      </Text>
+        <Text fontSize={10}>will deploy with png data as base64.</Text>
+        <Text fontSize={10}>
+          you can convert png file with `@icona/generator`
+        </Text>
+        <Flex gap={6}>
+          <Checkbox
+            marginTop={2}
+            isChecked={pngOption.x1}
+            onChange={() => {
+              dispatch({
+                name: "SET_PNG_OPTION",
+                payload: {
+                  options: {
+                    png: {
+                      ...pngOption,
+                      x1: !pngOption.x1,
+                    },
+                  },
+                },
+              });
+            }}
+          >
+            <Text fontWeight="bold" fontSize={14}>
+              x1
+            </Text>
+          </Checkbox>
+
+          <Checkbox
+            marginTop={2}
+            isChecked={pngOption.x2}
+            onChange={() => {
+              dispatch({
+                name: "SET_PNG_OPTION",
+                payload: {
+                  options: {
+                    png: {
+                      ...pngOption,
+                      x2: !pngOption.x2,
+                    },
+                  },
+                },
+              });
+            }}
+          >
+            <Text fontWeight="bold" fontSize={14}>
+              x2
+            </Text>
+          </Checkbox>
+
+          <Checkbox
+            marginTop={2}
+            isChecked={pngOption.x3}
+            onChange={() => {
+              dispatch({
+                name: "SET_PNG_OPTION",
+                payload: {
+                  options: {
+                    png: {
+                      ...pngOption,
+                      x3: !pngOption.x3,
+                    },
+                  },
+                },
+              });
+            }}
+          >
+            <Text fontWeight="bold" fontSize={14}>
+              x3
+            </Text>
+          </Checkbox>
+
+          <Checkbox
+            marginTop={2}
+            isChecked={pngOption.x4}
+            onChange={() => {
+              dispatch({
+                name: "SET_PNG_OPTION",
+                payload: {
+                  options: {
+                    png: {
+                      ...pngOption,
+                      x4: !pngOption.x4,
+                    },
+                  },
+                },
+              });
+            }}
+          >
+            <Text fontWeight="bold" fontSize={14}>
+              x4
+            </Text>
+          </Checkbox>
+        </Flex>
+      </Box>
+
+      <Box marginTop={4} fontSize={14}>
+        <Text fontWeight="bold">Previews</Text>
+      </Box>
 
       <Box className={styles.preview}>
         {icons.map(([name, data]) => {

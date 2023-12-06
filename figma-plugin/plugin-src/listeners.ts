@@ -1,17 +1,36 @@
-import { KEY } from "../common/constants.js";
+import { FRAME_NAME, KEY } from "../common/constants.js";
 import { emit } from "../common/fromPlugin.js";
 import { on } from "../common/fromUi.js";
 import { createGithubClient } from "./github.js";
+import { exportFromIconaIconData, getAssetFramesInFrame } from "./service.js";
 import { setLocalData } from "./utils.js";
 
 export function listenDeployIcon() {
-  on("DEPLOY_ICON", async ({ githubData, icons }) => {
+  on("DEPLOY_ICON", async ({ githubData, icons, options }) => {
     try {
       const { owner, name, apiKey } = githubData;
+      const pngOption = options.png;
 
       const { createDeployPR } = createGithubClient(owner, name, apiKey);
 
-      await createDeployPR(icons);
+      const iconaFrame = figma.currentPage.findOne((node) => {
+        return node.name === FRAME_NAME;
+      });
+
+      if (!iconaFrame) {
+        figma.notify("Icona frame not found");
+        return;
+      }
+
+      const targetFrame = figma.getNodeById(iconaFrame.id) as FrameNode;
+      const assetFrames = getAssetFramesInFrame(targetFrame);
+
+      const iconaData = await exportFromIconaIconData(assetFrames, icons, {
+        png: pngOption,
+      });
+
+      await createDeployPR(iconaData);
+
       emit("DEPLOY_DONE", null);
       figma.notify("Icons deployed", { timeout: 5000 });
     } catch (error) {
@@ -35,8 +54,9 @@ export function listenSetGithubUrl() {
     setLocalData(KEY.GITHUB_REPO_URL, url);
   });
 }
+
 export function listenPngOption() {
-  on("SET_PNG_OPTION", ({ withPng }) => {
-    setLocalData(KEY.DEPLOY_WITH_PNG, withPng);
+  on("SET_PNG_OPTION", ({ options }) => {
+    setLocalData(KEY.PNG_OPTION, options);
   });
 }

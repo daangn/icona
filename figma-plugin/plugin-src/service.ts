@@ -2,6 +2,8 @@
 import type { IconaIconData } from "@icona/types";
 import { Base64 } from "js-base64";
 
+import type { ExportOptions } from "../common/types";
+
 type TargetNode =
   | ComponentNode
   | InstanceNode
@@ -9,7 +11,7 @@ type TargetNode =
   | ComponentSetNode
   | FrameNode
   | GroupNode;
-type Extracted = {
+type ExtractedNode = {
   id: string;
   name: string;
 };
@@ -41,7 +43,7 @@ const makeComponentName = ({
 const findComponentInNode = (
   node: TargetNode,
   setName?: string,
-): Extracted | Extracted[] => {
+): ExtractedNode | ExtractedNode[] => {
   switch (node.type) {
     case "FRAME":
     case "GROUP":
@@ -70,17 +72,8 @@ const findComponentInNode = (
   }
 };
 
-export async function getAssetInIconFrame(
-  iconFrameId: string,
-  options?: {
-    withPng?: boolean;
-  },
-): Promise<Record<string, IconaIconData>> {
-  const frame = figma.getNodeById(iconFrameId) as FrameNode;
-
-  const withPng = options?.withPng ?? true;
-
-  const targetNodes = frame.children.flatMap((child) => {
+export function getAssetFramesInFrame(targetFrame: FrameNode): ExtractedNode[] {
+  const targetNodes = targetFrame.children.flatMap((child) => {
     if (
       child.type === "COMPONENT" ||
       child.type === "INSTANCE" ||
@@ -94,43 +87,26 @@ export async function getAssetInIconFrame(
     return [];
   });
 
-  const targetComponents = targetNodes.filter((component) => component);
+  return targetNodes.filter((component) => component);
+}
 
+export async function getSvgFromExtractedNodes(nodes: ExtractedNode[]) {
   const datas = await Promise.allSettled(
-    targetComponents.map(async (component) => {
-      const data = {} as IconaIconData;
+    nodes.map(async (component) => {
       const node = figma.getNodeById(component.id) as ComponentNode;
 
-      // base
-      data.style = {
-        width: node.width,
-        height: node.height,
+      return {
+        name: component.name,
+        svg: await node.exportAsync({
+          format: "SVG_STRING",
+          svgIdAttribute: true,
+        }),
       };
-      data.name = component.name;
-
-      // svg
-      const svg = await node.exportAsync({
-        format: "SVG_STRING",
-        svgIdAttribute: true,
-      });
-      data.svg = svg;
-
-      // png
-      if (withPng) {
-        const png = await node.exportAsync({ format: "PNG" });
-        const base64String = Base64.fromUint8Array(png);
-        data.png = base64String;
-      }
-
-      return data;
     }),
   );
 
   const dataMap = datas.reduce((acc, cur) => {
-    if (cur.status === "rejected") {
-      console.error(cur.reason);
-    }
-
+    if (cur.status === "rejected") console.error(cur.reason);
     if (cur.status === "fulfilled") {
       const { name, ...rest } = cur.value as IconaIconData;
       acc[name] = {
@@ -143,4 +119,65 @@ export async function getAssetInIconFrame(
   }, {} as Record<string, IconaIconData>);
 
   return dataMap;
+}
+
+export async function exportFromIconaIconData(
+  nodes: ExtractedNode[],
+  iconaData: Record<string, IconaIconData>,
+  options: ExportOptions,
+) {
+  const result = iconaData;
+
+  nodes.forEach(async (component) => {
+    const node = figma.getNodeById(component.id) as ComponentNode;
+
+    const exportDatas = await Promise.allSettled(
+      Object.entries(options.png).map(async ([key, value]) => {
+        const scale = Number(key.replace("x", ""));
+
+        if (!value) {
+          return {
+            scale: `${scale}x`,
+            data: "",
+          };
+        }
+
+        const exportData = await node.exportAsync({
+          format: "PNG",
+          constraint: {
+            type: "SCALE",
+            value: scale,
+          },
+        });
+
+        const base64String = Base64.fromUint8Array(exportData);
+
+        return {
+          scale: `${scale}x`,
+          data: base64String,
+        };
+      }),
+    );
+
+    const pngDatas = exportDatas.reduce((acc, cur) => {
+      if (cur.status === "rejected") console.error(cur.reason);
+      if (cur.status === "fulfilled") {
+        const { scale, data } = cur.value as {
+          scale: string;
+          data: string;
+        };
+        acc[scale] = data;
+      }
+
+      return acc;
+    }, {} as Record<string, string>);
+
+    // name = "icon_name"
+    result[component.name] = {
+      ...result[component.name],
+      ...pngDatas,
+    };
+  });
+
+  return result;
 }

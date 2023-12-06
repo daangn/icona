@@ -4,9 +4,11 @@ export interface GithubData {
   apiKey: string;
 }
 
-export interface IconaMetaData {
-  githubData: GithubData;
-  options?: {
-    withPng?: boolean;
+export interface ExportOptions {
+  png: {
+    x1: boolean;
+    x2: boolean;
+    x3: boolean;
+    x4: boolean;
   };
 }
