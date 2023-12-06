@@ -137,7 +137,7 @@ export async function exportFromIconaIconData(
 
         if (!value) {
           return {
-            scale: `${scale}x`,
+            scale: `x${scale}`,
             data: "",
           };
         }
@@ -153,7 +153,7 @@ export async function exportFromIconaIconData(
         const base64String = Base64.fromUint8Array(exportData);
 
         return {
-          scale: `${scale}x`,
+          scale: `x${scale}`,
           data: base64String,
         };
       }),
