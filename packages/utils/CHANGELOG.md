@@ -1,5 +1,16 @@
 # @icona/utils
 
+## 0.3.0
+
+### Minor Changes
+
+- b9e4030: feat: Extract PNG images by scale
+
+### Patch Changes
+
+- Updated dependencies [b9e4030]
+  - @icona/types@0.3.0
+
 ## 0.2.2
 
 ### Patch Changes
