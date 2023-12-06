@@ -137,7 +137,7 @@ export async function exportFromIconaIconData(
 
         if (!value) {
           return {
-            scale: `x${scale}`,
+            scale: key,
             data: "",
           };
         }
@@ -153,7 +153,7 @@ export async function exportFromIconaIconData(
         const base64String = Base64.fromUint8Array(exportData);
 
         return {
-          scale: `x${scale}`,
+          scale: key,
           data: base64String,
         };
       }),
@@ -163,19 +163,21 @@ export async function exportFromIconaIconData(
       if (cur.status === "rejected") console.error(cur.reason);
       if (cur.status === "fulfilled") {
         const { scale, data } = cur.value as {
-          scale: string;
+          scale: keyof IconaIconData["png"];
           data: string;
         };
         acc[scale] = data;
       }
 
       return acc;
-    }, {} as Record<string, string>);
+    }, {} as Record<keyof IconaIconData["png"], string>);
 
     // name = "icon_name"
     result[component.name] = {
       ...result[component.name],
-      ...pngDatas,
+      png: {
+        ...pngDatas,
+      },
     };
   });
 
