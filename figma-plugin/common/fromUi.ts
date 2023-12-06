@@ -1,6 +1,8 @@
 import { emit as e, on as o } from "@create-figma-plugin/utilities";
 import type { IconaIconData } from "@icona/types";
 
+import type { ExportOptions } from "./types.js";
+
 interface GithubData {
   owner: string;
   name: string;
@@ -10,13 +12,11 @@ interface GithubData {
 interface IconaMetaData {
   githubData: GithubData;
   icons: Record<string, IconaIconData>;
-  options?: {
-    withPng?: boolean;
-  };
+  options: ExportOptions;
 }
 
 interface SetPngOptionPayload {
-  withPng: boolean;
+  options: ExportOptions;
 }
 
 interface SetGithubUrlPayload {

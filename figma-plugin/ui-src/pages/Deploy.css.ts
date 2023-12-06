@@ -6,6 +6,17 @@ export const container = style({
   flexDirection: "column",
 });
 
+export const optionContainer = style({
+  display: "flex",
+  flexDirection: "column",
+  flexWrap: "wrap",
+  borderRadius: "4px",
+  border: "1px solid #ddd",
+
+  padding: "6px",
+  marginTop: "10px",
+});
+
 export const preview = style({
   display: "flex",
   alignItems: "center",

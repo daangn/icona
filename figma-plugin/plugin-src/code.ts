@@ -6,7 +6,7 @@ import {
   listenSetGithubApiKey,
   listenSetGithubUrl,
 } from "./listeners";
-import { getAssetInIconFrame } from "./service";
+import { getAssetFramesInFrame, getSvgFromExtractedNodes } from "./service";
 import { getLocalData } from "./utils";
 
 function sendUserInfo() {
@@ -21,11 +21,15 @@ function sendUserInfo() {
 async function sendStorageData() {
   const repoUrl = await getLocalData(KEY.GITHUB_REPO_URL);
   const apiKey = await getLocalData(KEY.GITHUB_API_KEY);
-  const deployWithPng = await getLocalData(KEY.DEPLOY_WITH_PNG);
+  const pngOption = await getLocalData(KEY.PNG_OPTION);
 
   emit("GET_GITHUB_REPO_URL", { repoUrl });
   emit("GET_GITHUB_API_KEY", { apiKey });
-  emit("GET_DEPLOY_WITH_PNG", { deployWithPng });
+  emit("GET_DEPLOY_WITH_PNG", {
+    options: pngOption || {
+      png: { x1: false, x2: false, x3: false, x4: false },
+    },
+  });
 }
 
 async function setPreviewIcons() {
@@ -37,13 +41,11 @@ async function setPreviewIcons() {
     figma.notify("Icona frame not found");
     return;
   } else {
-    const svgDatas = await getAssetInIconFrame(iconaFrame.id, {
-      withPng: await getLocalData(KEY.DEPLOY_WITH_PNG),
-    });
+    const targetFrame = figma.getNodeById(iconaFrame.id) as FrameNode;
+    const assetFrames = getAssetFramesInFrame(targetFrame);
+    const datas = await getSvgFromExtractedNodes(assetFrames);
 
-    emit("GET_ICON_PREVIEW", {
-      icons: svgDatas,
-    });
+    emit("GET_ICON_PREVIEW", { icons: datas });
   }
 }
 

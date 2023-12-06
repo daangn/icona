@@ -21,8 +21,15 @@ type State = {
 
   iconPreview: Record<string, IconaIconData>;
 
-  /* status */
-  isDeployWithPng: boolean;
+  // Options
+  pngOption: {
+    x1: boolean;
+    x2: boolean;
+    x3: boolean;
+    x4: boolean;
+  };
+
+  // Status
   isDeploying: boolean;
 };
 
@@ -47,10 +54,17 @@ function reducer(state: State, action: Actions): State {
   switch (action.name) {
     /* from Plugin */
     case "GET_DEPLOY_WITH_PNG": {
-      const { deployWithPng = false } = action.payload;
+      const { options } = action.payload;
+      const png = options.png || { x1: false, x2: false, x3: false, x4: false };
+
       return {
         ...state,
-        isDeployWithPng: deployWithPng,
+        pngOption: {
+          x1: png.x1 || false,
+          x2: png.x2 || false,
+          x3: png.x3 || false,
+          x4: png.x4 || false,
+        },
       };
     }
     case "GET_GITHUB_API_KEY": {
@@ -128,7 +142,9 @@ function reducer(state: State, action: Actions): State {
 
       return {
         ...state,
-        isDeployWithPng: action.payload.withPng,
+        pngOption: {
+          ...action.payload.options.png,
+        },
       };
     }
 
@@ -164,8 +180,15 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     githubApiKey: "",
     githubRepositoryUrl: "",
 
+    // Options
+    pngOption: {
+      x1: false,
+      x2: false,
+      x3: false,
+      x4: false,
+    },
+
     // Status
-    isDeployWithPng: true,
     isDeploying: false,
   });
 

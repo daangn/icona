@@ -1,6 +1,8 @@
 import { emit as e, on as o } from "@create-figma-plugin/utilities";
 import type { IconaIconData } from "@icona/types";
 
+import type { ExportOptions } from "./types.js";
+
 interface UserInfoPayload {
   name: string;
   id: string;
@@ -15,7 +17,7 @@ interface GetGithubApiKeyPayload {
 }
 
 interface GetDeployWithPngPayload {
-  deployWithPng?: boolean;
+  options: ExportOptions;
 }
 
 interface GetIconPreviewPayload {
