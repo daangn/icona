@@ -5,7 +5,8 @@ import {
   getProjectRootPath,
   makeFolderIfNotExistFromRoot,
 } from "@icona/utils";
-import { writeFileSync } from "fs";
+import { Presets, SingleBar } from "cli-progress";
+import { writeFile } from "fs/promises";
 import { resolve } from "path";
 import { optimize } from "svgo";
 
@@ -18,7 +19,7 @@ interface GenerateSVGFunction {
   config: GenerateSVGConfig;
 }
 
-export const generateSVG = ({
+export const generateSVG = async ({
   icons = getIconaIconsFile(),
   config,
 }: GenerateSVGFunction) => {
@@ -39,8 +40,20 @@ export const generateSVG = ({
     deleteAllFilesInDir(resolve(projectPath, path));
   }
 
+  console.log(`\nSVG Generate in \`${path}\` folder...`);
+
+  const bar = new SingleBar(
+    {
+      format: "SVG Generate | {bar} | {percentage}% | {value}/{total}",
+      hideCursor: true,
+    },
+    Presets.shades_grey,
+  );
+
+  bar.start(iconData.length, 0);
+
   // TODO: Name transform option
-  iconData.forEach(([name, data]) => {
+  for (const [name, data] of iconData) {
     const { svg } = data;
 
     if (!svg) {
@@ -50,6 +63,9 @@ export const generateSVG = ({
 
     const { data: optimizedSvg } = optimize(svg, svgoConfig);
     const svgPath = resolve(projectPath, path, `${name}.svg`);
-    writeFileSync(svgPath, optimizedSvg, "utf-8");
-  });
+    await writeFile(svgPath, optimizedSvg, "utf-8");
+    bar.increment();
+  }
+
+  bar.stop();
 };

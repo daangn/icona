@@ -5,7 +5,8 @@ import {
   getProjectRootPath,
   makeFolderIfNotExistFromRoot,
 } from "@icona/utils";
-import { writeFileSync } from "fs";
+import { MultiBar, Presets } from "cli-progress";
+import { writeFile } from "fs/promises";
 import { join, resolve } from "path";
 
 interface GeneratePNGFunction {
@@ -17,7 +18,7 @@ interface GeneratePNGFunction {
   config: GeneratePNGConfig;
 }
 
-export const generatePNG = ({
+export const generatePNG = async ({
   icons = getIconaIconsFile(),
   config,
 }: GeneratePNGFunction) => {
@@ -43,16 +44,48 @@ export const generatePNG = ({
     });
   }
 
+  console.log(`\nPNG Generate in \`${path}\` folder...`);
+
+  const bar = new MultiBar(
+    {
+      format: "PNG Generate {scale} | {bar} | {percentage}% | {value}/{total}",
+      hideCursor: true,
+    },
+    Presets.shades_grey,
+  );
+
+  const scale1bar = bar.create(iconData.length, 0);
+  const scale2bar = bar.create(iconData.length, 0);
+  const scale3bar = bar.create(iconData.length, 0);
+  const scale4bar = bar.create(iconData.length, 0);
+
   // TODO: Name transform option
-  iconData.forEach(([name, data]) => {
-    scales.forEach((scale) => {
+  for (const [name, data] of iconData) {
+    for (const scale of scales) {
       const base64 = data.png[scale];
       if (!base64) return;
 
       const buffer = Buffer.from(base64, "base64");
       const filePath = resolve(projectPath, join(path, scale, `${name}.png`));
 
-      writeFileSync(filePath, buffer);
-    });
-  });
+      await writeFile(filePath, buffer);
+
+      switch (scale) {
+        case "1x":
+          scale1bar.increment({ scale });
+          break;
+        case "2x":
+          scale2bar.increment({ scale });
+          break;
+        case "3x":
+          scale3bar.increment({ scale });
+          break;
+        case "4x":
+          scale4bar.increment({ scale });
+          break;
+      }
+    }
+  }
+
+  bar.stop();
 };

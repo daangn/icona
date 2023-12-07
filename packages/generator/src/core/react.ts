@@ -7,7 +7,8 @@ import {
 } from "@icona/utils";
 import type { Config } from "@svgr/core";
 import { transform } from "@svgr/core";
-import { writeFileSync } from "fs";
+import { Presets, SingleBar } from "cli-progress";
+import { writeFile } from "fs/promises";
 import { resolve } from "path";
 
 interface GenerateReactFunction {
@@ -19,7 +20,7 @@ interface GenerateReactFunction {
   config: GenerateReactConfig;
 }
 
-export const generateReact = ({
+export const generateReact = async ({
   icons = getIconaIconsFile(),
   config,
 }: GenerateReactFunction) => {
@@ -40,8 +41,20 @@ export const generateReact = ({
     deleteAllFilesInDir(resolve(projectPath, path));
   }
 
+  console.log(`\nReact Generate in \`${path}\` folder...`);
+
+  const bar = new SingleBar(
+    {
+      format: "React Generate | {bar} | {percentage}% | {value}/{total}",
+      hideCursor: true,
+    },
+    Presets.shades_grey,
+  );
+
+  bar.start(iconData.length, 0);
+
   // TODO: Name transform option
-  iconData.forEach(async ([name, data]) => {
+  for (const [name, data] of iconData) {
     const { svg } = data;
 
     const componentName = name
@@ -55,6 +68,9 @@ export const generateReact = ({
 
     const svgPath = resolve(projectPath, path, `${componentName}.tsx`);
 
-    writeFileSync(svgPath, component, "utf-8");
-  });
+    await writeFile(svgPath, component, "utf-8");
+    bar.increment();
+  }
+
+  bar.stop();
 };
