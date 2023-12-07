@@ -3653,6 +3653,8 @@ __metadata:
     "@icona/types": ^0.3.0
     "@icona/utils": ^0.3.0
     "@svgr/core": ^8.0.0
+    "@types/cli-progress": ^3.11.5
+    cli-progress: ^3.12.0
     nanobundle: ^1.6.0
     pdfkit: ^0.13.0
     prettier: ^2.8.8
@@ -4121,6 +4123,15 @@ __metadata:
   version: 3.0.2
   resolution: "@types/braces@npm:3.0.2"
   checksum: 0b1bee5e8332fabf57397de8dec1a24c3bf53efc3284d15d64d7dd67c0ba9853e0191e5220464ff171a4963c1db2b0cfd3926e2b363a95909ff723a4426a1964
+  languageName: node
+  linkType: hard
+
+"@types/cli-progress@npm:^3.11.5":
+  version: 3.11.5
+  resolution: "@types/cli-progress@npm:3.11.5"
+  dependencies:
+    "@types/node": "*"
+  checksum: 571fb3b11646415ac49c90e8003b82f3ac58d75fde5952caf40b4a079517b6e25e79ab0a7455d0ab0398d0b2de062646dba075d3d1f8d147eed2ab4d41abbf64
   languageName: node
   linkType: hard
 
@@ -5190,6 +5201,15 @@ __metadata:
   version: 2.2.0
   resolution: "clean-stack@npm:2.2.0"
   checksum: 2ac8cd2b2f5ec986a3c743935ec85b07bc174d5421a5efc8017e1f146a1cf5f781ae962618f416352103b32c9cd7e203276e8c28241bbe946160cab16149fb68
+  languageName: node
+  linkType: hard
+
+"cli-progress@npm:^3.12.0":
+  version: 3.12.0
+  resolution: "cli-progress@npm:3.12.0"
+  dependencies:
+    string-width: ^4.2.3
+  checksum: e8390dc3cdf3c72ecfda0a1e8997bfed63a0d837f97366bbce0ca2ff1b452da386caed007b389f0fe972625037b6c8e7ab087c69d6184cc4dfc8595c4c1d3e6e
   languageName: node
   linkType: hard
 

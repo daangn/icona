@@ -10,9 +10,9 @@ export interface IconaIconData {
   style: Style;
   svg: string;
   png: {
-    x1: Base64 | null;
-    x2: Base64 | null;
-    x3: Base64 | null;
-    x4: Base64 | null;
+    "1x": Base64 | null;
+    "2x": Base64 | null;
+    "3x": Base64 | null;
+    "4x": Base64 | null;
   };
 }

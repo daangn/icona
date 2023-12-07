@@ -5,6 +5,7 @@ import {
   getProjectRootPath,
   makeFolderIfNotExistFromRoot,
 } from "@icona/utils";
+import { Presets, SingleBar } from "cli-progress";
 import { createWriteStream } from "fs";
 import { resolve } from "path";
 import PDFDocument from "pdfkit";
@@ -41,8 +42,20 @@ export const generatePDF = ({
     deleteAllFilesInDir(resolve(projectPath, path));
   }
 
+  console.log(`\nPDF Generate in \`${path}\` folder...`);
+
+  const bar = new SingleBar(
+    {
+      format: "PDF Generate | {bar} | {percentage}% | {value}/{total}",
+      hideCursor: true,
+    },
+    Presets.shades_grey,
+  );
+
+  bar.start(iconData.length, 0);
+
   // TODO: Name transform option
-  iconData.forEach(async ([name, data]) => {
+  for (const [name, data] of iconData) {
     const { svg } = data;
     const svgPath = resolve(projectPath, path, `${name}.pdf`);
 
@@ -74,6 +87,8 @@ export const generatePDF = ({
 
     SVGtoPDF(pdfDoc, svg, x, y, restSvgToPdfOptions);
     pdfDoc.pipe(createWriteStream(svgPath));
-    pdfDoc.end();
-  });
+    bar.increment();
+  }
+
+  bar.stop();
 };

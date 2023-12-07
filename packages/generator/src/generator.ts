@@ -13,16 +13,16 @@ export const generator = (
 ) => {
   const { pdf, drawable, react, svg, png } = config;
 
-  const generate = () => {
+  const generate = async () => {
     console.log("[@Icona/generator] Start generating...");
 
-    if (svg?.active) generateSVG({ icons, config: svg });
-    if (react?.active) generateReact({ icons, config: react });
+    if (svg?.active) await generateSVG({ icons, config: svg });
+    if (react?.active) await generateReact({ icons, config: react });
     if (pdf?.active) generatePDF({ icons, config: pdf });
-    if (drawable?.active) generateDrawable({ icons, config: drawable });
-    if (png?.active) generatePNG({ icons, config: png });
+    if (drawable?.active) await generateDrawable({ icons, config: drawable });
+    if (png?.active) await generatePNG({ icons, config: png });
 
-    console.log("[@Icona/generator] Finish generating!");
+    console.log("\n[@Icona/generator] Finish generating!!!");
   };
 
   return { generate };
@@ -36,7 +36,7 @@ interface GenerateFunction {
   icons?: Record<string, IconaIconData> | null;
   config: IconaConfig;
 }
-export const generate = ({
+export const generate = async ({
   icons = getIconaIconsFile(),
   config,
 }: GenerateFunction) => {
@@ -47,5 +47,5 @@ export const generate = ({
   }
 
   const { generate: fn } = generator(icons, config);
-  fn();
+  await fn();
 };

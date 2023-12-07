@@ -21,13 +21,13 @@ function sendUserInfo() {
 async function sendStorageData() {
   const repoUrl = await getLocalData(KEY.GITHUB_REPO_URL);
   const apiKey = await getLocalData(KEY.GITHUB_API_KEY);
-  const pngOption = await getLocalData(KEY.PNG_OPTION);
+  const pngOption = await getLocalData(KEY.PNG_OPTIONS);
 
   emit("GET_GITHUB_REPO_URL", { repoUrl });
   emit("GET_GITHUB_API_KEY", { apiKey });
   emit("GET_DEPLOY_WITH_PNG", {
     options: pngOption || {
-      png: { x1: false, x2: false, x3: false, x4: false },
+      png: { "1x": false, "2x": false, "3x": false, "4x": false },
     },
   });
 }

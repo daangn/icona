@@ -113,15 +113,15 @@ const Deploy = () => {
         <Flex gap={6}>
           <Checkbox
             marginTop={2}
-            isChecked={pngOption.x1}
+            isChecked={pngOption["1x"]}
             onChange={() => {
               dispatch({
-                name: "SET_PNG_OPTION",
+                name: "SET_PNG_OPTIONS",
                 payload: {
                   options: {
                     png: {
                       ...pngOption,
-                      x1: !pngOption.x1,
+                      "1x": !pngOption["1x"],
                     },
                   },
                 },
@@ -129,21 +129,21 @@ const Deploy = () => {
             }}
           >
             <Text fontWeight="bold" fontSize={14}>
-              x1
+              1x
             </Text>
           </Checkbox>
 
           <Checkbox
             marginTop={2}
-            isChecked={pngOption.x2}
+            isChecked={pngOption["2x"]}
             onChange={() => {
               dispatch({
-                name: "SET_PNG_OPTION",
+                name: "SET_PNG_OPTIONS",
                 payload: {
                   options: {
                     png: {
                       ...pngOption,
-                      x2: !pngOption.x2,
+                      "2x": !pngOption["2x"],
                     },
                   },
                 },
@@ -151,21 +151,21 @@ const Deploy = () => {
             }}
           >
             <Text fontWeight="bold" fontSize={14}>
-              x2
+              2x
             </Text>
           </Checkbox>
 
           <Checkbox
             marginTop={2}
-            isChecked={pngOption.x3}
+            isChecked={pngOption["3x"]}
             onChange={() => {
               dispatch({
-                name: "SET_PNG_OPTION",
+                name: "SET_PNG_OPTIONS",
                 payload: {
                   options: {
                     png: {
                       ...pngOption,
-                      x3: !pngOption.x3,
+                      "3x": !pngOption["3x"],
                     },
                   },
                 },
@@ -173,21 +173,21 @@ const Deploy = () => {
             }}
           >
             <Text fontWeight="bold" fontSize={14}>
-              x3
+              3x
             </Text>
           </Checkbox>
 
           <Checkbox
             marginTop={2}
-            isChecked={pngOption.x4}
+            isChecked={pngOption["4x"]}
             onChange={() => {
               dispatch({
-                name: "SET_PNG_OPTION",
+                name: "SET_PNG_OPTIONS",
                 payload: {
                   options: {
                     png: {
                       ...pngOption,
-                      x4: !pngOption.x4,
+                      "4x": !pngOption["4x"],
                     },
                   },
                 },
@@ -195,7 +195,7 @@ const Deploy = () => {
             }}
           >
             <Text fontWeight="bold" fontSize={14}>
-              x4
+              4x
             </Text>
           </Checkbox>
         </Flex>

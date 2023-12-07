@@ -37,8 +37,8 @@ export type Events = {
     payload: SetGithubApiKeyPayload;
     handler: (props: SetGithubApiKeyPayload) => void;
   };
-  SET_PNG_OPTION: {
-    name: "SET_PNG_OPTION";
+  SET_PNG_OPTIONS: {
+    name: "SET_PNG_OPTIONS";
     payload: SetPngOptionPayload;
     handler: (props: SetPngOptionPayload) => void;
   };

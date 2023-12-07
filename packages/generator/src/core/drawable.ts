@@ -5,7 +5,8 @@ import {
   getProjectRootPath,
   makeFolderIfNotExistFromRoot,
 } from "@icona/utils";
-import { writeFileSync } from "fs";
+import { Presets, SingleBar } from "cli-progress";
+import { writeFile } from "fs/promises";
 import { resolve } from "path";
 import svg2vectordrawable from "svg2vectordrawable";
 
@@ -18,7 +19,7 @@ interface GenerateDrawableFunction {
   config: GenerateDrawableConfig;
 }
 
-export const generateDrawable = ({
+export const generateDrawable = async ({
   icons = getIconaIconsFile(),
   config,
 }: GenerateDrawableFunction) => {
@@ -40,8 +41,20 @@ export const generateDrawable = ({
     deleteAllFilesInDir(resolve(projectPath, path));
   }
 
+  console.log(`\nDrawable Generate in \`${path}\` folder...`);
+
+  const bar = new SingleBar(
+    {
+      format: "Drawable Generate | {bar} | {percentage}% | {value}/{total}",
+      hideCursor: true,
+    },
+    Presets.shades_grey,
+  );
+
+  bar.start(iconData.length, 0);
+
   // TODO: Name transform option
-  iconData.forEach(async ([name, data]) => {
+  for (const [name, data] of iconData) {
     const { svg } = data;
 
     const drawablePath = resolve(projectPath, path, `${name}.xml`);
@@ -52,6 +65,9 @@ export const generateDrawable = ({
       drawable = drawable.replace(/#FF212124/g, defaultColor);
     }
 
-    writeFileSync(drawablePath, drawable);
-  });
+    await writeFile(drawablePath, drawable);
+    bar.increment();
+  }
+
+  bar.stop();
 };

@@ -23,10 +23,10 @@ type State = {
 
   // Options
   pngOption: {
-    x1: boolean;
-    x2: boolean;
-    x3: boolean;
-    x4: boolean;
+    "1x": boolean;
+    "2x": boolean;
+    "3x": boolean;
+    "4x": boolean;
   };
 
   // Status
@@ -41,7 +41,7 @@ type Actions =
   | Omit<PluginEvents["GET_ICON_PREVIEW"], "handler">
   | Omit<PluginEvents["DEPLOY_DONE"], "handler">
   | Omit<UiEvents["DEPLOY_ICON"], "handler">
-  | Omit<UiEvents["SET_PNG_OPTION"], "handler">
+  | Omit<UiEvents["SET_PNG_OPTIONS"], "handler">
   | Omit<UiEvents["SET_GITHUB_API_KEY"], "handler">
   | Omit<UiEvents["SET_GITHUB_URL"], "handler">;
 
@@ -55,15 +55,17 @@ function reducer(state: State, action: Actions): State {
     /* from Plugin */
     case "GET_DEPLOY_WITH_PNG": {
       const { options } = action.payload;
-      const png = options.png || { x1: false, x2: false, x3: false, x4: false };
+      const png = options.png || {
+        "1x": false,
+        "2x": false,
+        "3x": false,
+        "4x": false,
+      };
 
       return {
         ...state,
         pngOption: {
-          x1: png.x1 || false,
-          x2: png.x2 || false,
-          x3: png.x3 || false,
-          x4: png.x4 || false,
+          ...png,
         },
       };
     }
@@ -137,8 +139,8 @@ function reducer(state: State, action: Actions): State {
       };
     }
 
-    case "SET_PNG_OPTION": {
-      emit("SET_PNG_OPTION", action.payload);
+    case "SET_PNG_OPTIONS": {
+      emit("SET_PNG_OPTIONS", action.payload);
 
       return {
         ...state,
@@ -182,10 +184,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
     // Options
     pngOption: {
-      x1: false,
-      x2: false,
-      x3: false,
-      x4: false,
+      "1x": false,
+      "2x": false,
+      "3x": false,
+      "4x": false,
     },
 
     // Status
