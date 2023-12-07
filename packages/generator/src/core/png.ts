@@ -23,7 +23,7 @@ export const generatePNG = ({
 }: GeneratePNGFunction) => {
   const projectPath = getProjectRootPath();
   const path = config.path || "png";
-  const scales = ["x1", "x2", "x3", "x4"] as const;
+  const scales = ["1x", "2x", "3x", "4x"] as const;
 
   if (!icons) {
     throw new Error("There is no icons data");

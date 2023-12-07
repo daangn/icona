@@ -56,7 +56,7 @@ export function listenSetGithubUrl() {
 }
 
 export function listenPngOption() {
-  on("SET_PNG_OPTION", ({ options }) => {
-    setLocalData(KEY.PNG_OPTION, options);
+  on("SET_PNG_OPTIONS", ({ options }) => {
+    setLocalData(KEY.PNG_OPTIONS, options);
   });
 }

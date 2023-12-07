@@ -6,9 +6,9 @@ export interface GithubData {
 
 export interface ExportOptions {
   png: {
-    x1: boolean;
-    x2: boolean;
-    x3: boolean;
-    x4: boolean;
+    "1x": boolean;
+    "2x": boolean;
+    "3x": boolean;
+    "4x": boolean;
   };
 }

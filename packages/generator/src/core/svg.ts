@@ -42,7 +42,11 @@ export const generateSVG = ({
   // TODO: Name transform option
   iconData.forEach(([name, data]) => {
     const { svg } = data;
-    makeFolderIfNotExistFromRoot(path);
+
+    if (!svg) {
+      console.log(`There is no svg data in ${name}`);
+      return;
+    }
 
     const { data: optimizedSvg } = optimize(svg, svgoConfig);
     const svgPath = resolve(projectPath, path, `${name}.svg`);
