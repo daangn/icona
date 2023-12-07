@@ -5,7 +5,7 @@ import {
   getProjectRootPath,
   makeFolderIfNotExistFromRoot,
 } from "@icona/utils";
-import { MultiBar, Presets } from "cli-progress";
+import { Presets, SingleBar } from "cli-progress";
 import { writeFile } from "fs/promises";
 import { join, resolve } from "path";
 
@@ -46,22 +46,23 @@ export const generatePNG = async ({
 
   console.log(`\nPNG Generate in \`${path}\` folder...`);
 
-  const bar = new MultiBar(
-    {
-      format: "PNG Generate {scale} | {bar} | {percentage}% | {value}/{total}",
-      hideCursor: true,
-    },
-    Presets.shades_grey,
-  );
-
-  const scale1bar = bar.create(iconData.length, 0);
-  const scale2bar = bar.create(iconData.length, 0);
-  const scale3bar = bar.create(iconData.length, 0);
-  const scale4bar = bar.create(iconData.length, 0);
-
+  const iconaData = Object.entries(icons);
   // TODO: Name transform option
-  for (const [name, data] of iconData) {
-    for (const scale of scales) {
+  for (const scale of scales) {
+    const iconaScaleData = iconaData.filter(([, data]) => data.png[scale]);
+    if (iconaScaleData.length === 0) continue;
+
+    const bar = new SingleBar(
+      {
+        format: `Drawable Generate ${scale} | {bar} | {percentage}% | {value}/{total}`,
+        hideCursor: true,
+      },
+      Presets.shades_grey,
+    );
+
+    bar.start(iconaScaleData.length, 0);
+
+    for (const [name, data] of iconaScaleData) {
       const base64 = data.png[scale];
       if (!base64) return;
 
@@ -69,23 +70,9 @@ export const generatePNG = async ({
       const filePath = resolve(projectPath, join(path, scale, `${name}.png`));
 
       await writeFile(filePath, buffer);
-
-      switch (scale) {
-        case "1x":
-          scale1bar.increment({ scale });
-          break;
-        case "2x":
-          scale2bar.increment({ scale });
-          break;
-        case "3x":
-          scale3bar.increment({ scale });
-          break;
-        case "4x":
-          scale4bar.increment({ scale });
-          break;
-      }
+      bar.increment();
     }
-  }
 
-  bar.stop();
+    bar.stop();
+  }
 };
