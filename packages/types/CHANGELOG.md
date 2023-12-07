@@ -1,5 +1,11 @@
 # @icona/types
 
+## 0.4.1
+
+### Patch Changes
+
+- 51a6e58: fix: png, pdf bar no stop issue
+
 ## 0.4.0
 
 ### Minor Changes
