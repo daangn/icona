@@ -1,5 +1,14 @@
 # @icona/generator
 
+## 0.4.1
+
+### Patch Changes
+
+- 51a6e58: fix: png, pdf bar no stop issue
+- Updated dependencies [51a6e58]
+  - @icona/types@0.4.1
+  - @icona/utils@0.4.1
+
 ## 0.4.0
 
 ### Minor Changes

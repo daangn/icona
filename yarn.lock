@@ -3650,8 +3650,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@icona/generator@workspace:packages/generator"
   dependencies:
-    "@icona/types": ^0.4.0
-    "@icona/utils": ^0.4.0
+    "@icona/types": ^0.4.1
+    "@icona/utils": ^0.4.1
     "@svgr/core": ^8.0.0
     "@types/cli-progress": ^3.11.5
     cli-progress: ^3.12.0
@@ -3689,7 +3689,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/types@^0.4.0, @icona/types@workspace:^, @icona/types@workspace:packages/types":
+"@icona/types@^0.4.1, @icona/types@workspace:^, @icona/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@icona/types@workspace:packages/types"
   dependencies:
@@ -3705,11 +3705,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/utils@^0.4.0, @icona/utils@workspace:packages/utils":
+"@icona/utils@^0.4.1, @icona/utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "@icona/utils@workspace:packages/utils"
   dependencies:
-    "@icona/types": ^0.4.0
+    "@icona/types": ^0.4.1
     "@types/findup-sync": ^4.0.2
     "@types/node": ^20.3.1
     findup-sync: ^5.0.0
