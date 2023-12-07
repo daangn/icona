@@ -87,6 +87,7 @@ export const generatePDF = ({
 
     SVGtoPDF(pdfDoc, svg, x, y, restSvgToPdfOptions);
     pdfDoc.pipe(createWriteStream(svgPath));
+    pdfDoc.end();
     bar.increment();
   }
 
