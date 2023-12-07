@@ -1,5 +1,17 @@
 # @icona/generator
 
+## 0.4.0
+
+### Minor Changes
+
+- b04ef92: feat: add progress bar & change async & change png folder name (x1 -> 1x)
+
+### Patch Changes
+
+- Updated dependencies [b04ef92]
+  - @icona/types@0.4.0
+  - @icona/utils@0.4.0
+
 ## 0.3.0
 
 ### Minor Changes

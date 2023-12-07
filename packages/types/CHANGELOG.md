@@ -1,5 +1,11 @@
 # @icona/types
 
+## 0.4.0
+
+### Minor Changes
+
+- b04ef92: feat: add progress bar & change async & change png folder name (x1 -> 1x)
+
 ## 0.3.0
 
 ### Minor Changes
