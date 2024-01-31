@@ -86,7 +86,64 @@ If you use this library, please send PR to add your project in this list.
 
 - [daangn/seed-icon](https://github.com/daangn/seed-icon)
 
-## TODO
+## Common Problems
 
-- [ ] Check diff and update only changed icons. (Now, always update all icons)
-  - ISSUE: PDF generate occur all file changes when generate.
+### 1. If you use `removeAttrs` and remove `id` prop in svgoConfig option, you have to check that exists `<mask>` tag in your svg file.
+
+If the `<mask />` tag is looking at a specific id value as a URL, the mask tag should not delete the id value in the removeAttrs plugin.
+
+If you use `<mask>` tag and using `removeAttrs` plugin in svgoConfig like below...
+
+```html
+<svg
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  data-seed-icon="true"
+  data-seed-icon-version="0.5.4"
+>
+  <g>
+    <g>
+      <mask id="path-1-inside-1_12571_4011" fill="currentColor">
+        <path
+          d="..."
+          fill="currentColor"
+          mask="url(#path-1-inside-1_12571_4011)"
+        />
+      </mask>
+    </g>
+  </g>
+</svg>
+```
+
+The `<mask />` tag must be exception-handled to avoid deleting the id value.
+
+```js
+svgoConfig: {
+   plugins: [
+     {
+       name: "removeAttrs",
+       params: {
+         attrs: ["id"],
+       },
+       fn: () => {
+         return {
+           element: {
+             enter: node => {
+               // NOTE: The `<mask />` tag must be exception-handled to avoid deleting the id value.
+
+               // NOTE: Not working (Maybe bug)
+               // if (node.name === 'mask') return;
+
+               // NOTE: Working
+               if (node.name !== 'mask') delete node.attributes.id;
+             }
+           }
+         }
+       }
+     },
+   ],
+},
+```
