@@ -2,6 +2,7 @@ import type { IconaConfig, IconaIconData } from "@icona/types";
 import { getIconaIconsFile } from "@icona/utils";
 
 import { generateDrawable } from "./core/drawable.js";
+import { generateFont } from "./core/font.js";
 import { generatePDF } from "./core/pdf.js";
 import { generatePNG } from "./core/png.js";
 import { generateReact } from "./core/react.js";
@@ -11,7 +12,7 @@ export const generator = (
   icons: Record<string, IconaIconData>,
   config: IconaConfig,
 ) => {
-  const { pdf, drawable, react, svg, png } = config;
+  const { pdf, drawable, react, svg, png, font } = config;
 
   const generate = async () => {
     console.log("[@Icona/generator] Start generating...");
@@ -21,6 +22,7 @@ export const generator = (
     if (pdf?.active) generatePDF({ icons, config: pdf });
     if (drawable?.active) await generateDrawable({ icons, config: drawable });
     if (png?.active) await generatePNG({ icons, config: png });
+    if (font?.active) generateFont({ config: font });
 
     console.log("\n[@Icona/generator] Finish generating!!!");
   };

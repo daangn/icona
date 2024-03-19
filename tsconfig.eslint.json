@@ -3,7 +3,8 @@
   "include": [
     "packages",
     "figma-plugin/**/*",
-    ".eslintrc.js"
+    ".eslintrc.js",
+    "test"
   ],
   "exclude": [
     "packages/legacy",

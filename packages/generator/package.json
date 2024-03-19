@@ -33,7 +33,8 @@
     "pdfkit": "^0.13.0",
     "svg-to-pdfkit": "^0.1.8",
     "svg2vectordrawable": "^2.9.1",
-    "svgo": "^3.0.2"
+    "svgo": "^3.0.2",
+    "svgtofont": "^4.2.0"
   },
   "devDependencies": {
     "nanobundle": "^1.6.0",
