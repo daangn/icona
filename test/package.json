@@ -1,0 +1,16 @@
+{
+  "name": "@icona/generator-test",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node ./icona.js"
+  },
+  "dependencies": {
+    "@icona/generator": "workspace:^"
+  },
+  "devDependencies": {
+    "@icona/types": "workspace:^"
+  },
+  "packageManager": "yarn@3.5.1"
+}

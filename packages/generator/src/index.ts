@@ -1,4 +1,5 @@
 import { generateDrawable } from "./core/drawable.js";
+import { generateFont } from "./core/font.js";
 import { generatePDF } from "./core/pdf.js";
 import { generatePNG } from "./core/png.js";
 import { generateReact } from "./core/react.js";
@@ -8,6 +9,7 @@ import { generate, generator } from "./generator.js";
 export {
   generate,
   generateDrawable,
+  generateFont,
   generatePDF,
   generatePNG,
   generateReact,
