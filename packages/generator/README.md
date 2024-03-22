@@ -37,6 +37,28 @@ generate({
       path: "react", // will generate react component files in react folder
       svgrConfig: {},
     },
+    png: {
+      active: false,
+      genMode: "recreate",
+      path: "png",
+    },
+    font: {
+      genMode: "recreate",
+      active: true,
+      svgToFontOptions: {
+        src: "svg",
+        dist: "font",
+        fontName: "seed-icon",
+      },
+    },
+    flutter: {
+      active: true,
+      ttfPath: "font/seed-icon.ttf",
+      fileName: "SeedIcons",
+      fontFamily: "SeedIcon",
+      genMode: "recreate",
+      path: "flutter",
+    },
   },
 });
 ```
@@ -48,6 +70,8 @@ generate({
 - [pdfkit (PDF)](https://pdfkit.org/docs/getting_started.html#document-structure)
 - [svg-to-pdfkit (PDF)](https://github.com/alafr/SVG-to-PDFKit)
 - [svgr (React Components)](https://react-svgr.com/)
+- [svgtofont (Font Files)](https://www.npmjs.com/package/svgtofont)
+- [opentype.js (Flutter Icons)](https://github.com/opentypejs/opentype.js)
 
 you configure each library options in `config` object.
 If you want to see real example, you can see [here (seed-icon)](https://github.com/daangn/seed-icon/blob/main/icona.js)
