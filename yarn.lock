@@ -3654,8 +3654,10 @@ __metadata:
     "@icona/utils": ^0.4.1
     "@svgr/core": ^8.0.0
     "@types/cli-progress": ^3.11.5
+    "@types/opentype.js": ^1.3.8
     cli-progress: ^3.12.0
     nanobundle: ^1.6.0
+    opentype.js: ^1.3.4
     pdfkit: ^0.13.0
     prettier: ^2.8.8
     svg-to-pdfkit: ^0.1.8
@@ -4234,6 +4236,13 @@ __metadata:
   version: 2.4.1
   resolution: "@types/normalize-package-data@npm:2.4.1"
   checksum: e87bccbf11f95035c89a132b52b79ce69a1e3652fe55962363063c9c0dae0fe2477ebc585e03a9652adc6f381d24ba5589cc5e51849df4ced3d3e004a7d40ed5
+  languageName: node
+  linkType: hard
+
+"@types/opentype.js@npm:^1.3.8":
+  version: 1.3.8
+  resolution: "@types/opentype.js@npm:1.3.8"
+  checksum: c618164b96d7f5d71ffa37cab76941ca82f4864c8814d6a7ee9b624dadf1d39db16d4712e9a940802865aefe35405b10b40d138c20c4fbd20aeb2a82f8b421c1
   languageName: node
   linkType: hard
 
@@ -8826,6 +8835,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"opentype.js@npm:^1.3.4":
+  version: 1.3.4
+  resolution: "opentype.js@npm:1.3.4"
+  dependencies:
+    string.prototype.codepointat: ^0.2.1
+    tiny-inflate: ^1.0.3
+  bin:
+    ot: bin/ot
+  checksum: 365af0f9a8bd87b772c794502a9e53a6d286faf2bafda51f3016acab21bd6202a0d6a1260d7b71f1d6ad8076ccedfe84f76bd6aabb14704ce42ac9a9f96bae21
+  languageName: node
+  linkType: hard
+
 "optionator@npm:^0.9.1":
   version: 0.9.1
   resolution: "optionator@npm:0.9.1"
@@ -10082,6 +10103,13 @@ __metadata:
     emoji-regex: ^9.2.2
     strip-ansi: ^7.0.1
   checksum: 7369deaa29f21dda9a438686154b62c2c5f661f8dda60449088f9f980196f7908fc39fdd1803e3e01541970287cf5deae336798337e9319a7055af89dafa7193
+  languageName: node
+  linkType: hard
+
+"string.prototype.codepointat@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "string.prototype.codepointat@npm:0.2.1"
+  checksum: bafa15844d7ea5bed24a01fa8954327c0c49226cefe68ab70573f1338f6a4680587db962724924f2cceb91abe408e11bd38c80095f25ee080f136a6c9d300f00
   languageName: node
   linkType: hard
 

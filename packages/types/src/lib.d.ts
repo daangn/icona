@@ -179,10 +179,65 @@ export interface GeneratePNGConfig {
   path?: string;
 }
 
+export interface GenerateFontConfig {
+  /**
+   * @default overwrite
+   */
+  genMode?: GenerateMode;
+
+  /**
+   * generate drawable PNG files
+   * @default false
+   */
+  active: boolean;
+
+  /**
+   * @see https://wangchujiang.com/svgtofont/#options
+   */
+  svgToFontOptions?: SvgToFontOptions;
+}
+
+export interface GenerateDartConfig {
+  /**
+   * @default overwrite
+   */
+  genMode?: GenerateMode;
+
+  /**
+   * generate dart file
+   */
+  active: boolean;
+
+  /**
+   * ttf file path
+   */
+  ttfPath: string;
+
+  /**
+   * dart files path that will be generated
+   * @default flutter
+   */
+  path?: string;
+
+  /**
+   * flutter className and file name
+   * @default SeedIcons
+   */
+  fileName?: string;
+
+  /**
+   * flutter font family
+   * @default SeedIcon
+   */
+  fontFamily?: string;
+}
+
 export interface IconaConfig {
   svg: GenerateSVGConfig;
   react: GenerateReactConfig;
   pdf: GeneratePDFConfig;
   drawable: GenerateDrawableConfig;
   png: GeneratePNGConfig;
+  font: GenerateFontConfig;
+  flutter: GenerateDartConfig;
 }

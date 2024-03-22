@@ -5,10 +5,9 @@
   "license": "MIT",
   "author": "junghyeonsu <jung660317@naver.com>",
   "workspaces": [
-    "packages/types",
-    "packages/utils",
-    "packages/generator",
-    "figma-plugin"
+    "packages/*",
+    "figma-plugin",
+    "test"
   ],
   "scripts": {
     "build": "ultra -r build",
