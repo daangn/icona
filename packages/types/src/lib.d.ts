@@ -1,6 +1,7 @@
 import type { Config as SvgrConfig } from "@svgr/core";
 import type { SVGtoPDFOptions as LibSVGtoPDFOptions } from "svg-to-pdfkit";
 import type { Config as SvgoConfig } from "svgo";
+import type { SvgToFontOptions } from "svgtofont";
 
 type PDFKitConfig = PDFKit.PDFDocumentOptions & {
   /**
@@ -167,7 +168,7 @@ export interface GeneratePNGConfig {
   genMode?: GenerateMode;
 
   /**
-   * generate drawable xml files
+   * generate drawable PNG files
    * @default false
    */
   active: boolean;

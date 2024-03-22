@@ -11,6 +11,7 @@ export {
   generate,
   generateDart,
   generateDrawable,
+  generateFont,
   generatePDF,
   generatePNG,
   generateReact,
