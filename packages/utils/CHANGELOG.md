@@ -1,5 +1,19 @@
 # @icona/utils
 
+## 0.6.0
+
+### Minor Changes
+
+- 1ef6f48: feat:
+
+  - (generator): Add `.dart` generate method
+  - This is for flutter projects and Need `.ttf` file to generate `.dart` file (You can use `font` option)
+
+### Patch Changes
+
+- Updated dependencies [1ef6f48]
+  - @icona/types@0.6.0
+
 ## 0.5.0
 
 ### Minor Changes
