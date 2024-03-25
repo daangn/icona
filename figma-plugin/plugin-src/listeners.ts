@@ -8,7 +8,7 @@ import { setLocalData } from "./utils.js";
 export function listenDeployIcon() {
   on("DEPLOY_ICON", async ({ githubData, icons, options }) => {
     try {
-      const { owner, name, apiKey } = githubData;
+      const { owner, name, apiKey, branch } = githubData;
       const pngOption = options.png;
 
       const { createDeployPR } = createGithubClient(owner, name, apiKey);
@@ -29,7 +29,7 @@ export function listenDeployIcon() {
         png: pngOption,
       });
 
-      await createDeployPR(iconaData);
+      await createDeployPR(iconaData, branch);
 
       emit("DEPLOY_DONE", null);
       figma.notify("Icons deployed", { timeout: 5000 });
@@ -58,5 +58,11 @@ export function listenSetGithubUrl() {
 export function listenPngOption() {
   on("SET_PNG_OPTIONS", ({ options }) => {
     setLocalData(KEY.PNG_OPTIONS, options);
+  });
+}
+
+export function listenGithubBranch() {
+  on("SET_GITHUB_BRANCH", ({ branch }) => {
+    setLocalData(KEY.GITHUB_BRANCH, branch);
   });
 }

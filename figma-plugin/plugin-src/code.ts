@@ -2,6 +2,7 @@ import { FRAME_NAME, KEY } from "../common/constants";
 import { emit } from "../common/fromPlugin";
 import {
   listenDeployIcon,
+  listenGithubBranch,
   listenPngOption,
   listenSetGithubApiKey,
   listenSetGithubUrl,
@@ -22,6 +23,7 @@ async function sendStorageData() {
   const repoUrl = await getLocalData(KEY.GITHUB_REPO_URL);
   const apiKey = await getLocalData(KEY.GITHUB_API_KEY);
   const pngOption = await getLocalData(KEY.PNG_OPTIONS);
+  const branch = await getLocalData(KEY.GITHUB_BRANCH);
 
   emit("GET_GITHUB_REPO_URL", { repoUrl });
   emit("GET_GITHUB_API_KEY", { apiKey });
@@ -30,6 +32,7 @@ async function sendStorageData() {
       png: { "1x": false, "2x": false, "3x": false, "4x": false },
     },
   });
+  emit("GET_GITHUB_BRANCH", { branch });
 }
 
 async function setPreviewIcons() {
@@ -60,4 +63,5 @@ async function setPreviewIcons() {
   listenSetGithubApiKey();
   listenSetGithubUrl();
   listenPngOption();
+  listenGithubBranch();
 })();

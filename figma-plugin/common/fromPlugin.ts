@@ -16,6 +16,10 @@ interface GetGithubApiKeyPayload {
   apiKey?: string;
 }
 
+interface GetGithubBranchPayload {
+  branch?: string;
+}
+
 interface GetDeployWithPngPayload {
   options: ExportOptions;
 }
@@ -49,6 +53,11 @@ export type Events = {
     name: "GET_ICON_PREVIEW";
     payload: GetIconPreviewPayload;
     handler: (props: GetIconPreviewPayload) => void;
+  };
+  GET_GITHUB_BRANCH: {
+    name: "GET_GITHUB_BRANCH";
+    payload: GetGithubBranchPayload;
+    handler: (props: GetGithubBranchPayload) => void;
   };
   DEPLOY_DONE: {
     name: "DEPLOY_DONE";

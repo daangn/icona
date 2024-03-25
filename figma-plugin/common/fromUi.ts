@@ -7,6 +7,7 @@ interface GithubData {
   owner: string;
   name: string;
   apiKey: string;
+  branch: string;
 }
 
 interface IconaMetaData {
@@ -21,6 +22,10 @@ interface SetPngOptionPayload {
 
 interface SetGithubUrlPayload {
   url: string;
+}
+
+interface SetGithubBranchPayload {
+  branch: string;
 }
 interface SetGithubApiKeyPayload {
   apiKey: string;
@@ -46,6 +51,11 @@ export type Events = {
     name: "DEPLOY_ICON";
     payload: IconaMetaData;
     handler: (props: IconaMetaData) => void;
+  };
+  SET_GITHUB_BRANCH: {
+    name: "SET_GITHUB_BRANCH";
+    payload: SetGithubBranchPayload;
+    handler: (props: SetGithubBranchPayload) => void;
   };
 };
 
