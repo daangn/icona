@@ -1,5 +1,21 @@
 # @icona/generator
 
+## 0.7.0
+
+### Minor Changes
+
+- ac2eb09: - Add `vue2`, `vue3` generate function
+  - Remove `flutter`, `font` generate function (cause unstable)
+  - Add `genIndexFile` option in `react`, `vue2`, `vue3`
+  - Remove `generator`, only `generate` functions
+  - Remove `@icona/utils` package (merge into `@icona/generator`
+  - Refactoring variables name, some logics
+
+### Patch Changes
+
+- Updated dependencies [ac2eb09]
+  - @icona/types@0.7.0
+
 ## 0.6.0
 
 ### Minor Changes
