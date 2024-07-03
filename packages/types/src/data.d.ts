@@ -1,13 +1,13 @@
 type Base64 = string;
 
-export interface Style {
+export interface SVGStyleOptions {
   width: number;
   height: number;
 }
 
 export interface IconaIconData {
   name: string;
-  style: Style;
+  style: SVGStyleOptions;
   svg: string;
   png: {
     "1x": Base64 | null;

@@ -1,7 +1,43 @@
 import type { Config as SvgrConfig } from "@svgr/core";
 import type { SVGtoPDFOptions as LibSVGtoPDFOptions } from "svg-to-pdfkit";
 import type { Config as SvgoConfig } from "svgo";
-import type { SvgToFontOptions } from "svgtofont";
+
+/**
+ * @param overwrite overwrite existing files in folder
+ * @param recreate rm -rf all files and generate new files in folder
+ */
+type GenerateMode = "recreate" | "overwrite";
+
+interface BaseConfig {
+  /**
+   * @default overwrite
+   */
+  genMode?: GenerateMode;
+
+  /**
+   * files path that will be generated
+   */
+  path?: string;
+
+  /**
+   * generate files in folder
+   * @default false
+   */
+  active: boolean;
+}
+
+export interface SVGConfig extends Omit<BaseConfig, "active"> {
+  /**
+   * Config (svgo)
+   * @see https://github.com/svg/svgo#configuration
+   */
+  svgoConfig?: SvgoConfig;
+}
+
+type SvgToPdfOptions = {
+  x?: number;
+  y?: number;
+} & LibSVGtoPDFOptions;
 
 type PDFKitConfig = PDFKit.PDFDocumentOptions & {
   /**
@@ -27,34 +63,7 @@ type PDFKitConfig = PDFKit.PDFDocumentOptions & {
   info?: PDFKit.PDFDocumentOptions["info"];
 };
 
-export type SvgToPdfOptions = {
-  x?: number;
-  y?: number;
-} & LibSVGtoPDFOptions;
-/**
- * @param overwrite overwrite existing files in folder
- * @param recreate rm -rf all files and generate new files in folder
- */
-export type GenerateMode = "recreate" | "overwrite";
-
-export interface GeneratePDFConfig {
-  /**
-   * @default overwrite
-   */
-  genMode?: GenerateMode;
-
-  /**
-   * generate drawable pdf files
-   * @default false
-   */
-  active: boolean;
-
-  /**
-   * pdf files path that will be generated
-   * @default pdf
-   */
-  path?: string;
-
+export interface PDFConfig extends BaseConfig {
   /**
    * PDFKit.PDFDocumentOptions
    * @see https://pdfkit.org/docs/getting_started.html#document-structure
@@ -71,54 +80,14 @@ export interface GeneratePDFConfig {
   svgToPdfOptions?: SvgToPdfOptions;
 }
 
-export interface GenerateReactConfig {
-  /**
-   * @default overwrite
-   */
-  genMode?: GenerateMode;
-
-  /**
-   * generate drawable react files
-   * @default false
-   */
-  active: boolean;
-
-  /**
-   * react component files path that will be generated
-   * @default react
-   */
-  path?: string;
-
+export interface ReactConfig extends BaseConfig {
   /**
    * Config (@svgr/core)
    * @see https://react-svgr.com/docs/options/
    */
   svgrConfig?: SvgrConfig;
-}
 
-export interface GenerateSVGConfig {
-  /**
-   * @default overwrite
-   */
-  genMode?: GenerateMode;
-
-  /**
-   * generate drawable svg files
-   * @default true
-   */
-  active: boolean;
-
-  /**
-   * svg files path that will be generated
-   * @default svg
-   */
-  path?: string;
-
-  /**
-   * Config (svgo)
-   * @see https://github.com/svg/svgo#configuration
-   */
-  svgoConfig?: SvgoConfig;
+  genIndexFile?: boolean;
 }
 
 interface Svg2vectordrawableOptions {
@@ -129,24 +98,7 @@ interface Svg2vectordrawableOptions {
   tint?: string;
 }
 
-export interface GenerateDrawableConfig {
-  /**
-   * @default overwrite
-   */
-  genMode?: GenerateMode;
-
-  /**
-   * generate drawable xml files
-   * @default false
-   */
-  active: boolean;
-
-  /**
-   * xml files path that will be generated
-   * @default xml
-   */
-  path?: string;
-
+export interface DrawableConfig extends BaseConfig {
   /**
    * Config (svg2vectordrawable)
    * @see https://github.com/Ashung/svg2vectordrawable
@@ -161,84 +113,26 @@ export interface GenerateDrawableConfig {
   defaultColor?: string;
 }
 
-export interface GeneratePNGConfig {
-  /**
-   * @default overwrite
-   */
-  genMode?: GenerateMode;
+export interface PNGConfig extends BaseConfig {}
 
-  /**
-   * generate drawable PNG files
-   * @default false
-   */
-  active: boolean;
+export interface Vue2Config extends BaseConfig {
+  genShimFile?: boolean;
 
-  /**
-   * xml files path that will be generated
-   * @default xml
-   */
-  path?: string;
+  genIndexFile?: boolean;
 }
 
-export interface GenerateFontConfig {
-  /**
-   * @default overwrite
-   */
-  genMode?: GenerateMode;
+export interface Vue3Config extends BaseConfig {
+  genShimFile?: boolean;
 
-  /**
-   * generate drawable PNG files
-   * @default false
-   */
-  active: boolean;
-
-  /**
-   * @see https://wangchujiang.com/svgtofont/#options
-   */
-  svgToFontOptions?: SvgToFontOptions;
-}
-
-export interface GenerateDartConfig {
-  /**
-   * @default overwrite
-   */
-  genMode?: GenerateMode;
-
-  /**
-   * generate dart file
-   */
-  active: boolean;
-
-  /**
-   * ttf file path
-   */
-  ttfPath: string;
-
-  /**
-   * dart files path that will be generated
-   * @default flutter
-   */
-  path?: string;
-
-  /**
-   * flutter className and file name
-   * @default SeedIcons
-   */
-  fileName?: string;
-
-  /**
-   * flutter font family
-   * @default SeedIcon
-   */
-  fontFamily?: string;
+  genIndexFile?: boolean;
 }
 
 export interface IconaConfig {
-  svg: GenerateSVGConfig;
-  react: GenerateReactConfig;
-  pdf: GeneratePDFConfig;
-  drawable: GenerateDrawableConfig;
-  png: GeneratePNGConfig;
-  font: GenerateFontConfig;
-  flutter: GenerateDartConfig;
+  svg: SVGConfig;
+  react: ReactConfig;
+  pdf: PDFConfig;
+  drawable: DrawableConfig;
+  png: PNGConfig;
+  vue2: Vue2Config;
+  vue3: Vue3Config;
 }

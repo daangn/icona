@@ -1,30 +1,29 @@
-import type { GenerateDrawableConfig, IconaIconData } from "@icona/types";
-import {
-  deleteAllFilesInDir,
-  getIconaIconsFile,
-  getProjectRootPath,
-  makeFolderIfNotExistFromRoot,
-} from "@icona/utils";
-import { Presets, SingleBar } from "cli-progress";
+import type { DrawableConfig, IconaIconData } from "@icona/types";
 import { writeFile } from "fs/promises";
 import { resolve } from "path";
 import svg2vectordrawable from "svg2vectordrawable";
 
-interface GenerateDrawableFunction {
+import { createBar } from "../utils/bar";
+import {
+  deleteAllFilesInDir,
+  getIconaIconsFile,
+  getTargetPath,
+  makeFolderIfNotExistFromRoot,
+} from "../utils/file";
+
+interface Props {
   /**
    * @description Icona icons data
    * @default .icona/icons.json
    */
   icons?: Record<string, IconaIconData> | null;
-  config: GenerateDrawableConfig;
+
+  config: DrawableConfig;
 }
 
-export const generateDrawable = async ({
-  icons = getIconaIconsFile(),
-  config,
-}: GenerateDrawableFunction) => {
-  const projectPath = getProjectRootPath();
-  const path = config.path || "drawable";
+export const generateDrawable = async (props: Props) => {
+  const { config, icons = getIconaIconsFile() } = props;
+  const targetPath = getTargetPath(config.path || "drawable");
   const drawableConfig = config.svg2vectordrawableConfig || {};
   const defaultColor = config.defaultColor;
 
@@ -34,30 +33,27 @@ export const generateDrawable = async ({
 
   const iconData = Object.entries(icons);
   if (iconData.length !== 0) {
-    makeFolderIfNotExistFromRoot(path);
+    makeFolderIfNotExistFromRoot(targetPath);
   }
 
   if (config.genMode === "recreate") {
-    deleteAllFilesInDir(resolve(projectPath, path));
+    deleteAllFilesInDir(targetPath);
   }
 
-  console.log(`\nDrawable Generate in \`${path}\` folder...`);
+  console.log(`\nDrawable Generate in \`${targetPath}\` folder...`);
 
-  const bar = new SingleBar(
-    {
-      format: "Drawable Generate | {bar} | {percentage}% | {value}/{total}",
-      hideCursor: true,
-    },
-    Presets.shades_grey,
-  );
+  const bar = createBar({
+    name: "Drawable",
+    total: iconData.length,
+  });
 
-  bar.start(iconData.length, 0);
+  bar.start();
 
   // TODO: Name transform option
   for (const [name, data] of iconData) {
     const { svg } = data;
 
-    const drawablePath = resolve(projectPath, path, `${name}.xml`);
+    const drawablePath = resolve(targetPath, `${name}.xml`);
     let drawable = await svg2vectordrawable(svg, drawableConfig);
 
     // NOTE(@junghyeonsu): DRAWABLE_DEFAULT_COLOR = "#FF212124"

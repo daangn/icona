@@ -5,13 +5,17 @@
   "type": "module",
   "scripts": {
     "gen": "yarn generate",
-    "generate": "node ./icona.js"
+    "generate": "node --no-warnings=ExperimentalWarning --loader ts-node/esm icona.ts"
   },
   "dependencies": {
     "@icona/generator": "workspace:^"
   },
   "devDependencies": {
-    "@icona/types": "workspace:^"
+    "@icona/types": "workspace:^",
+    "@types/node": "^20.14.9",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.6.3",
+    "typescript": "^5.5.3"
   },
   "packageManager": "yarn@3.5.1"
 }
