@@ -1,31 +1,33 @@
-import type { GenerateReactConfig, IconaIconData } from "@icona/types";
-import {
-  deleteAllFilesInDir,
-  getIconaIconsFile,
-  getProjectRootPath,
-  makeFolderIfNotExistFromRoot,
-} from "@icona/utils";
+import type { IconaIconData, ReactConfig } from "@icona/types";
 import type { Config } from "@svgr/core";
 import { transform } from "@svgr/core";
-import { Presets, SingleBar } from "cli-progress";
 import { writeFile } from "fs/promises";
 import { resolve } from "path";
 
-interface GenerateReactFunction {
+import { createBar } from "../utils/bar";
+import {
+  deleteAllFilesInDir,
+  getIconaIconsFile,
+  getTargetPath,
+  makeFolderIfNotExistFromRoot,
+} from "../utils/file";
+import { generateIndexFileTemplate, ignores } from "../utils/template";
+
+interface Props {
   /**
    * @description Icona icons data
    * @default .icona/icons.json
    */
   icons?: Record<string, IconaIconData> | null;
-  config: GenerateReactConfig;
+
+  config: ReactConfig;
 }
 
-export const generateReact = async ({
-  icons = getIconaIconsFile(),
-  config,
-}: GenerateReactFunction) => {
-  const projectPath = getProjectRootPath();
-  const path = config.path || "react";
+export const generateReact = async (props: Props) => {
+  const { config, icons = getIconaIconsFile() } = props;
+  const { genIndexFile } = config;
+  const componentNames = [];
+  const targetPath = getTargetPath(config.path || "react");
   const svgrConfig = config.svgrConfig || {};
 
   if (!icons) {
@@ -34,24 +36,21 @@ export const generateReact = async ({
 
   const iconData = Object.entries(icons);
   if (iconData.length !== 0) {
-    makeFolderIfNotExistFromRoot(path);
+    makeFolderIfNotExistFromRoot(targetPath);
   }
 
   if (config.genMode === "recreate") {
-    deleteAllFilesInDir(resolve(projectPath, path));
+    deleteAllFilesInDir(targetPath);
   }
 
-  console.log(`\nReact Generate in \`${path}\` folder...`);
+  console.log(`\nReact Generate in \`${targetPath}\` folder...`);
 
-  const bar = new SingleBar(
-    {
-      format: "React Generate | {bar} | {percentage}% | {value}/{total}",
-      hideCursor: true,
-    },
-    Presets.shades_grey,
-  );
+  const bar = createBar({
+    name: "React",
+    total: iconData.length,
+  });
 
-  bar.start(iconData.length, 0);
+  bar.start();
 
   // TODO: Name transform option
   for (const [name, data] of iconData) {
@@ -62,14 +61,26 @@ export const generateReact = async ({
       .replace(/_[a-z]/g, (ch) => ch[1].toUpperCase())
       .replace(/-[a-z]/g, (ch) => ch[1].toUpperCase());
 
+    componentNames.push(componentName);
+
     const component = await transform(svg, svgrConfig as Config, {
       componentName,
     });
 
-    const svgPath = resolve(projectPath, path, `${componentName}.tsx`);
+    const svgPath = resolve(targetPath, `${componentName}.tsx`);
+    const content = `${ignores}\n${component}`;
 
-    await writeFile(svgPath, component, "utf-8");
+    await writeFile(svgPath, content, "utf-8");
     bar.increment();
+  }
+
+  if (genIndexFile) {
+    const index = generateIndexFileTemplate({
+      componentNames,
+      ext: null,
+    });
+    const content = `${ignores}\n${index}`;
+    await writeFile(resolve(targetPath, "index.ts"), content, "utf-8");
   }
 
   bar.stop();

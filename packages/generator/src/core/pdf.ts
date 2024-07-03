@@ -1,31 +1,30 @@
-import type { GeneratePDFConfig, IconaIconData } from "@icona/types";
-import {
-  deleteAllFilesInDir,
-  getIconaIconsFile,
-  getProjectRootPath,
-  makeFolderIfNotExistFromRoot,
-} from "@icona/utils";
-import { Presets, SingleBar } from "cli-progress";
+import type { IconaIconData, PDFConfig } from "@icona/types";
 import { createWriteStream } from "fs";
 import { resolve } from "path";
 import PDFDocument from "pdfkit";
 import SVGtoPDF from "svg-to-pdfkit";
 
-interface GeneratePDFFunction {
+import { createBar } from "../utils/bar";
+import {
+  deleteAllFilesInDir,
+  getIconaIconsFile,
+  getTargetPath,
+  makeFolderIfNotExistFromRoot,
+} from "../utils/file";
+
+interface Props {
   /**
    * @description Icona icons data
    * @default .icona/icons.json
    */
   icons?: Record<string, IconaIconData> | null;
-  config: GeneratePDFConfig;
+
+  config: PDFConfig;
 }
 
-export const generatePDF = ({
-  icons = getIconaIconsFile(),
-  config,
-}: GeneratePDFFunction) => {
-  const projectPath = getProjectRootPath();
-  const path = config.path || "pdf";
+export const generatePDF = (props: Props) => {
+  const { config, icons = getIconaIconsFile() } = props;
+  const targetPath = getTargetPath(config.path || "pdf");
   const pdfkitConfig = config.pdfKitConfig || {};
   const { x, y, ...restSvgToPdfOptions } = config.svgToPdfOptions || {};
 
@@ -35,29 +34,26 @@ export const generatePDF = ({
 
   const iconData = Object.entries(icons);
   if (iconData.length !== 0) {
-    makeFolderIfNotExistFromRoot(path);
+    makeFolderIfNotExistFromRoot(targetPath);
   }
 
   if (config.genMode === "recreate") {
-    deleteAllFilesInDir(resolve(projectPath, path));
+    deleteAllFilesInDir(targetPath);
   }
 
-  console.log(`\nPDF Generate in \`${path}\` folder...`);
+  console.log(`\nPDF Generate in \`${targetPath}\` folder...`);
 
-  const bar = new SingleBar(
-    {
-      format: "PDF Generate | {bar} | {percentage}% | {value}/{total}",
-      hideCursor: true,
-    },
-    Presets.shades_grey,
-  );
+  const bar = createBar({
+    name: "PDF",
+    total: iconData.length,
+  });
 
-  bar.start(iconData.length, 0);
+  bar.start();
 
   // TODO: Name transform option
   for (const [name, data] of iconData) {
     const { svg } = data;
-    const svgPath = resolve(projectPath, path, `${name}.pdf`);
+    const svgPath = resolve(targetPath, `${name}.pdf`);
 
     /**
      * @see https://github.com/foliojs/pdfkit/blob/4ec77ddc8c090c8d0d57fbd72cff433e9ce0d733/docs/getting_started.md?plain=1#L194

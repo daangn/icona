@@ -1,17 +1,3 @@
-# @icona/generator
-
-> Icona asset generator
-
-## Install
-
-```bash
-yarn add -D @icona/generator
-```
-
-## Usage
-
-```ts
-// icona.js (ts also available)
 import type {
   DrawableConfig,
   PDFConfig,
@@ -146,15 +132,3 @@ generate({
     vue3: vue3Config,
   },
 });
-```
-
-`@icona/generator` use several libraries to generate assets.
-
-- [svgo (SVG)](https://github.com/svg/svgo)
-- [svg2vectordrawable (XML)](https://github.com/Ashung/svg2vectordrawable)
-- [pdfkit (PDF)](https://pdfkit.org/docs/getting_started.html#document-structure)
-- [svg-to-pdfkit (PDF)](https://github.com/alafr/SVG-to-PDFKit)
-- [svgr (React Components)](https://react-svgr.com/)
-
-you configure each library options in `config` object.
-If you want to see real example, you can see [here (seed-icon)](https://github.com/daangn/seed-icon/blob/main/icona.js)
