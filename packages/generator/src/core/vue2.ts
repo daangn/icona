@@ -10,14 +10,21 @@ import {
   getTargetPath,
   makeFolderIfNotExistFromRoot,
 } from "../utils/file";
-import { generateIndexFileTemplate, ignores } from "../utils/template";
+import {
+  generateIndexFileTemplate,
+  ignores,
+  vueIgnores,
+} from "../utils/template";
 
 const shimsTemplate = () => `${ignores}\ndeclare module "*.vue" {
   import Vue from 'vue'
   export default Vue
 }\n`;
 
-const componentTemplate = (name: string, svg: string) => `${ignores}\n<template>
+const componentTemplate = (
+  name: string,
+  svg: string,
+) => `${vueIgnores}\n<template>
   ${svg}</template>
 
 <script lang="ts">
