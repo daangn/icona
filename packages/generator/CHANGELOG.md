@@ -1,5 +1,13 @@
 # @icona/generator
 
+## 0.7.1
+
+### Patch Changes
+
+- 3fa3adb: change vue ignore comment
+- Updated dependencies [3fa3adb]
+  - @icona/types@0.7.1
+
 ## 0.7.0
 
 ### Minor Changes
