@@ -68,7 +68,7 @@ const createShimFile = async (targetPath: string) => {
 export const generateVue2 = async (props: Props) => {
   const { config, icons = getIconaIconsFile() } = props;
   const targetPath = getTargetPath(config.path || "vue2");
-  const { genShimFile, genIndexFile } = config;
+  const { genShimFile, genIndexFile, attributes } = config;
   const componentNames = [];
 
   if (!icons) {
@@ -100,8 +100,13 @@ export const generateVue2 = async (props: Props) => {
     const svgPath = resolve(targetPath, `${componentName}.vue`);
     componentNames.push(componentName);
 
+    const attributesString = Object.entries(attributes || {})
+      .map(([key, value]) => `${key}="${value}"`)
+      .join(" ");
+
     // SVG 파일 내용을 Vue 컴포넌트로 변환
     const convertedSvg = svg
+      .replace(/<svg/, `<svg ${attributesString}`)
       .replace(/width="([^"]+)"/, ':width="size"')
       .replace(/height="([^"]+)"/, ':height="size"');
 
