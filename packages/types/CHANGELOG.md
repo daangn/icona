@@ -1,5 +1,11 @@
 # @icona/types
 
+## 0.7.2
+
+### Patch Changes
+
+- 9f9452e: Add attributes in vue generators
+
 ## 0.7.1
 
 ### Patch Changes
