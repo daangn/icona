@@ -3679,7 +3679,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@icona/generator@workspace:packages/generator"
   dependencies:
-    "@icona/types": ^0.7.1
+    "@icona/types": ^0.7.2
     "@svgr/core": ^8.0.0
     "@types/cli-progress": ^3.11.5
     "@types/findup-sync": ^4.0.5
@@ -3722,7 +3722,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@icona/types@^0.7.1, @icona/types@workspace:^, @icona/types@workspace:packages/types":
+"@icona/types@^0.7.2, @icona/types@workspace:^, @icona/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@icona/types@workspace:packages/types"
   dependencies:
