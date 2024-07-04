@@ -119,12 +119,16 @@ export interface Vue2Config extends BaseConfig {
   genShimFile?: boolean;
 
   genIndexFile?: boolean;
+
+  attributes?: Record<string, string>;
 }
 
 export interface Vue3Config extends BaseConfig {
   genShimFile?: boolean;
 
   genIndexFile?: boolean;
+
+  attributes?: Record<string, string>;
 }
 
 export interface IconaConfig {
