@@ -1,5 +1,11 @@
 # @icona/types
 
+## 0.7.1
+
+### Patch Changes
+
+- 3fa3adb: change vue ignore comment
+
 ## 0.7.0
 
 ### Minor Changes
