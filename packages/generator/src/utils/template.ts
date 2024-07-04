@@ -5,6 +5,7 @@ interface GenerateIndexFileTemplateProps {
 }
 
 export const ignores = `/* eslint-disable */ // @ts-nocheck @ts-ignore`;
+export const vueIgnores = `<!-- eslint-disable --> <!-- @ts-nocheck @ts-ignore -->`;
 
 export const generateIndexFileTemplate = (
   props: GenerateIndexFileTemplateProps,

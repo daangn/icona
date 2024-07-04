@@ -10,7 +10,11 @@ import {
   getTargetPath,
   makeFolderIfNotExistFromRoot,
 } from "../utils/file";
-import { generateIndexFileTemplate, ignores } from "../utils/template";
+import {
+  generateIndexFileTemplate,
+  ignores,
+  vueIgnores,
+} from "../utils/template";
 
 const shimsTemplate = () => `${ignores}\ndeclare module '*.vue' {
   import type { DefineComponent } from 'vue'
@@ -19,7 +23,10 @@ const shimsTemplate = () => `${ignores}\ndeclare module '*.vue' {
 }\n`;
 
 // Vue 컴포넌트 템플릿
-const componentTemplate = (name: string, svg: string) => `${ignores}\n<template>
+const componentTemplate = (
+  name: string,
+  svg: string,
+) => `${vueIgnores}\n<template>
   ${svg}</template>
 
 <script lang="ts">
