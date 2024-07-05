@@ -11,6 +11,7 @@ import { useJune } from "june-so-sandbox-react";
 import * as React from "react";
 
 import { FRAME_NAME } from "../../common/constants";
+import { TextInput } from "../components/TextInput";
 import { useAppDispatch, useAppState } from "../contexts/AppContext";
 import * as styles from "./Deploy.css";
 
@@ -22,6 +23,7 @@ const Deploy = () => {
     iconPreview,
     githubApiKey,
     githubRepositoryUrl,
+    githubBranch,
     pngOption,
   } = useAppState();
   const icons = Object.entries(iconPreview);
@@ -215,6 +217,27 @@ const Deploy = () => {
           );
         })}
       </Box>
+
+      <Box marginTop={4} fontSize={14}>
+        <Text fontWeight="bold">Base Branch Name</Text>
+      </Box>
+
+      <TextInput
+        label=""
+        placeholder="Base Branch Name"
+        value={githubBranch}
+        helperText="Branch name that you want to merge."
+        isError={false}
+        errorMessage="It's not a valid Branch name."
+        handleChange={(event) => {
+          dispatch({
+            name: "SET_GITHUB_BRANCH",
+            payload: {
+              branch: event.target.value,
+            },
+          });
+        }}
+      />
     </Box>
   );
 };

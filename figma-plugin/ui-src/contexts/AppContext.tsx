@@ -18,6 +18,7 @@ type State = {
   // Input
   githubRepositoryUrl: string;
   githubApiKey: string;
+  githubBranch: string;
 
   iconPreview: Record<string, IconaIconData>;
 
@@ -37,13 +38,15 @@ type Actions =
   | Omit<PluginEvents["GET_GITHUB_API_KEY"], "handler">
   | Omit<PluginEvents["GET_GITHUB_REPO_URL"], "handler">
   | Omit<PluginEvents["GET_DEPLOY_WITH_PNG"], "handler">
+  | Omit<PluginEvents["GET_GITHUB_BRANCH"], "handler">
   | Omit<PluginEvents["GET_USER_INFO"], "handler">
   | Omit<PluginEvents["GET_ICON_PREVIEW"], "handler">
   | Omit<PluginEvents["DEPLOY_DONE"], "handler">
   | Omit<UiEvents["DEPLOY_ICON"], "handler">
   | Omit<UiEvents["SET_PNG_OPTIONS"], "handler">
   | Omit<UiEvents["SET_GITHUB_API_KEY"], "handler">
-  | Omit<UiEvents["SET_GITHUB_URL"], "handler">;
+  | Omit<UiEvents["SET_GITHUB_URL"], "handler">
+  | Omit<UiEvents["SET_GITHUB_BRANCH"], "handler">;
 
 type AppDispatch = Dispatch<Actions>;
 
@@ -88,6 +91,17 @@ function reducer(state: State, action: Actions): State {
         githubData: {
           ...state.githubData,
           ...getGithubDataFromUrl(repoUrl),
+        },
+      };
+    }
+    case "GET_GITHUB_BRANCH": {
+      const { branch = "main" } = action.payload;
+      return {
+        ...state,
+        githubBranch: branch,
+        githubData: {
+          ...state.githubData,
+          branch,
         },
       };
     }
@@ -139,6 +153,19 @@ function reducer(state: State, action: Actions): State {
       };
     }
 
+    case "SET_GITHUB_BRANCH": {
+      emit("SET_GITHUB_BRANCH", action.payload);
+
+      return {
+        ...state,
+        githubBranch: action.payload.branch,
+        githubData: {
+          ...state.githubData,
+          branch: action.payload.branch,
+        },
+      };
+    }
+
     case "SET_PNG_OPTIONS": {
       emit("SET_PNG_OPTIONS", action.payload);
 
@@ -175,12 +202,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       owner: "",
       name: "",
       apiKey: "",
+      branch: "main",
     },
     iconPreview: {},
 
     // Input
     githubApiKey: "",
     githubRepositoryUrl: "",
+    githubBranch: "main",
 
     // Options
     pngOption: {

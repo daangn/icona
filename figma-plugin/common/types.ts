@@ -2,6 +2,7 @@ export interface GithubData {
   owner: string;
   name: string;
   apiKey: string;
+  branch: string;
 }
 
 export interface ExportOptions {
