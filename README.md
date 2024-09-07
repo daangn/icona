@@ -75,6 +75,12 @@ If you want to automate the process of generating assets when PR uploaded, you c
 
 Then you can use the generated assets that are automatically generated in the PR.
 
+! IMPORTANT
+
+you have to set workflow allow write and create PR in your repository.
+
+![workflow permission](./images/workflow-permissions.png)
+
 ## Products
 
 - [figma-plugin (Figma Plugin)](https://github.com/daangn/icona/tree/main/packages/figma-plugin)
