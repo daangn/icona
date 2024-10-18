@@ -1,5 +1,17 @@
 # @icona/generator
 
+## 0.8.0
+
+### Minor Changes
+
+- fc5f4ae: - Add `metadata` system
+  - Add custom template with `IconaIconData` in React Config
+
+### Patch Changes
+
+- Updated dependencies [fc5f4ae]
+  - @icona/types@0.8.0
+
 ## 0.7.2
 
 ### Patch Changes
