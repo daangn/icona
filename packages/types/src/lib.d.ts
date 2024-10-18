@@ -2,6 +2,13 @@ import type { Config as SvgrConfig } from "@svgr/core";
 import type { SVGtoPDFOptions as LibSVGtoPDFOptions } from "svg-to-pdfkit";
 import type { Config as SvgoConfig } from "svgo";
 
+import type {
+  TemplateContext,
+  TemplateReturn,
+  TemplateVariables,
+} from "./babel";
+import type { IconaIconData } from "./data";
+
 /**
  * @param overwrite overwrite existing files in folder
  * @param recreate rm -rf all files and generate new files in folder
@@ -85,9 +92,18 @@ export interface ReactConfig extends BaseConfig {
    * Config (@svgr/core)
    * @see https://react-svgr.com/docs/options/
    */
-  svgrConfig?: SvgrConfig;
+  svgrConfig?: Omit<SvgrConfig, "template">;
 
   genIndexFile?: boolean;
+
+  template?: (
+    iconData: IconaIconData,
+  ) => (
+    variables: TemplateVariables,
+    context: TemplateContext,
+  ) => TemplateReturn;
+  // template?: "with-jsdoc-size-prop" | Template;
+  // jsdocTemplate?: (iconData: IconaIconData) => string;
 }
 
 interface Svg2vectordrawableOptions {

@@ -14,6 +14,7 @@ type TargetNode =
 type ExtractedNode = {
   id: string;
   name: string;
+  description?: string;
 };
 
 const makeComponentName = ({
@@ -43,6 +44,7 @@ const makeComponentName = ({
 const findComponentInNode = (
   node: TargetNode,
   setName?: string,
+  description?: string,
 ): ExtractedNode | ExtractedNode[] => {
   switch (node.type) {
     case "FRAME":
@@ -57,13 +59,13 @@ const findComponentInNode = (
         separator: "_",
       });
 
-      return { id: node.id, name: svgName };
+      return { id: node.id, name: svgName, description };
     }
 
     case "COMPONENT_SET": {
-      return node.children.flatMap((child: any) =>
-        findComponentInNode(child, node.name),
-      );
+      return node.children.flatMap((child: any) => {
+        return findComponentInNode(child, node.name, node.description);
+      });
     }
 
     default: {
@@ -90,10 +92,38 @@ export function getAssetFramesInFrame(targetFrame: FrameNode): ExtractedNode[] {
   return targetNodes.filter((component) => component);
 }
 
+function createRegexWithDelimiters(
+  startDelimiter: string,
+  endDelimiter: string,
+): RegExp {
+  // 특수 문자 이스케이프 처리
+  const escapeRegExp = (string: string) =>
+    string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+  const start = escapeRegExp(startDelimiter);
+  const end = escapeRegExp(endDelimiter);
+
+  return new RegExp(`${start}(.*?)${end}`);
+}
+
 export async function getSvgFromExtractedNodes(nodes: ExtractedNode[]) {
   const datas = await Promise.allSettled(
     nodes.map(async (component) => {
       const node = figma.getNodeById(component.id) as ComponentNode;
+      const description = component.description;
+      const regex = createRegexWithDelimiters("[", "]");
+      const metadatasRegexResult = regex.exec(description || "");
+
+      if (metadatasRegexResult && metadatasRegexResult.length === 2) {
+        return {
+          name: component.name,
+          svg: await node.exportAsync({
+            format: "SVG_STRING",
+            svgIdAttribute: true,
+          }),
+          metadatas: metadatasRegexResult[1].split(","),
+        };
+      }
 
       return {
         name: component.name,
@@ -101,6 +131,7 @@ export async function getSvgFromExtractedNodes(nodes: ExtractedNode[]) {
           format: "SVG_STRING",
           svgIdAttribute: true,
         }),
+        metadatas: [],
       };
     }),
   );

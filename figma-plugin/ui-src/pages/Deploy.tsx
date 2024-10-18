@@ -5,6 +5,7 @@ import {
   Flex,
   Spinner,
   Text,
+  Textarea,
   Tooltip,
 } from "@chakra-ui/react";
 import { useJune } from "june-so-sandbox-react";
@@ -214,6 +215,17 @@ const Deploy = () => {
             </Tooltip>
           );
         })}
+      </Box>
+
+      <Box marginTop={4} fontSize={14}>
+        <Text fontWeight="bold">Datas</Text>
+      </Box>
+
+      <Box>
+        <Textarea
+          value={JSON.stringify(iconPreview, null, 2)}
+          placeholder="icons data"
+        />
       </Box>
     </Box>
   );
