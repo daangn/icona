@@ -1,4 +1,9 @@
-import type { IconaIconData, ReactConfig } from "@icona/types";
+import type {
+  IconaIconData,
+  ReactConfig,
+  TemplateContext,
+  TemplateVariables,
+} from "@icona/types";
 import type { Config } from "@svgr/core";
 import { transform } from "@svgr/core";
 import { writeFile } from "fs/promises";
@@ -28,7 +33,6 @@ export const generateReact = async (props: Props) => {
   const { genIndexFile } = config;
   const componentNames = [];
   const targetPath = getTargetPath(config.path || "react");
-  const svgrConfig = config.svgrConfig || {};
 
   if (!icons) {
     throw new Error("There is no icons data");
@@ -63,9 +67,35 @@ export const generateReact = async (props: Props) => {
 
     componentNames.push(componentName);
 
-    const component = await transform(svg, svgrConfig as Config, {
-      componentName,
-    });
+    const component = await transform(
+      svg,
+      {
+        ...(config.svgrConfig as Config),
+        template: (variables: TemplateVariables, context: TemplateContext) => {
+          const { tpl } = context;
+          const customTemplate = config.template?.(data);
+
+          // Custom template
+          if (customTemplate) {
+            return customTemplate(variables, context);
+          }
+
+          // Default template
+          return tpl`
+          ${variables.imports};
+          
+          ${variables.interfaces};
+          
+          const ${variables.componentName} = (${variables.props}) => (
+            ${variables.jsx}
+          );
+          
+          ${variables.exports};
+          `;
+        },
+      },
+      {},
+    );
 
     const svgPath = resolve(targetPath, `${componentName}.tsx`);
     const content = `${ignores}\n${component}`;

@@ -65,6 +65,32 @@ const reactConfig: ReactConfig = {
   active: true,
   path: "react",
   genIndexFile: true,
+  template: (iconData) => {
+    return (variables, context) => {
+      const { tpl } = context;
+      const { metadatas, png } = iconData;
+
+      const comment = `
+/**
+ * ${metadatas && `@alias ${metadatas}`}
+ * ${png["1x"] && `@preview ![icon](data:image/png;base64,${png["1x"]})`}
+ */
+      `;
+
+      return tpl`
+        ${variables.imports};
+
+        ${variables.interfaces};
+
+        ${comment}
+        const ${variables.componentName} = (${variables.props}) => (
+          ${variables.jsx}
+        );
+
+        export default ${variables.componentName};
+      `;
+    };
+  },
   svgrConfig: {
     jsxRuntime: "classic",
     plugins: ["@svgr/plugin-svgo", "@svgr/plugin-jsx", "@svgr/plugin-prettier"],
