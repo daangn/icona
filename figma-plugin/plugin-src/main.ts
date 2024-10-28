@@ -82,3 +82,9 @@ async function setPreviewIcons() {
   listenSetGithubUrl();
   listenPngOption();
 })();
+
+// Listen for changes in the current page
+figma.on("currentpagechange", () => {
+  sendFileName();
+  setPreviewIcons();
+});
