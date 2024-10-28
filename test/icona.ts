@@ -148,6 +148,7 @@ const vue3Config: Vue3Config = {
 };
 
 generate({
+  icons: ".icona/multicolor.json",
   config: {
     svg: svgConfig,
     drawable: drawableConfig,
