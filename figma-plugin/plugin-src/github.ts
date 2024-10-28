@@ -215,9 +215,9 @@ export function createGithubClient(
   ) {
     const baseBranch = "main";
     const newBranch = `icona-update-${new Date().getTime()}`;
-    const prTitle = "[Icona]: Update Icons";
 
     const fileName = iconaFileName || "icons";
+    const prTitle = `[Icona]: Update \`./icona/${fileName}.json\``;
     const commitTitle = `feat: update ./icona/${fileName}.json`;
 
     const head = await getHead(baseBranch);
