@@ -3,6 +3,7 @@ import type { IconaIconData } from "@icona/types";
 import { Base64 } from "js-base64";
 
 import type { PngOptionPayload } from "../common/types";
+import { removeDotPrefix } from "./utils";
 
 type TargetNode =
   | ComponentNode
@@ -113,24 +114,33 @@ export async function getSvgFromExtractedNodes(nodes: ExtractedNode[]) {
       const regex = createRegexWithDelimiters("[", "]");
       const metadatasRegexResult = regex.exec(description || "");
 
+      const metadatas = [];
+
+      // 피그마에서 node name 앞에 `.`이 붙어있는 경우에는 `tag:figma-not-published`로 처리
+      if (node.name.startsWith(".")) {
+        metadatas.push("tag:figma-not-published");
+      }
+
       if (metadatasRegexResult && metadatasRegexResult.length === 2) {
+        metadatas.push(...metadatasRegexResult[1].split(","));
+
         return {
-          name: component.name,
+          name: removeDotPrefix(component.name),
           svg: await node.exportAsync({
             format: "SVG_STRING",
             svgIdAttribute: true,
           }),
-          metadatas: metadatasRegexResult[1].split(","),
+          metadatas,
         };
       }
 
       return {
-        name: component.name,
+        name: removeDotPrefix(component.name),
         svg: await node.exportAsync({
           format: "SVG_STRING",
           svgIdAttribute: true,
         }),
-        metadatas: [],
+        metadatas,
       };
     }),
   );
@@ -139,7 +149,8 @@ export async function getSvgFromExtractedNodes(nodes: ExtractedNode[]) {
     if (cur.status === "rejected") console.error(cur.reason);
     if (cur.status === "fulfilled") {
       const { name, ...rest } = cur.value as IconaIconData;
-      acc[name] = {
+      const removedName = removeDotPrefix(name);
+      acc[removedName] = {
         ...rest,
         name,
       };
@@ -203,8 +214,9 @@ export async function exportFromIconaIconData(
     }, {} as Record<keyof IconaIconData["png"], string>);
 
     // name = "icon_name"
-    result[component.name] = {
-      ...result[component.name],
+    const name = removeDotPrefix(component.name);
+    result[name] = {
+      ...result[name],
       png: {
         ...pngDatas,
       },

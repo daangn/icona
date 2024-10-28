@@ -7,7 +7,6 @@ export interface SVGStyleOptions {
 
 export interface IconaIconData {
   name: string;
-  style: SVGStyleOptions;
   svg: string;
   metadatas?: string[];
   png: {

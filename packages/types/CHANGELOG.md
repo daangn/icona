@@ -1,5 +1,11 @@
 # @icona/types
 
+## 0.9.0
+
+### Minor Changes
+
+- change `icons` prop in `generator` fn
+
 ## 0.8.0
 
 ### Minor Changes

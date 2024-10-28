@@ -21,3 +21,11 @@ export function getIconaFrame(): FrameNode {
 
   return iconaFrame as FrameNode;
 }
+
+/**
+ * @description 컴포넌트 이름 맨 앞에 `.`이 붙어있는 경우에는 `.`을 없애요.
+ *
+ */
+export function removeDotPrefix(name: string) {
+  return name.startsWith(".") ? name.replace(".", "") : name;
+}
