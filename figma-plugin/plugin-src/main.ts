@@ -1,13 +1,13 @@
-import { FRAME_NAME, KEY } from "../common/constants";
-import { emit } from "../common/fromPlugin";
+import { KEY } from "../common/constants.js";
+import { emit } from "../common/fromPlugin.js";
 import {
   listenDeployIcon,
   listenPngOption,
   listenSetGithubApiKey,
   listenSetGithubUrl,
-} from "./listeners";
-import { getAssetFramesInFrame, getSvgFromExtractedNodes } from "./service";
-import { getLocalData } from "./utils";
+} from "./listeners.js";
+import { getAssetFramesInFrame, getSvgFromExtractedNodes } from "./service.js";
+import { getIconaFrame, getLocalData } from "./utils.js";
 
 function sendUserInfo() {
   if (!figma.currentUser) return;
@@ -16,6 +16,28 @@ function sendUserInfo() {
     id: figma.currentUser.id || "",
     name: figma.currentUser.name,
   });
+}
+
+/**
+ * @note Extracts the filename from the icona frame name
+ *
+ * @example
+ * 1. icona-frame,filename=monochrome,something=1 -> monochrome
+ * 2. icona-frame,something=1,filename=monochrome -> monochrome
+ */
+function sendFileName() {
+  const FILENAME_PREFIX = "filename=";
+  const iconaFrame = getIconaFrame();
+  const fileNamePart = iconaFrame.name.split(",").find((part) => {
+    return part.startsWith(FILENAME_PREFIX);
+  });
+  const fileName = fileNamePart
+    ? fileNamePart.replace(FILENAME_PREFIX, "")
+    : undefined;
+
+  if (fileName) {
+    emit("CHANGE_FILE_NAME", fileName);
+  }
 }
 
 async function sendStorageData() {
@@ -33,9 +55,7 @@ async function sendStorageData() {
 }
 
 async function setPreviewIcons() {
-  const iconaFrame = figma.currentPage.findOne((node) => {
-    return node.name === FRAME_NAME;
-  });
+  const iconaFrame = getIconaFrame();
 
   if (!iconaFrame) {
     figma.notify("Icona frame not found");
@@ -54,6 +74,7 @@ async function setPreviewIcons() {
 
   sendUserInfo();
   sendStorageData();
+  sendFileName();
   setPreviewIcons();
 
   listenDeployIcon();

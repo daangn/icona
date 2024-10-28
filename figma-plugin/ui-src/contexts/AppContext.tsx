@@ -42,6 +42,7 @@ type Actions =
   | Omit<PluginEvents["GET_USER_INFO"], "handler">
   | Omit<PluginEvents["GET_ICON_PREVIEW"], "handler">
   | Omit<PluginEvents["DEPLOY_DONE"], "handler">
+  | Omit<PluginEvents["CHANGE_FILE_NAME"], "handler">
   | Omit<UiEvents["DEPLOY_ICON"], "handler">
   | Omit<UiEvents["SET_PNG_OPTIONS"], "handler">
   | Omit<UiEvents["SET_GITHUB_API_KEY"], "handler">
@@ -56,6 +57,13 @@ const AppDispatchContext = createContext<AppDispatch | null>(null);
 function reducer(state: State, action: Actions): State {
   switch (action.name) {
     /* from Plugin */
+    case "CHANGE_FILE_NAME": {
+      return {
+        ...state,
+        iconaFileName: action.payload,
+      };
+    }
+
     case "GET_DEPLOY_WITH_PNG": {
       const { options } = action.payload;
       const png = options.png || {

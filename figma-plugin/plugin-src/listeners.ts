@@ -1,9 +1,9 @@
-import { FRAME_NAME, KEY } from "../common/constants.js";
+import { KEY } from "../common/constants.js";
 import { emit } from "../common/fromPlugin.js";
 import { on } from "../common/fromUi.js";
 import { createGithubClient } from "./github.js";
 import { exportFromIconaIconData, getAssetFramesInFrame } from "./service.js";
-import { setLocalData } from "./utils.js";
+import { getIconaFrame, setLocalData } from "./utils.js";
 
 export function listenDeployIcon() {
   on("DEPLOY_ICON", async ({ githubData, icons, options }) => {
@@ -13,9 +13,7 @@ export function listenDeployIcon() {
 
       const { createDeployPR } = createGithubClient(owner, name, apiKey);
 
-      const iconaFrame = figma.currentPage.findOne((node) => {
-        return node.name === FRAME_NAME;
-      });
+      const iconaFrame = getIconaFrame();
 
       if (!iconaFrame) {
         figma.notify("Icona frame not found");

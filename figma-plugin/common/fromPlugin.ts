@@ -55,6 +55,11 @@ export type Events = {
     payload: null;
     handler: () => void;
   };
+  CHANGE_FILE_NAME: {
+    name: "CHANGE_FILE_NAME";
+    payload: string;
+    handler: (fileName: string) => void;
+  };
 };
 
 type EventName = keyof Events;
