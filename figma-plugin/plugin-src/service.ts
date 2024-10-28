@@ -47,11 +47,13 @@ const findComponentInNode = (
   description?: string,
 ): ExtractedNode | ExtractedNode[] => {
   switch (node.type) {
-    case "FRAME":
-    case "GROUP":
-    case "COMPONENT":
-    case "INSTANCE":
-    case "VECTOR": {
+    case "FRAME": {
+      return node.children.flatMap((child: any) => {
+        return findComponentInNode(child, setName, description);
+      });
+    }
+
+    case "COMPONENT": {
       const svgName = makeComponentName({
         componentSetName: setName,
         componentName: node.name,
@@ -78,10 +80,7 @@ export function getAssetFramesInFrame(targetFrame: FrameNode): ExtractedNode[] {
   const targetNodes = targetFrame.children.flatMap((child) => {
     if (
       child.type === "COMPONENT" ||
-      child.type === "INSTANCE" ||
-      child.type === "VECTOR" ||
       child.type === "FRAME" ||
-      child.type === "GROUP" ||
       child.type === "COMPONENT_SET"
     ) {
       return findComponentInNode(child);
