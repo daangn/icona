@@ -1,7 +1,7 @@
 const esbuild = require("esbuild");
 
 const commonOpts = {
-  entryPoints: ["./plugin-src/code.ts"],
+  entryPoints: ["./plugin-src/main.ts"],
   outfile: "dist/code.js",
   target: "es6",
   bundle: true,
