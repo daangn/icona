@@ -1,7 +1,7 @@
 import { emit as e, on as o } from "@create-figma-plugin/utilities";
 import type { IconaIconData } from "@icona/types";
 
-import type { ExportOptions } from "./types.js";
+import type { ExportOptions, PngOptionPayload } from "./types.js";
 
 interface GithubData {
   owner: string;
@@ -16,7 +16,7 @@ interface IconaMetaData {
 }
 
 interface SetPngOptionPayload {
-  options: ExportOptions;
+  png: PngOptionPayload;
 }
 
 interface SetGithubUrlPayload {
@@ -46,6 +46,11 @@ export type Events = {
     name: "DEPLOY_ICON";
     payload: IconaMetaData;
     handler: (props: IconaMetaData) => void;
+  };
+  SET_ICONA_FILE_NAME: {
+    name: "SET_ICONA_FILE_NAME";
+    payload: string;
+    handler: (props: string) => void;
   };
 };
 

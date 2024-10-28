@@ -5,10 +5,13 @@ export interface GithubData {
 }
 
 export interface ExportOptions {
-  png: {
-    "1x": boolean;
-    "2x": boolean;
-    "3x": boolean;
-    "4x": boolean;
-  };
+  png: PngOptionPayload;
+  fileName: string;
+}
+
+export interface PngOptionPayload {
+  "1x": boolean;
+  "2x": boolean;
+  "3x": boolean;
+  "4x": boolean;
 }

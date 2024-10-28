@@ -21,6 +21,8 @@ type State = {
 
   iconPreview: Record<string, IconaIconData>;
 
+  iconaFileName: string;
+
   // Options
   pngOption: {
     "1x": boolean;
@@ -43,7 +45,8 @@ type Actions =
   | Omit<UiEvents["DEPLOY_ICON"], "handler">
   | Omit<UiEvents["SET_PNG_OPTIONS"], "handler">
   | Omit<UiEvents["SET_GITHUB_API_KEY"], "handler">
-  | Omit<UiEvents["SET_GITHUB_URL"], "handler">;
+  | Omit<UiEvents["SET_GITHUB_URL"], "handler">
+  | Omit<UiEvents["SET_ICONA_FILE_NAME"], "handler">;
 
 type AppDispatch = Dispatch<Actions>;
 
@@ -145,7 +148,7 @@ function reducer(state: State, action: Actions): State {
       return {
         ...state,
         pngOption: {
-          ...action.payload.options.png,
+          ...action.payload.png,
         },
       };
     }
@@ -156,6 +159,15 @@ function reducer(state: State, action: Actions): State {
       return {
         ...state,
         iconPreview: icons,
+      };
+    }
+
+    case "SET_ICONA_FILE_NAME": {
+      const fileName = action.payload;
+
+      return {
+        ...state,
+        iconaFileName: fileName,
       };
     }
 
@@ -181,6 +193,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     // Input
     githubApiKey: "",
     githubRepositoryUrl: "",
+    iconaFileName: "icons",
 
     // Options
     pngOption: {

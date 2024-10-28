@@ -2,7 +2,7 @@
 import type { IconaIconData } from "@icona/types";
 import { Base64 } from "js-base64";
 
-import type { ExportOptions } from "../common/types";
+import type { PngOptionPayload } from "../common/types";
 
 type TargetNode =
   | ComponentNode
@@ -155,7 +155,7 @@ export async function getSvgFromExtractedNodes(nodes: ExtractedNode[]) {
 export async function exportFromIconaIconData(
   nodes: ExtractedNode[],
   iconaData: Record<string, IconaIconData>,
-  options: ExportOptions,
+  png: PngOptionPayload,
 ) {
   const result = iconaData;
 
@@ -163,7 +163,7 @@ export async function exportFromIconaIconData(
     const node = figma.getNodeById(component.id) as ComponentNode;
 
     const exportDatas = await Promise.allSettled(
-      Object.entries(options.png).map(async ([key, value]) => {
+      Object.entries(png).map(async ([key, value]) => {
         const scale = Number(key.replace("x", ""));
 
         if (!value) {

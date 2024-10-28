@@ -9,7 +9,7 @@ export function listenDeployIcon() {
   on("DEPLOY_ICON", async ({ githubData, icons, options }) => {
     try {
       const { owner, name, apiKey } = githubData;
-      const pngOption = options.png;
+      const { fileName, png } = options;
 
       const { createDeployPR } = createGithubClient(owner, name, apiKey);
 
@@ -25,11 +25,9 @@ export function listenDeployIcon() {
       const targetFrame = figma.getNodeById(iconaFrame.id) as FrameNode;
       const assetFrames = getAssetFramesInFrame(targetFrame);
 
-      const iconaData = await exportFromIconaIconData(assetFrames, icons, {
-        png: pngOption,
-      });
+      const iconaData = await exportFromIconaIconData(assetFrames, icons, png);
 
-      await createDeployPR(iconaData);
+      await createDeployPR(iconaData, fileName);
 
       emit("DEPLOY_DONE", null);
       figma.notify("Icons deployed", { timeout: 5000 });
@@ -56,7 +54,7 @@ export function listenSetGithubUrl() {
 }
 
 export function listenPngOption() {
-  on("SET_PNG_OPTIONS", ({ options }) => {
-    setLocalData(KEY.PNG_OPTIONS, options);
+  on("SET_PNG_OPTIONS", ({ png }) => {
+    setLocalData(KEY.PNG_OPTIONS, png);
   });
 }

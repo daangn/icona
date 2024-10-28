@@ -209,17 +209,22 @@ export function createGithubClient(
     await createPullRequest(newBranch, baseBranch, prTitle, prBody);
   }
 
-  async function createDeployPR(svgs: Record<string, IconaIconData>) {
+  async function createDeployPR(
+    svgs: Record<string, IconaIconData>,
+    iconaFileName?: string,
+  ) {
     const baseBranch = "main";
     const newBranch = `icona-update-${new Date().getTime()}`;
     const prTitle = "[Icona]: Update Icons";
-    const commitTitle = "feat: update icons.json";
+
+    const fileName = iconaFileName || "icons";
+    const commitTitle = `feat: update ./icona/${fileName}.json`;
 
     const head = await getHead(baseBranch);
 
     const treeBody = await uploadBlob(JSON.stringify(svgs, null, 2)).then(
       (blob) => ({
-        path: `.icona/icons.json`,
+        path: `.icona/${fileName}.json`,
         mode: "100644",
         type: "blob",
         sha: blob.sha,

@@ -3,6 +3,7 @@ import {
   Button,
   Checkbox,
   Flex,
+  Input,
   Spinner,
   Text,
   Textarea,
@@ -24,6 +25,7 @@ const Deploy = () => {
     githubApiKey,
     githubRepositoryUrl,
     pngOption,
+    iconaFileName,
   } = useAppState();
   const icons = Object.entries(iconPreview);
   const { track } = useJune();
@@ -36,6 +38,7 @@ const Deploy = () => {
         githubData,
         options: {
           png: pngOption,
+          fileName: iconaFileName,
         },
       },
     });
@@ -119,11 +122,9 @@ const Deploy = () => {
               dispatch({
                 name: "SET_PNG_OPTIONS",
                 payload: {
-                  options: {
-                    png: {
-                      ...pngOption,
-                      "1x": !pngOption["1x"],
-                    },
+                  png: {
+                    ...pngOption,
+                    "1x": !pngOption["1x"],
                   },
                 },
               });
@@ -141,11 +142,9 @@ const Deploy = () => {
               dispatch({
                 name: "SET_PNG_OPTIONS",
                 payload: {
-                  options: {
-                    png: {
-                      ...pngOption,
-                      "2x": !pngOption["2x"],
-                    },
+                  png: {
+                    ...pngOption,
+                    "2x": !pngOption["2x"],
                   },
                 },
               });
@@ -163,11 +162,9 @@ const Deploy = () => {
               dispatch({
                 name: "SET_PNG_OPTIONS",
                 payload: {
-                  options: {
-                    png: {
-                      ...pngOption,
-                      "3x": !pngOption["3x"],
-                    },
+                  png: {
+                    ...pngOption,
+                    "3x": !pngOption["3x"],
                   },
                 },
               });
@@ -185,11 +182,9 @@ const Deploy = () => {
               dispatch({
                 name: "SET_PNG_OPTIONS",
                 payload: {
-                  options: {
-                    png: {
-                      ...pngOption,
-                      "4x": !pngOption["4x"],
-                    },
+                  png: {
+                    ...pngOption,
+                    "4x": !pngOption["4x"],
                   },
                 },
               });
@@ -200,6 +195,26 @@ const Deploy = () => {
             </Text>
           </Checkbox>
         </Flex>
+
+        <Text fontSize={12} mt={4} fontWeight="bold">
+          File Name
+        </Text>
+
+        <Text fontSize={10}>will deploy below path</Text>
+        <Text fontSize={10}>`.icona/{iconaFileName}.json`</Text>
+
+        <Input
+          size="xs"
+          mt={1}
+          placeholder="icon-name"
+          value={iconaFileName}
+          onChange={(e) => {
+            dispatch({
+              name: "SET_ICONA_FILE_NAME",
+              payload: e.target.value,
+            });
+          }}
+        />
       </Box>
 
       <Box marginTop={4} fontSize={14}>
