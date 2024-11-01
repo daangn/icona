@@ -23,9 +23,14 @@ export function getIconaFrame(): FrameNode {
 }
 
 /**
- * @description 컴포넌트 이름 맨 앞에 `.`이 붙어있는 경우에는 `.`을 없애요.
- *
+ * @param name .icon_name or ❌icon_name
+ * @returns icon_name
+ * @description `icon` 앞에 있는 내용들은 전부 제거 후 반환
  */
-export function removeDotPrefix(name: string) {
-  return name.startsWith(".") ? name.replace(".", "") : name;
+export function stripBeforeIcon(name: string) {
+  if (name.includes("icon")) {
+    return name.replace(/.*icon/, "icon");
+  }
+
+  return name;
 }

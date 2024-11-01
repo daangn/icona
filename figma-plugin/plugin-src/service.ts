@@ -3,7 +3,7 @@ import type { IconaIconData } from "@icona/types";
 import { Base64 } from "js-base64";
 
 import type { PngOptionPayload } from "../common/types";
-import { removeDotPrefix } from "./utils";
+import { stripBeforeIcon } from "./utils";
 
 type TargetNode =
   | ComponentNode
@@ -125,7 +125,7 @@ export async function getSvgFromExtractedNodes(nodes: ExtractedNode[]) {
         metadatas.push(...metadatasRegexResult[1].split(","));
 
         return {
-          name: removeDotPrefix(component.name),
+          name: stripBeforeIcon(component.name),
           svg: await node.exportAsync({
             format: "SVG_STRING",
             svgIdAttribute: true,
@@ -135,7 +135,7 @@ export async function getSvgFromExtractedNodes(nodes: ExtractedNode[]) {
       }
 
       return {
-        name: removeDotPrefix(component.name),
+        name: stripBeforeIcon(component.name),
         svg: await node.exportAsync({
           format: "SVG_STRING",
           svgIdAttribute: true,
@@ -149,7 +149,7 @@ export async function getSvgFromExtractedNodes(nodes: ExtractedNode[]) {
     if (cur.status === "rejected") console.error(cur.reason);
     if (cur.status === "fulfilled") {
       const { name, ...rest } = cur.value as IconaIconData;
-      const removedName = removeDotPrefix(name);
+      const removedName = stripBeforeIcon(name);
       acc[removedName] = {
         ...rest,
         name,
@@ -214,7 +214,7 @@ export async function exportFromIconaIconData(
     }, {} as Record<keyof IconaIconData["png"], string>);
 
     // name = "icon_name"
-    const name = removeDotPrefix(component.name);
+    const name = stripBeforeIcon(component.name);
     result[name] = {
       ...result[name],
       png: {
