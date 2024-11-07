@@ -1,5 +1,13 @@
 # @icona/generator
 
+## 0.9.1
+
+### Patch Changes
+
+- feat: add drawable's fillColor, strokeColor option
+- Updated dependencies
+  - @icona/types@0.9.1
+
 ## 0.9.0
 
 ### Minor Changes

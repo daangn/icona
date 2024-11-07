@@ -1,6 +1,6 @@
 {
   "name": "@icona/generator",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/daangn/icona.git",
@@ -25,7 +25,7 @@
     "prepack": "yarn build"
   },
   "dependencies": {
-    "@icona/types": "^0.9.0",
+    "@icona/types": "^0.9.1",
     "@svgr/core": "^8.0.0",
     "@types/cli-progress": "^3.11.5",
     "cli-progress": "^3.12.0",

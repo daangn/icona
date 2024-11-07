@@ -125,8 +125,11 @@ export interface DrawableConfig extends BaseConfig {
    * drawable default color is #FF212124
    * if you want to change default color, you can use this option
    * @default #FF212124
+   * @deprecated
    */
   defaultColor?: string;
+
+  fillColor?: string;
 }
 
 export interface PNGConfig extends BaseConfig {}

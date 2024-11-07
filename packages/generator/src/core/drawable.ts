@@ -26,6 +26,7 @@ export const generateDrawable = async (props: Props) => {
   const targetPath = getTargetPath(config.path || "drawable");
   const drawableConfig = config.svg2vectordrawableConfig || {};
   const defaultColor = config.defaultColor;
+  const fillColor = config.fillColor;
 
   if (!icons) {
     throw new Error("There is no icons data");
@@ -59,6 +60,19 @@ export const generateDrawable = async (props: Props) => {
     // NOTE(@junghyeonsu): DRAWABLE_DEFAULT_COLOR = "#FF212124"
     if (defaultColor) {
       drawable = drawable.replace(/#FF212124/g, defaultColor);
+    }
+
+    // NOTE(@junghyeonsu): android:fillColor="something" 인거를 ""사이에 있는 값을 변경하기
+    if (fillColor) {
+      drawable = drawable.replace(
+        /android:fillColor="[^"]*"/g,
+        `android:fillColor="${fillColor}"`,
+      );
+
+      drawable = drawable.replace(
+        /android:strokeColor="[^"]*"/g,
+        `android:strokeColor="${fillColor}"`,
+      );
     }
 
     await writeFile(drawablePath, drawable);

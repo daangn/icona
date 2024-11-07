@@ -55,10 +55,11 @@ const pdfConfig: PDFConfig = {
 };
 
 const drawableConfig: DrawableConfig = {
-  active: false,
+  active: true,
   path: "drawable",
   svg2vectordrawableConfig: {},
-  defaultColor: "@color/gray900",
+  // defaultColor: "@color/gray900",
+  // fillColor: "@color/gray900",
 };
 
 const reactConfig: ReactConfig = {
