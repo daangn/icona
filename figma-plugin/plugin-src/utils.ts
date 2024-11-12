@@ -25,11 +25,11 @@ export function getIconaFrame(): FrameNode {
 /**
  * @param name .icon_name or ❌icon_name
  * @returns icon_name
- * @description `icon` 앞에 있는 내용들은 전부 제거 후 반환
+ * @description `icon_` 앞에 있는 내용들은 전부 제거 후 반환
  */
 export function stripBeforeIcon(name: string) {
   if (name.includes("icon")) {
-    return name.replace(/.*icon/, "icon");
+    return name.replace(/.*icon_/, "icon_");
   }
 
   return name;

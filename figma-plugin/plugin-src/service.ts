@@ -3,6 +3,7 @@ import type { IconaIconData } from "@icona/types";
 import { Base64 } from "js-base64";
 
 import type { PngOptionPayload } from "../common/types";
+import { Meta, Tag } from "./constants";
 import { stripBeforeIcon } from "./utils";
 
 type TargetNode =
@@ -109,6 +110,7 @@ function createRegexWithDelimiters(
 export async function getSvgFromExtractedNodes(nodes: ExtractedNode[]) {
   const datas = await Promise.allSettled(
     nodes.map(async (component) => {
+      const name = component.name;
       const node = figma.getNodeById(component.id) as ComponentNode;
       const description = component.description;
       const regex = createRegexWithDelimiters("[", "]");
@@ -117,15 +119,25 @@ export async function getSvgFromExtractedNodes(nodes: ExtractedNode[]) {
       const metadatas = [];
 
       // 피그마에서 node name 앞에 `.`이 붙어있는 경우에는 `tag:figma-not-published`로 처리
-      if (node.name.startsWith(".")) {
-        metadatas.push("tag:figma-not-published");
+      if (name.startsWith(Meta.figmaNotPublished)) {
+        metadatas.push(Tag.figmaNotPublished);
+      }
+
+      // 피그마에서 node name에 `[서비스아이콘]`이 포함되어 있는 경우에는 `tag:service`로 처리
+      if (name.includes(Meta.service)) {
+        metadatas.push(Tag.service);
+      }
+
+      // 피그마에서 node name에 `_fat`이 포함되어 있는 경우에는 `tag:fat`로 처리
+      if (name.includes(Meta.fat)) {
+        metadatas.push(Tag.fat);
       }
 
       if (metadatasRegexResult && metadatasRegexResult.length === 2) {
         metadatas.push(...metadatasRegexResult[1].split(","));
 
         return {
-          name: stripBeforeIcon(component.name),
+          name: stripBeforeIcon(name),
           svg: await node.exportAsync({
             format: "SVG_STRING",
             svgIdAttribute: true,
@@ -135,7 +147,7 @@ export async function getSvgFromExtractedNodes(nodes: ExtractedNode[]) {
       }
 
       return {
-        name: stripBeforeIcon(component.name),
+        name: stripBeforeIcon(name),
         svg: await node.exportAsync({
           format: "SVG_STRING",
           svgIdAttribute: true,
