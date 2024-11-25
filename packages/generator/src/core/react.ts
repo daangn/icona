@@ -107,7 +107,7 @@ export const generateReact = async (props: Props) => {
   if (genIndexFile) {
     const index = generateIndexFileTemplate({
       componentNames,
-      ext: null,
+      ext: "js",
     });
     const content = `${ignores}\n${index}`;
     await writeFile(resolve(targetPath, "index.ts"), content, "utf-8");

@@ -1,5 +1,13 @@
 # @icona/generator
 
+## 0.9.2
+
+### Patch Changes
+
+- react index ext
+- Updated dependencies
+  - @icona/types@0.9.2
+
 ## 0.9.1
 
 ### Patch Changes

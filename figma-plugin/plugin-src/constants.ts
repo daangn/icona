@@ -1,3 +1,4 @@
+// TODO: Tag System with icona, seed-design
 export const Tag = {
   service: "tag:service",
   figmaNotPublished: "tag:figma-not-published",

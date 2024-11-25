@@ -63,12 +63,20 @@ const findComponentInNode = (
         separator: "_",
       });
 
-      return { id: node.id, name: svgName, description };
+      return {
+        id: node.id,
+        name: svgName,
+        description: description || node.description,
+      };
     }
 
     case "COMPONENT_SET": {
       return node.children.flatMap((child: any) => {
-        return findComponentInNode(child, node.name, node.description);
+        return findComponentInNode(
+          child,
+          node.name,
+          description || node.description,
+        );
       });
     }
 
@@ -107,44 +115,49 @@ function createRegexWithDelimiters(
   return new RegExp(`${start}(.*?)${end}`);
 }
 
+function extractMetadataFromDescription(description: string) {
+  const regex = createRegexWithDelimiters("[", "]");
+  const metadatasRegexResult = regex.exec(description);
+
+  if (metadatasRegexResult && metadatasRegexResult.length === 2) {
+    return metadatasRegexResult[1].split(",");
+  }
+
+  return [];
+}
+
+function getMetadatasFromName(name: string) {
+  const metadatas = [];
+
+  // 피그마에서 node name 앞에 `.`이 붙어있는 경우에는 `tag:figma-not-published`로 처리
+  if (name.startsWith(Meta.figmaNotPublished)) {
+    metadatas.push(Tag.figmaNotPublished);
+  }
+
+  // 피그마에서 node name에 `[서비스아이콘]`이 포함되어 있는 경우에는 `tag:service`로 처리
+  if (name.includes(Meta.service)) {
+    metadatas.push(Tag.service);
+  }
+
+  // 피그마에서 node name에 `_fat`이 포함되어 있는 경우에는 `tag:fat`로 처리
+  if (name.includes(Meta.fat)) {
+    metadatas.push(Tag.fat);
+  }
+
+  return metadatas;
+}
+
 export async function getSvgFromExtractedNodes(nodes: ExtractedNode[]) {
   const datas = await Promise.allSettled(
     nodes.map(async (component) => {
       const name = component.name;
       const node = figma.getNodeById(component.id) as ComponentNode;
       const description = component.description;
-      const regex = createRegexWithDelimiters("[", "]");
-      const metadatasRegexResult = regex.exec(description || "");
 
-      const metadatas = [];
-
-      // 피그마에서 node name 앞에 `.`이 붙어있는 경우에는 `tag:figma-not-published`로 처리
-      if (name.startsWith(Meta.figmaNotPublished)) {
-        metadatas.push(Tag.figmaNotPublished);
-      }
-
-      // 피그마에서 node name에 `[서비스아이콘]`이 포함되어 있는 경우에는 `tag:service`로 처리
-      if (name.includes(Meta.service)) {
-        metadatas.push(Tag.service);
-      }
-
-      // 피그마에서 node name에 `_fat`이 포함되어 있는 경우에는 `tag:fat`로 처리
-      if (name.includes(Meta.fat)) {
-        metadatas.push(Tag.fat);
-      }
-
-      if (metadatasRegexResult && metadatasRegexResult.length === 2) {
-        metadatas.push(...metadatasRegexResult[1].split(","));
-
-        return {
-          name: stripBeforeIcon(name),
-          svg: await node.exportAsync({
-            format: "SVG_STRING",
-            svgIdAttribute: true,
-          }),
-          metadatas,
-        };
-      }
+      const metadatas = [
+        ...extractMetadataFromDescription(description || ""),
+        ...getMetadatasFromName(name),
+      ];
 
       return {
         name: stripBeforeIcon(name),
