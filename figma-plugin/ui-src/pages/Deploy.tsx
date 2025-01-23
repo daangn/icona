@@ -9,7 +9,6 @@ import {
   Textarea,
   Tooltip,
 } from "@chakra-ui/react";
-import { useJune } from "june-so-sandbox-react";
 import * as React from "react";
 
 import { FRAME_NAME } from "../../common/constants";
@@ -28,7 +27,6 @@ const Deploy = () => {
     iconaFileName,
   } = useAppState();
   const icons = Object.entries(iconPreview);
-  const { track } = useJune();
 
   const deploy = () => {
     dispatch({
@@ -41,15 +39,6 @@ const Deploy = () => {
           fileName: iconaFileName,
         },
       },
-    });
-    track({
-      event: "Icona: Deploy Icon",
-      properties: {
-        githubRepositoryUrl,
-        githubRepositoryName: githubData.name,
-        githubRepositoryOwner: githubData.owner,
-      },
-      timestamp: new Date(),
     });
   };
 

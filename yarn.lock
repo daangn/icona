@@ -3841,7 +3841,6 @@ __metadata:
     esbuild: ^0.17.19
     framer-motion: ^10.12.11
     js-base64: ^3.7.5
-    june-so-sandbox-react: ^0.0.2
     react: ^18.2.0
     react-dom: ^18.2.0
     ts-dedent: ^2.2.0
@@ -9190,24 +9189,6 @@ __metadata:
     array-includes: ^3.1.5
     object.assign: ^4.1.3
   checksum: a2ed78cac49a0f0c4be8b1eafe3c5257a1411341d8e7f1ac740debae003de04e5f6372bfcfbd9d082e954ffd99aac85bcda85b7c6bc11609992483f4cdc0f745
-  languageName: node
-  linkType: hard
-
-"june-so-sandbox-react@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "june-so-sandbox-react@npm:0.0.2"
-  dependencies:
-    june-so-sandbox-types: ^0.0.2
-  peerDependencies:
-    react: ^17.0.0 || ^18.0.0
-  checksum: 99adedbc039e4be9ec4437e75be06378527d9171507405795ebdff076f33c9c04fa991bdaed96a00f76d367f56d236b469b7820a3a03a0825e9b55afa552b5be
-  languageName: node
-  linkType: hard
-
-"june-so-sandbox-types@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "june-so-sandbox-types@npm:0.0.2"
-  checksum: 15339636ed03b39f5ad2dc15e48f7d27b9df4b1a6af2fc57ddc5207e190689591b6ad37162115279e5b6209a372fa7aaedf837c355496ae4478f8ba83e787157
   languageName: node
   linkType: hard
 

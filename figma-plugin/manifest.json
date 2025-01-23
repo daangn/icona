@@ -4,9 +4,16 @@
   "api": "1.0.0",
   "main": "dist/code.js",
   "ui": "dist/index.html",
-  "editorType": ["figma", "dev"],
-  "capabilities": ["inspect"],
-  "permissions": ["currentuser"],
+  "editorType": [
+    "figma",
+    "dev"
+  ],
+  "capabilities": [
+    "inspect"
+  ],
+  "permissions": [
+    "currentuser"
+  ],
   "networkAccess": {
     "allowedDomains": [
       "https://www.figma.com",
