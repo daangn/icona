@@ -86,6 +86,56 @@ const findComponentInNode = (
   }
 };
 
+/**
+ * 노드의 모든 프레임에서 fill을 일시적으로 제거하고 원래 값을 저장
+ * @param node 대상 노드
+ * @returns 원래 fill 값을 저장한 맵
+ */
+function removeAndStoreFills(node: SceneNode): Map<string, readonly Paint[]> {
+  const fillsMap = new Map<string, readonly Paint[]>();
+
+  if (node.type === "FRAME" && "fills" in node && node.id) {
+    fillsMap.set(node.id, node.fills as readonly Paint[]);
+    node.fills = [];
+  }
+
+  if ("children" in node) {
+    for (const child of node.children) {
+      const childFillsMap = removeAndStoreFills(child);
+      childFillsMap.forEach((fills, id) => {
+        fillsMap.set(id, fills);
+      });
+    }
+  }
+
+  return fillsMap;
+}
+
+/**
+ * 저장된 fill 값을 노드에 복원
+ * @param node 대상 노드
+ * @param fillsMap 원래 fill 값을 저장한 맵
+ */
+function restoreFills(
+  node: SceneNode,
+  fillsMap: Map<string, readonly Paint[]>,
+) {
+  if (
+    node.type === "FRAME" &&
+    "fills" in node &&
+    node.id &&
+    fillsMap.has(node.id)
+  ) {
+    node.fills = fillsMap.get(node.id)!;
+  }
+
+  if ("children" in node) {
+    for (const child of node.children) {
+      restoreFills(child, fillsMap);
+    }
+  }
+}
+
 export function getAssetFramesInFrame(targetFrame: FrameNode): ExtractedNode[] {
   const targetNodes = targetFrame.children.flatMap((child) => {
     if (
@@ -159,12 +209,20 @@ export async function getSvgFromExtractedNodes(nodes: ExtractedNode[]) {
         ...getMetadatasFromName(name),
       ];
 
+      const fillsMap = removeAndStoreFills(node);
+
+      // SVG 내보내기
+      const svg = await node.exportAsync({
+        format: "SVG_STRING",
+        svgIdAttribute: true,
+      });
+
+      // fill 복원
+      restoreFills(node, fillsMap);
+
       return {
         name: stripBeforeIcon(name),
-        svg: await node.exportAsync({
-          format: "SVG_STRING",
-          svgIdAttribute: true,
-        }),
+        svg,
         metadatas,
       };
     }),
@@ -197,6 +255,9 @@ export async function exportFromIconaIconData(
   nodes.forEach(async (component) => {
     const node = figma.getNodeById(component.id) as ComponentNode;
 
+    // 내보내기 전에 fill 제거 및 저장
+    const fillsMap = removeAndStoreFills(node);
+
     const exportDatas = await Promise.allSettled(
       Object.entries(png).map(async ([key, value]) => {
         const scale = Number(key.replace("x", ""));
@@ -224,6 +285,9 @@ export async function exportFromIconaIconData(
         };
       }),
     );
+
+    // fill 복원
+    restoreFills(node, fillsMap);
 
     const pngDatas = exportDatas.reduce((acc, cur) => {
       if (cur.status === "rejected") console.error(cur.reason);
