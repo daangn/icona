@@ -8,84 +8,80 @@ export function createGithubClient(
   repoOwner: string,
   repoName: string,
   accessToken: string,
+  githubBaseUrl?: string, // 추가된 매개변수
 ) {
   const ACCESS_TOKEN = accessToken;
-  const API_URL = `https://api.github.com/repos/${repoOwner}/${repoName}`;
+
+  // GitHub Enterprise 지원을 위한 동적 API URL 설정
+  const baseUrl = githubBaseUrl || "https://api.github.com";
+  const API_URL = `${baseUrl}/repos/${repoOwner}/${repoName}`;
 
   async function uploadBlob(
     content: string,
     encoding: "utf-8" | "base64" = "utf-8",
   ): Promise<{ sha: string; mode: string; type: string }> {
-    return fetch(`${API_URL}/git/blobs`, {
+    const response = await fetch(`${API_URL}/git/blobs`, {
       method: "POST",
       headers: {
-        Authorization: `token ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${ACCESS_TOKEN}`, // token -> Bearer로 통일
         "X-GitHub-Api-Version": GITHUB_API_VERSION,
+        Accept: "application/vnd.github+json",
       },
       body: JSON.stringify({
         content,
         encoding,
       }),
-    }).then((res) => res.json());
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to upload blob: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    return response.json();
   }
 
   async function getHead(branch: string): Promise<{ object: { sha: string } }> {
-    return fetch(`${API_URL}/git/ref/heads/${branch}`, {
+    const response = await fetch(`${API_URL}/git/ref/heads/${branch}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${ACCESS_TOKEN}`,
         Accept: "application/vnd.github+json",
         "X-GitHub-Api-Version": GITHUB_API_VERSION,
       },
-    }).then((res) => res.json());
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to get head: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    return response.json();
   }
 
-  // async function getContent(
-  //   path: string,
-  // ): Promise<{ sha: string; content: string }> {
-  //   return fetch(`${API_URL}/contents/${path}`, {
-  //     method: "GET",
-  //     headers: {
-  //       Authorization: `token ${ACCESS_TOKEN}`,
-  //       "X-GitHub-Api-Version": GITHUB_API_VERSION,
-  //     },
-  //   }).then((res) => res.json());
-  // }
-
-  // async function createContent(
-  //   path: string,
-  //   content: string,
-  //   message: string,
-  // ): Promise<{ commit: { sha: string } }> {
-  //   return fetch(`${API_URL}/contents/${path}`, {
-  //     method: "PUT",
-  //     headers: {
-  //       Authorization: `token ${ACCESS_TOKEN}`,
-  //       "X-GitHub-Api-Version": GITHUB_API_VERSION,
-  //     },
-  //     body: JSON.stringify({
-  //       message,
-  //       content,
-  //       committer: {
-  //         name: "GitHub Action",
-  //         email: "41898282+github-actions[bot]@users.noreply.github.com",
-  //       },
-  //     }),
-  //   }).then((res) => res.json());
-  // }
-
   async function createBranch(name: string, sha: string) {
-    return fetch(`${API_URL}/git/refs`, {
+    const response = await fetch(`${API_URL}/git/refs`, {
       method: "POST",
       headers: {
         "X-GitHub-Api-Version": GITHUB_API_VERSION,
-        Authorization: `token ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Accept: "application/vnd.github+json",
       },
       body: JSON.stringify({
         ref: `refs/heads/${name}`,
         sha,
       }),
-    }).then((res) => res.json());
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to create branch: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    return response.json();
   }
 
   async function createTree(
@@ -95,17 +91,26 @@ export function createGithubClient(
     sha: string;
     tree: { path: string; mode: string; type: string; sha: string }[];
   }> {
-    return fetch(`${API_URL}/git/trees`, {
+    const response = await fetch(`${API_URL}/git/trees`, {
       method: "POST",
       headers: {
         "X-GitHub-Api-Version": GITHUB_API_VERSION,
-        Authorization: `token ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Accept: "application/vnd.github+json",
       },
       body: JSON.stringify({
         tree: body,
         base_tree: baseTree,
       }),
-    }).then((res) => res.json());
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to create tree: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    return response.json();
   }
 
   async function createCommit(
@@ -113,31 +118,49 @@ export function createGithubClient(
     message: string,
     parents: string[],
   ): Promise<{ sha: string }> {
-    return fetch(`${API_URL}/git/commits`, {
+    const response = await fetch(`${API_URL}/git/commits`, {
       method: "POST",
       headers: {
         "X-GitHub-Api-Version": GITHUB_API_VERSION,
-        Authorization: `token ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Accept: "application/vnd.github+json",
       },
       body: JSON.stringify({
         tree: tree,
         message: message,
         parents: parents,
       }),
-    }).then((res) => res.json());
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to create commit: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    return response.json();
   }
 
   async function updateRef(branch: string, commit: string) {
-    return fetch(`${API_URL}/git/refs/heads/${branch}`, {
+    const response = await fetch(`${API_URL}/git/refs/heads/${branch}`, {
       method: "PATCH",
       headers: {
         "X-GitHub-Api-Version": GITHUB_API_VERSION,
-        Authorization: `token ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Accept: "application/vnd.github+json",
       },
       body: JSON.stringify({
         sha: commit,
       }),
-    }).then((res) => res.json());
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to update ref: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    return response.json();
   }
 
   async function createPullRequest(
@@ -146,11 +169,12 @@ export function createGithubClient(
     title: string,
     body: string,
   ) {
-    return fetch(`${API_URL}/pulls`, {
+    const response = await fetch(`${API_URL}/pulls`, {
       method: "POST",
       headers: {
         "X-GitHub-Api-Version": GITHUB_API_VERSION,
-        Authorization: `token ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Accept: "application/vnd.github+json",
       },
       body: JSON.stringify({
         head: head,
@@ -158,7 +182,15 @@ export function createGithubClient(
         title: title,
         body: body,
       }),
-    }).then((res) => res.json());
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to create pull request: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    return response.json();
   }
 
   async function createSettingPR() {

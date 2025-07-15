@@ -13,7 +13,9 @@
     "build": "ultra -r build",
     "clean": "ultra -r clean",
     "release": "yarn changeset publish",
-    "version": "changeset version && yarn install --no-immutable"
+    "version": "changeset version && yarn install --no-immutable",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.1",
