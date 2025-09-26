@@ -12,13 +12,15 @@ jobs:
   publish-package:
     name: 패키지를 출판해요
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
-          node-version: "16"
+          node-version: "22"
 
       - name: 패키지를 설치하고 릴리즈를 만들어요
         run: |
@@ -38,4 +40,3 @@ jobs:
           version: yarn version
         env:
           NODE_AUTH_TOKEN: ${{ github.token }}
-          NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
