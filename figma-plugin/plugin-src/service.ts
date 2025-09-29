@@ -224,6 +224,11 @@ export async function getSvgFromExtractedNodes(nodes: ExtractedNode[]) {
         name: stripBeforeIcon(name),
         svg,
         metadatas,
+        figma: {
+          name: node.name,
+          key: node.key,
+          description: node.description,
+        },
       };
     }),
   );
@@ -306,6 +311,11 @@ export async function exportFromIconaIconData(
     const name = stripBeforeIcon(component.name);
     result[name] = {
       ...result[name],
+      figma: {
+        name: node.name,
+        key: node.key,
+        description: node.description,
+      },
       png: {
         ...pngDatas,
       },

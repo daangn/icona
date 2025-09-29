@@ -9,6 +9,11 @@ export interface IconaIconData {
   name: string;
   svg: string;
   metadatas?: string[];
+  figma?: {
+    key?: string;
+    name?: string;
+    description?: string;
+  };
   png: {
     "1x": Base64 | null;
     "2x": Base64 | null;
