@@ -28,6 +28,18 @@ We need github repository url, github api token
 1. **Repository URL**: GitHub repository full url.
 2. **Github API Key**: GitHub API Key
 
+### Target Branch Selection
+
+By default, PRs are created against the `main` branch. To target a different branch, include the branch path in the repository URL:
+
+| URL Format                                         | Target Branch    |
+| -------------------------------------------------- | ---------------- |
+| `https://github.com/owner/repo`                    | `main` (default) |
+| `https://github.com/owner/repo/tree/develop`       | `develop`        |
+| `https://github.com/owner/repo/tree/feature/icons` | `feature/icons`  |
+
+Simply paste the URL from your browser when viewing the target branch on GitHub.
+
 API Key need `repo`, `workflow` scope.
 
 ![repo-scope](./images/repo-scope.png)
