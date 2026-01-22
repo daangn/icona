@@ -195,6 +195,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       owner: "",
       name: "",
       apiKey: "",
+      branch: "main",
     },
     iconPreview: {},
 

@@ -193,8 +193,7 @@ export function createGithubClient(
     return response.json();
   }
 
-  async function createSettingPR() {
-    const baseBranch = "main";
+  async function createSettingPR(baseBranch = "main") {
     const newBranch = `icona-setting-${new Date().getTime()}`;
     const commitTitle = "chore: add icona.yml";
 
@@ -244,8 +243,8 @@ export function createGithubClient(
   async function createDeployPR(
     svgs: Record<string, IconaIconData>,
     iconaFileName?: string,
+    baseBranch = "main",
   ) {
-    const baseBranch = "main";
     const newBranch = `icona-update-${new Date().getTime()}`;
 
     const fileName = iconaFileName || "icons";

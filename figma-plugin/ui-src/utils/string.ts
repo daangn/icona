@@ -7,13 +7,15 @@ export const getFigmaFileKeyFromUrl = (fileUrl: string) => {
 };
 
 export const getGithubDataFromUrl = (githubUrl: string) => {
-  const match = githubUrl.match(/github\.com\/([^/]+)\/([^/]+)/);
+  // Match: github.com/{owner}/{repo} or github.com/{owner}/{repo}/tree/{branch}
+  const match = githubUrl.match(
+    /github\.com\/([^/]+)\/([^/]+)(?:\/tree\/(.+))?/,
+  );
   if (match) {
     return {
       owner: match[1],
       name: match[2],
-      // NOTE: This is not used currently
-      // repo: `${match[1]}/${match[2]}`,
+      branch: match[3] || "main", // default to "main" if no branch specified
     };
   }
   return null;
