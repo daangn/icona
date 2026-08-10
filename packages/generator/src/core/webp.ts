@@ -1,6 +1,6 @@
 import type { IconaIconData, WebPConfig } from "@icona/types";
 import { resolve } from "path";
-import sharp from "sharp";
+import type { WebpOptions } from "sharp";
 
 import { createBar } from "../utils/bar";
 import {
@@ -25,7 +25,14 @@ const WEBP_OPTIONS = {
   effort: 6,
   preset: "icon",
   exact: true,
-} as sharp.WebpOptions;
+} satisfies WebpOptions;
+
+let sharpModule: Promise<typeof import("sharp")> | undefined;
+
+const loadSharp = () => {
+  sharpModule ??= import("sharp");
+  return sharpModule;
+};
 
 export const generateWebP = async (props: Props) => {
   const { config, icons = getIconaIconsFile() } = props;
@@ -45,9 +52,14 @@ export const generateWebP = async (props: Props) => {
   }
 
   if (config.genMode === "recreate") {
-    scales.forEach((scale) => {
-      deleteAllFilesInDir(resolve(targetPath, scale));
-    });
+    const failedScale = scales.find(
+      (scale) => !deleteAllFilesInDir(resolve(targetPath, scale)),
+    );
+    if (failedScale) {
+      throw new Error(
+        `Failed to recreate WebP output directory for scale ${failedScale}`,
+      );
+    }
   }
 
   console.log(`\nWebP Generate in \`${targetPath}\` folder...`);
@@ -55,6 +67,7 @@ export const generateWebP = async (props: Props) => {
   for (const scale of scales) {
     const iconaScaleData = iconData.filter(([, data]) => data.png[scale]);
     if (iconaScaleData.length === 0) continue;
+    const { default: sharp } = await loadSharp();
 
     const bar = createBar({
       name: `WebP ${scale}`,

@@ -46,18 +46,20 @@ const makeFolderIfNotExistFromRoot = (targetPath: string): void => {
   }
 };
 
-const deleteAllFilesInDir = (dirPath: string): void => {
+const deleteAllFilesInDir = (dirPath: string): boolean => {
   if (!existsSync(dirPath)) {
     console.log(`Directory ${dirPath} does not exist.`);
-    return;
+    return true;
   }
 
   try {
     readdirSync(dirPath).forEach((file) => {
       unlinkSync(join(dirPath, file));
     });
+    return true;
   } catch (error) {
     console.error(`Error while deleting files in directory ${dirPath}:`, error);
+    return false;
   }
 };
 

@@ -162,8 +162,8 @@ generate({
 - [svg2vectordrawable (XML)](https://github.com/Ashung/svg2vectordrawable)
 - [pdfkit (PDF)](https://pdfkit.org/docs/getting_started.html#document-structure)
 - [svg-to-pdfkit (PDF)](https://github.com/alafr/SVG-to-PDFKit)
-- [sharp (lossless WebP)](https://sharp.pixelplumbing.com/api-output/#webp)
+- [sharp (lossless WebP)](https://sharp.pixelplumbing.com/api-output/#webp) — WebP uses a fixed lossless profile and requires Node.js 20.9 or newer.
 - [svgr (React Components)](https://react-svgr.com/)
 
-you configure each library options in `config` object.
+You configure each generator in the `config` object. WebP encoder options are fixed internally and are not exposed in the public config.
 If you want to see real example, you can see [here (seed-icon)](https://github.com/daangn/seed-icon/blob/main/icona.js)
