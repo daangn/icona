@@ -32,6 +32,11 @@ jobs:
           yarn build
         shell: bash
 
+      - name: test
+        run: |
+          yarn test
+        shell: bash
+
       - name: 릴리즈 Pull Request를 만들거나 패키지를 배포해요
         id: changesets
         uses: changesets/action@v1

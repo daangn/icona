@@ -6,6 +6,7 @@ import type {
   SVGConfig,
   Vue2Config,
   Vue3Config,
+  WebPConfig,
 } from "@icona/generator";
 import { generate } from "@icona/generator";
 
@@ -134,6 +135,12 @@ const pngConfig: PNGConfig = {
   path: "png",
 };
 
+const webpConfig: WebPConfig = {
+  active: false,
+  genMode: "recreate",
+  path: "webp",
+};
+
 const vue2Config: Vue2Config = {
   path: "packages/vue2",
   active: false,
@@ -156,6 +163,7 @@ generate({
     pdf: pdfConfig,
     react: reactConfig,
     png: pngConfig,
+    webp: webpConfig,
     vue2: vue2Config,
     vue3: vue3Config,
   },

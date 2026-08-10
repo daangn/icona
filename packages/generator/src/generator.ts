@@ -8,6 +8,7 @@ import { generateReact } from "./core/react.js";
 import { generateSVG } from "./core/svg.js";
 import { generateVue2 } from "./core/vue2.js";
 import { generateVue3 } from "./core/vue3.js";
+import { generateWebP } from "./core/webp.js";
 import { iconaIconJsonFile } from "./schema.js";
 import { getIconaIconsFile } from "./utils/file";
 
@@ -38,11 +39,12 @@ export const generate = async (props: Props) => {
 
   const paredIconFile = iconaIconJsonFile.parse(iconData);
 
-  const { pdf, drawable, react, svg, png, vue2, vue3 } = config;
+  const { pdf, drawable, react, svg, png, webp, vue2, vue3 } = config;
 
   console.log("[@Icona/generator] Start generating...");
   await generateSVG({ icons: paredIconFile, config: svg }); // SVG is required
   if (png?.active) await generatePNG({ icons: paredIconFile, config: png });
+  if (webp?.active) await generateWebP({ icons: paredIconFile, config: webp });
   if (pdf?.active) generatePDF({ icons: paredIconFile, config: pdf });
   if (drawable?.active)
     await generateDrawable({ icons: paredIconFile, config: drawable });
