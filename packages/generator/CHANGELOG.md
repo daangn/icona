@@ -1,5 +1,16 @@
 # @icona/generator
 
+## 0.10.0
+
+### Minor Changes
+
+- 258b604: PNG source data에서 lossless WebP 아이콘을 생성하는 WebP 설정과 generator API를 추가합니다.
+
+### Patch Changes
+
+- Updated dependencies [258b604]
+  - @icona/types@0.10.0
+
 ## 0.9.2
 
 ### Patch Changes
