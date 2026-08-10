@@ -12,6 +12,7 @@
   "scripts": {
     "build": "ultra -r build",
     "clean": "ultra -r clean",
+    "test": "yarn workspace @icona/generator build && yarn workspace @icona/generator-test test",
     "release": "yarn changeset publish",
     "version": "changeset version && yarn install --no-immutable",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",

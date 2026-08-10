@@ -134,6 +134,8 @@ export interface DrawableConfig extends BaseConfig {
 
 export interface PNGConfig extends BaseConfig {}
 
+export interface WebPConfig extends BaseConfig {}
+
 export interface Vue2Config extends BaseConfig {
   genShimFile?: boolean;
 
@@ -156,6 +158,7 @@ export interface IconaConfig {
   pdf: PDFConfig;
   drawable: DrawableConfig;
   png: PNGConfig;
+  webp?: WebPConfig;
   vue2: Vue2Config;
   vue3: Vue3Config;
 }

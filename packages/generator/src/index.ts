@@ -7,6 +7,7 @@ import type {
   SVGConfig,
   Vue2Config,
   Vue3Config,
+  WebPConfig,
 } from "@icona/types";
 
 import { generateDrawable } from "./core/drawable.js";
@@ -16,6 +17,7 @@ import { generateReact } from "./core/react.js";
 import { generateSVG } from "./core/svg.js";
 import { generateVue2 } from "./core/vue2.js";
 import { generateVue3 } from "./core/vue3.js";
+import { generateWebP } from "./core/webp.js";
 import { generate } from "./generator.js";
 
 export {
@@ -27,6 +29,7 @@ export {
   generateSVG,
   generateVue2,
   generateVue3,
+  generateWebP,
 };
 
 export type {
@@ -38,4 +41,5 @@ export type {
   SVGConfig,
   Vue2Config,
   Vue3Config,
+  WebPConfig,
 };
