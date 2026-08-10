@@ -24,6 +24,9 @@ jobs:
         with:
           node-version: "22"
 
+      - name: npm trusted publishing을 준비해요
+        run: npm install --global npm@11.5.1
+
       - name: 패키지를 설치하고 릴리즈를 만들어요
         run: |
           yarn install
