@@ -8,7 +8,7 @@ import { getIconaFrame, setLocalData } from "./utils.js";
 export function listenDeployIcon() {
   on("DEPLOY_ICON", async ({ githubData, icons, options }) => {
     try {
-      const { owner, name, apiKey } = githubData;
+      const { owner, name, apiKey, branch } = githubData;
       const { fileName, png } = options;
 
       const { createDeployPR } = createGithubClient(owner, name, apiKey);
@@ -25,7 +25,7 @@ export function listenDeployIcon() {
 
       const iconaData = await exportFromIconaIconData(assetFrames, icons, png);
 
-      await createDeployPR(iconaData, fileName);
+      await createDeployPR(iconaData, fileName, branch);
 
       emit("DEPLOY_DONE", null);
       figma.notify("Icons deployed", { timeout: 5000 });
